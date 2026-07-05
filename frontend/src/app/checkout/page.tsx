@@ -4,8 +4,11 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { CreditCard, Truck, Wallet, Banknote, Lock } from "lucide-react";
+import { CreditCard, Truck, Wallet, Banknote, Lock, Loader2 } from "lucide-react";
 import { useCartStore } from "@/store/cart-store";
+import { useAuthStore } from "@/store/auth-store";
+import { apiCreateOrder } from "@/lib/auth-api";
+import { toast } from "@/store/toast-store";
 import { formatPrice, cn } from "@/lib/utils";
 import { STORE } from "@/lib/constants";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
@@ -36,8 +39,10 @@ const inputCls =
 export default function CheckoutPage() {
   const router = useRouter();
   const { items, clear } = useCartStore();
+  const token = useAuthStore((s) => s.token);
   const [payment, setPayment] = useState("razorpay");
   const [billingSame, setBillingSame] = useState(true);
+  const [placing, setPlacing] = useState(false);
 
   const {
     register,
@@ -50,11 +55,48 @@ export default function CheckoutPage() {
   const tax = Math.round(subtotal * 0.05);
   const total = subtotal + shipping + tax;
 
-  const onSubmit = () => {
-    const orderNumber = `SRUVALLE${Math.floor(100000 + subtotal + items.length * 37)}`;
-    if (typeof window !== "undefined") {
-      sessionStorage.setItem("aura-last-order", JSON.stringify({ orderNumber, total, payment }));
+  const onSubmit = async (data: CheckoutForm) => {
+    if (!token) {
+      toast.error("Please sign in to place your order.");
+      router.push("/login");
+      return;
     }
+    setPlacing(true);
+    const res = await apiCreateOrder(token, {
+      items: items.map((l) => ({
+        productId: l.productId,
+        name: l.name,
+        thumbnail: l.thumbnail,
+        color: l.color,
+        size: l.size,
+        price: l.price,
+        quantity: l.quantity,
+      })),
+      shippingAddress: {
+        fullName: data.fullName,
+        phone: data.phone,
+        line1: data.line1,
+        line2: data.line2,
+        city: data.city,
+        state: data.state,
+        pincode: data.pincode,
+      },
+      paymentMethod: payment,
+    });
+    setPlacing(false);
+
+    if (!res.ok) {
+      toast.error(res.error);
+      return;
+    }
+
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem(
+        "aura-last-order",
+        JSON.stringify({ orderNumber: res.data.orderNumber, total: res.data.total, payment })
+      );
+    }
+    toast.success(`Order ${res.data.orderNumber} placed!`);
     clear();
     router.push("/checkout/success");
   };
@@ -182,8 +224,16 @@ export default function CheckoutPage() {
             <span>Total</span>
             <span>{formatPrice(total)}</span>
           </div>
-          <Button type="submit" block className="mt-6 h-12">
-            <Lock size={15} /> Place Order
+          <Button type="submit" block disabled={placing} className="mt-6 h-12">
+            {placing ? (
+              <>
+                <Loader2 size={15} className="animate-spin" /> Placing order…
+              </>
+            ) : (
+              <>
+                <Lock size={15} /> Place Order
+              </>
+            )}
           </Button>
           <p className="mt-3 text-center text-xs text-muted">
             Secured by Razorpay · This is a demo — no payment is taken.

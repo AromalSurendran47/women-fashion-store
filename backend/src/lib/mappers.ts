@@ -185,7 +185,20 @@ export function mapOrder(o: any) {
     total: o.total ?? 0,
     status: o.status,
     paymentMethod: o.paymentMethod ?? "",
+    paymentStatus: o.paymentStatus ?? "Pending",
     trackingNumber: o.trackingNumber ?? undefined,
+    shippingAddress: o.shippingAddress
+      ? {
+          fullName: o.shippingAddress.fullName ?? "",
+          phone: o.shippingAddress.phone ?? "",
+          line1: o.shippingAddress.line1 ?? "",
+          line2: o.shippingAddress.line2 ?? "",
+          city: o.shippingAddress.city ?? "",
+          state: o.shippingAddress.state ?? "",
+          pincode: o.shippingAddress.pincode ?? "",
+          country: o.shippingAddress.country ?? "India",
+        }
+      : undefined,
   };
 }
 

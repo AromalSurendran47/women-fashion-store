@@ -91,6 +91,12 @@ function AdminDashboard() {
             <Users size={15} /> Manage Customers
           </Link>
           <Link
+            href="/admin/orders"
+            className="flex items-center gap-2 rounded-full border border-line px-4 py-2 text-sm hover:border-ink"
+          >
+            <ShoppingCart size={15} /> Manage Orders
+          </Link>
+          <Link
             href="/"
             className="flex items-center gap-2 rounded-full border border-line px-4 py-2 text-sm hover:border-ink"
           >
@@ -125,7 +131,12 @@ function AdminDashboard() {
           <div className="grid gap-8 lg:grid-cols-2">
             {/* Recent orders */}
             <section>
-              <h2 className="mb-4 text-lg font-medium">Recent Orders</h2>
+              <div className="mb-4 flex items-center justify-between">
+                <h2 className="text-lg font-medium">Recent Orders</h2>
+                <Link href="/admin/orders" className="text-sm underline hover:text-accent-dark">
+                  Manage all
+                </Link>
+              </div>
               <div className="overflow-hidden rounded-2xl border border-line">
                 <table className="w-full text-sm">
                   <thead className="bg-secondary text-left text-xs uppercase tracking-wider text-muted">

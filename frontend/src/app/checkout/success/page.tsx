@@ -7,12 +7,18 @@ import { formatPrice } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 
 export default function OrderSuccessPage() {
-  const [order, setOrder] = useState<{ orderNumber: string; total: number } | null>(null);
+  const [order, setOrder] = useState<{
+    orderNumber: string;
+    total: number;
+    payment?: string;
+  } | null>(null);
 
   useEffect(() => {
     const raw = sessionStorage.getItem("aura-last-order");
     if (raw) setOrder(JSON.parse(raw));
   }, []);
+
+  const isCod = order?.payment === "cod";
 
   return (
     <div className="container-wide flex flex-col items-center py-16 text-center md:py-24">
@@ -31,7 +37,7 @@ export default function OrderSuccessPage() {
           <span className="font-medium">{order?.orderNumber ?? "SRUVALLE100000"}</span>
         </div>
         <div className="flex justify-between pt-3 text-sm">
-          <span className="text-muted">Amount paid</span>
+          <span className="text-muted">{isCod ? "Amount payable (COD)" : "Amount paid"}</span>
           <span className="font-medium">{order ? formatPrice(order.total) : "—"}</span>
         </div>
       </div>

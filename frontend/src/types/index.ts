@@ -152,9 +152,23 @@ export type OrderStatus =
   | "Cancelled"
   | "Returned";
 
+export type PaymentStatus = "Pending" | "Paid" | "Failed" | "Refunded";
+
+export interface OrderAddress {
+  fullName: string;
+  phone: string;
+  line1: string;
+  line2?: string;
+  city: string;
+  state: string;
+  pincode: string;
+  country?: string;
+}
+
 export interface Order {
   id: string;
   orderNumber: string;
+  customerName?: string;
   date: string;
   items: OrderItem[];
   subtotal: number;
@@ -164,7 +178,9 @@ export interface Order {
   total: number;
   status: OrderStatus;
   paymentMethod: string;
+  paymentStatus?: PaymentStatus;
   trackingNumber?: string;
+  shippingAddress?: OrderAddress;
 }
 
 export interface CartLine {

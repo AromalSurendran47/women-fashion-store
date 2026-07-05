@@ -1,4 +1,4 @@
-import type { AuthUser, Product } from "@/types";
+import type { AuthUser, Product, Order } from "@/types";
 
 /** Shape the admin product form sends to the backend (create/update). */
 export interface ProductInput {
@@ -149,6 +149,83 @@ export function apiUpdateProduct(token: string, id: string, input: Partial<Produ
 /** Delete a product by id (admin). */
 export function apiDeleteProduct(token: string, id: string) {
   return sendAuthed<{ ok: true; id: string }>(`/products/${id}`, "DELETE", token);
+}
+
+/* ------------------------------- Orders ------------------------------- */
+
+export interface OrderAddress {
+  fullName: string;
+  phone: string;
+  line1: string;
+  line2?: string;
+  city: string;
+  state: string;
+  pincode: string;
+  country?: string;
+}
+
+export interface OrderInput {
+  items: {
+    productId: string;
+    name: string;
+    thumbnail: string;
+    color: string;
+    size: string;
+    price: number;
+    quantity: number;
+  }[];
+  shippingAddress: OrderAddress;
+  billingAddress?: OrderAddress;
+  paymentMethod: string; // "razorpay" | "card" | "cod"
+  discount?: number;
+  couponCode?: string;
+}
+
+/** Place an order (authenticated). Returns the created order. */
+export function apiCreateOrder(token: string, input: OrderInput) {
+  return sendAuthed<Order>("/orders", "POST", token, input);
+}
+
+/** Fetch the signed-in user's orders (admin gets everyone's). */
+export function apiGetOrders(token: string) {
+  return apiGetAuthed<Order[]>("/orders", token, []);
+}
+
+/** A page of orders plus pagination metadata (admin). */
+export interface OrdersPage {
+  orders: Order[];
+  total: number;
+  page: number;
+  pages: number;
+  limit: number;
+}
+
+/** Fetch a paginated / searched / status-filtered page of orders (admin). */
+export function apiGetOrdersPage(
+  token: string,
+  opts: { page?: number; limit?: number; q?: string; status?: string } = {}
+) {
+  const params = new URLSearchParams();
+  params.set("page", String(opts.page ?? 1));
+  params.set("limit", String(opts.limit ?? 10));
+  if (opts.q?.trim()) params.set("q", opts.q.trim());
+  if (opts.status?.trim()) params.set("status", opts.status.trim());
+  return apiGetAuthed<OrdersPage>(`/orders?${params.toString()}`, token, {
+    orders: [],
+    total: 0,
+    page: 1,
+    pages: 1,
+    limit: opts.limit ?? 10,
+  });
+}
+
+/** Update an order's status / payment status / tracking number (admin). */
+export function apiUpdateOrder(
+  token: string,
+  id: string,
+  input: { status?: string; paymentStatus?: string; trackingNumber?: string }
+) {
+  return sendAuthed<Order>(`/orders/${id}`, "PUT", token, input);
 }
 
 /* --------------------------- Admin: customer CRUD -------------------------- */

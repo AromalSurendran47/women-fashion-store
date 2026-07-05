@@ -729,11 +729,193 @@ app.post(
 );
 
 /* ------------------------------- Orders ----------------------------- */
+const PAYMENT_LABELS: Record<string, string> = {
+  razorpay: "Razorpay",
+  card: "Card",
+  cod: "COD",
+  upi: "UPI",
+  netbanking: "NetBanking",
+};
+
+/** Next sequential order number: SRUVALLE100001, SRUVALLE100002, … */
+async function nextOrderNumber(): Promise<string> {
+  const rows = await Order.find({ orderNumber: { $regex: /^SRUVALLE\d+$/ } }, { orderNumber: 1 }).lean();
+  let max = 100000;
+  for (const r of rows as any[]) {
+    const n = parseInt(String(r.orderNumber).replace("SRUVALLE", ""), 10);
+    if (Number.isFinite(n) && n >= max) max = n;
+  }
+  return `SRUVALLE${max + 1}`;
+}
+
+const ORDER_STATUSES = [
+  "Pending",
+  "Confirmed",
+  "Packed",
+  "Shipped",
+  "Delivered",
+  "Cancelled",
+  "Returned",
+] as const;
+const PAYMENT_STATUSES = ["Pending", "Paid", "Failed", "Refunded"] as const;
+
+// List orders. Admins see everyone's; a customer sees only their own.
+// Admins may paginate/search/filter (?page,&limit,&q,&status); with no such
+// params the response is a plain array (used by the dashboard panel).
 app.get(
   "/api/orders",
-  wrap(async (_req, res) => {
-    const orders = await Order.find().sort({ createdAt: -1 }).limit(20).lean();
-    res.json(orders.map(mapOrder));
+  authRequired,
+  wrap(async (req: AuthedRequest, res) => {
+    const isAdmin = req.auth!.role === "admin";
+    const query: Record<string, unknown> = isAdmin ? {} : { user: req.auth!.id };
+
+    if (isAdmin) {
+      const status = typeof req.query.status === "string" ? req.query.status : "";
+      if (status && (ORDER_STATUSES as readonly string[]).includes(status)) query.status = status;
+      const q = typeof req.query.q === "string" ? req.query.q.trim() : "";
+      if (q) {
+        const rx = new RegExp(escapeRegex(q), "i");
+        query.$or = [{ orderNumber: rx }, { customerName: rx }];
+      }
+    }
+
+    const paginated = isAdmin && (req.query.page !== undefined || req.query.limit !== undefined);
+    if (!paginated) {
+      const orders = await Order.find(query)
+        .sort({ createdAt: -1 })
+        .limit(isAdmin ? 50 : 25)
+        .lean();
+      return res.json(orders.map(mapOrder));
+    }
+
+    const page = Math.max(1, parseInt(String(req.query.page ?? "1"), 10) || 1);
+    const limit = Math.min(100, Math.max(1, parseInt(String(req.query.limit ?? "10"), 10) || 10));
+    const [total, orders] = await Promise.all([
+      Order.countDocuments(query),
+      Order.find(query)
+        .sort({ createdAt: -1 })
+        .skip((page - 1) * limit)
+        .limit(limit)
+        .lean(),
+    ]);
+    res.json({
+      orders: orders.map(mapOrder),
+      total,
+      page,
+      pages: Math.max(1, Math.ceil(total / limit)),
+      limit,
+    });
+  })
+);
+
+// Update an order's status / payment status / tracking number (admin).
+app.put(
+  "/api/orders/:id",
+  adminRequired,
+  wrap(async (req, res) => {
+    const { id } = req.params;
+    if (!OID.test(id)) return res.status(400).json({ error: "Invalid order id." });
+    const { status, paymentStatus, trackingNumber } = req.body ?? {};
+    const update: Record<string, unknown> = {};
+
+    if (status !== undefined) {
+      if (!(ORDER_STATUSES as readonly string[]).includes(status)) {
+        return res.status(400).json({ error: "Invalid order status." });
+      }
+      update.status = status;
+    }
+    if (paymentStatus !== undefined) {
+      if (!(PAYMENT_STATUSES as readonly string[]).includes(paymentStatus)) {
+        return res.status(400).json({ error: "Invalid payment status." });
+      }
+      update.paymentStatus = paymentStatus;
+    }
+    if (trackingNumber !== undefined) {
+      update.trackingNumber = String(trackingNumber).trim();
+    }
+    if (Object.keys(update).length === 0) {
+      return res.status(400).json({ error: "Nothing to update." });
+    }
+
+    const order = await Order.findByIdAndUpdate(id, update, { new: true, runValidators: true }).lean();
+    if (!order) return res.status(404).json({ error: "Order not found" });
+    res.json(mapOrder(order));
+  })
+);
+
+// Place an order (authenticated). Totals are recomputed server-side for trust.
+app.post(
+  "/api/orders",
+  authRequired,
+  wrap(async (req: AuthedRequest, res) => {
+    const b = req.body ?? {};
+    const items = Array.isArray(b.items) ? b.items : [];
+    if (items.length === 0) return res.status(400).json({ error: "Your cart is empty." });
+
+    const method = PAYMENT_LABELS[String(b.paymentMethod || "").toLowerCase()];
+    if (!method) return res.status(400).json({ error: "Please choose a valid payment method." });
+
+    const user = (await User.findById(req.auth!.id).lean()) as any;
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    const products: any[] = [];
+    for (const it of items) {
+      if (!OID.test(String(it.productId ?? ""))) {
+        return res.status(400).json({ error: "Your cart contains an invalid product." });
+      }
+      products.push({
+        product: it.productId,
+        name: String(it.name ?? ""),
+        thumbnail: it.thumbnail ?? "",
+        color: it.color ?? "",
+        size: it.size ?? "",
+        price: Number(it.price) || 0,
+        quantity: Math.max(1, Number(it.quantity) || 1),
+      });
+    }
+
+    const subtotal = products.reduce((s, p) => s + p.price * p.quantity, 0);
+    const shipping = subtotal >= 1499 ? 0 : 99;
+    const tax = Math.round(subtotal * 0.05);
+    const discount = Math.max(0, Number(b.discount) || 0);
+    const total = Math.max(0, subtotal + shipping + tax - discount);
+
+    const a = b.shippingAddress ?? {};
+    const shippingAddress = {
+      fullName: String(a.fullName ?? "").trim(),
+      phone: String(a.phone ?? "").trim(),
+      line1: String(a.line1 ?? "").trim(),
+      line2: String(a.line2 ?? "").trim(),
+      city: String(a.city ?? "").trim(),
+      state: String(a.state ?? "").trim(),
+      pincode: String(a.pincode ?? "").trim(),
+      country: String(a.country ?? "India").trim(),
+    };
+    for (const f of ["fullName", "phone", "line1", "city", "state", "pincode"] as const) {
+      if (!shippingAddress[f]) {
+        return res.status(400).json({ error: "A complete shipping address is required." });
+      }
+    }
+
+    const order = await Order.create({
+      orderNumber: await nextOrderNumber(),
+      user: user._id,
+      customerName: shippingAddress.fullName || user.name,
+      products,
+      subtotal,
+      discount,
+      couponCode: b.couponCode || undefined,
+      shipping,
+      tax,
+      total,
+      paymentMethod: method,
+      paymentStatus: method === "COD" ? "Pending" : "Paid",
+      status: "Confirmed",
+      shippingAddress,
+      billingAddress: b.billingAddress ?? shippingAddress,
+    });
+
+    res.status(201).json(mapOrder(order));
   })
 );
 
