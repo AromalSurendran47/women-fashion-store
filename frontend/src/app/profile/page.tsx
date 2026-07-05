@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { Package, Truck, Heart, Wallet } from "lucide-react";
-import { orders } from "@/data/orders";
+import { getOrders } from "@/lib/api";
 import { formatPrice, formatDate } from "@/lib/utils";
 import { OrderBadge } from "@/components/profile/order-badge";
 
-export default function ProfileDashboard() {
+export default async function ProfileDashboard() {
+  const orders = await getOrders();
   const totalSpent = orders.reduce((s, o) => s + o.total, 0);
   const active = orders.filter((o) => !["Delivered", "Cancelled", "Returned"].includes(o.status));
 

@@ -7,7 +7,7 @@ import { Minus, Plus, Trash2, ShoppingBag, Tag, ArrowRight } from "lucide-react"
 import { useCartStore } from "@/store/cart-store";
 import { formatPrice } from "@/lib/utils";
 import { STORE } from "@/lib/constants";
-import { findCoupon, computeDiscount } from "@/data/coupons";
+import { validateCoupon } from "@/lib/api";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { EmptyState } from "@/components/ui/empty-state";
 import { buttonVariants } from "@/components/ui/button";
@@ -17,6 +17,7 @@ export default function CartPage() {
   const [code, setCode] = useState("");
   const [applied, setApplied] = useState<{ code: string; amount: number } | null>(null);
   const [error, setError] = useState("");
+  const [applying, setApplying] = useState(false);
 
   const subtotal = items.reduce((s, l) => s + l.price * l.quantity, 0);
   const discount = applied?.amount ?? 0;
@@ -24,12 +25,17 @@ export default function CartPage() {
   const tax = Math.round((subtotal - discount) * 0.05);
   const total = subtotal - discount + shipping + tax;
 
-  const apply = () => {
-    const coupon = findCoupon(code);
-    if (!coupon) return setError("Invalid coupon code.");
-    const amount = computeDiscount(coupon, subtotal);
-    if (amount === 0) return setError(`Minimum order ${formatPrice(coupon.minOrderValue)} required.`);
-    setApplied({ code: coupon.code, amount });
+  const apply = async () => {
+    if (!code.trim() || applying) return;
+    setApplying(true);
+    setError("");
+    const result = await validateCoupon(code, subtotal);
+    setApplying(false);
+    if (!result.valid) {
+      setApplied(null);
+      return setError(result.message ?? "Invalid coupon code.");
+    }
+    setApplied({ code: result.code ?? code.trim().toUpperCase(), amount: result.discount ?? 0 });
     setError("");
   };
 
@@ -116,9 +122,10 @@ export default function CartPage() {
               </div>
               <button
                 onClick={apply}
-                className="rounded-full bg-ink px-5 text-sm font-medium text-background"
+                disabled={applying}
+                className="rounded-full bg-ink px-5 text-sm font-medium text-background disabled:opacity-60"
               >
-                Apply
+                {applying ? "Applying…" : "Apply"}
               </button>
             </div>
             {error && <p className="mt-2 text-xs text-sale">{error}</p>}

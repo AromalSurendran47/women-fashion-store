@@ -8,14 +8,33 @@ import { OurStory } from "@/components/home/our-story";
 import { Features } from "@/components/home/features";
 import { InstagramGallery } from "@/components/home/instagram-gallery";
 import { TestimonialsSection } from "@/components/home/testimonials-section";
-import { getProducts, getCategories, getTestimonials } from "@/lib/api";
+import {
+  getProducts,
+  getCategories,
+  getTestimonials,
+  getHeroBanners,
+  getCollectionBanner,
+  getInstagramGallery,
+} from "@/lib/api";
+
+// Render the homepage on-demand from the LIVE backend on every request.
+// `fetchCache: force-no-store` forces every fetch in this page to bypass the
+// Next.js data cache, so when the backend is disconnected the sections show
+// nothing instead of serving stale cached data. (Other pages keep their own
+// caching — this only affects the homepage.)
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 
 export default async function HomePage() {
-  const [all, categories, testimonials] = await Promise.all([
-    getProducts(),
-    getCategories(),
-    getTestimonials(),
-  ]);
+  const [all, categories, testimonials, heroBanners, collectionBanner, instagramGallery] =
+    await Promise.all([
+      getProducts(),
+      getCategories(),
+      getTestimonials(),
+      getHeroBanners(),
+      getCollectionBanner(),
+      getInstagramGallery(),
+    ]);
 
   const newArrivals = all.filter((p) => p.newArrival).slice(0, 8);
   const trending = all.filter((p) => p.trending).slice(0, 8);
@@ -24,7 +43,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <HeroSlider />
+      {heroBanners.length > 0 && <HeroSlider banners={heroBanners} />}
       <CategoryCircles categories={categories} />
       <FeaturedCategories categories={categories} />
       <ProductCarousel
@@ -42,7 +61,7 @@ export default async function HomePage() {
         href="/products?filter=trending"
         products={trending}
       />
-      <CollectionBanner />
+      {collectionBanner && <CollectionBanner banner={collectionBanner} />}
       <ProductCarousel
         eyebrow="Tried & Loved"
         title="Best Sellers"
@@ -52,8 +71,8 @@ export default async function HomePage() {
       />
       <OurStory />
       <Features />
-      <TestimonialsSection testimonials={testimonials} />
-      <InstagramGallery />
+      {testimonials.length > 0 && <TestimonialsSection testimonials={testimonials} />}
+      {instagramGallery.length > 0 && <InstagramGallery items={instagramGallery} />}
     </>
   );
 }

@@ -3,12 +3,13 @@
 import Link from "next/link";
 import { X, Heart, User } from "lucide-react";
 import { NAV_LINKS } from "@/lib/constants";
-import { categories } from "@/data/categories";
+import { useCategories } from "@/hooks/use-catalog";
 import { useUIStore } from "@/store/ui-store";
 import { cn } from "@/lib/utils";
 
 export function MobileDrawer() {
   const { drawerOpen, closeDrawer } = useUIStore();
+  const { data: categories } = useCategories();
 
   return (
     <>

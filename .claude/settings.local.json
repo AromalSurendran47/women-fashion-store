@@ -2,7 +2,13 @@
   "permissions": {
     "allow": [
       "Bash(node -e ' *)",
-      "Bash(node -e \"const m=require\\('mongoose'\\);\\(async\\(\\)=>{await m.connect\\('mongodb://127.0.0.1:27017/aura_fashion'\\);const U=m.model\\('U',new m.Schema\\({},{strict:false}\\),'users'\\);const testAccts=await U.countDocuments\\({email:/@test\\\\.com$/}\\);const total=await U.countDocuments\\(\\);console.log\\('leftover @test.com accounts:',testAccts,'\\(should be 0\\)'\\);console.log\\('total users in DB:',total,'\\(should be 20 — all test accounts cleaned up\\)'\\);await m.disconnect\\(\\);}\\)\\(\\);\")"
+      "Bash(node -e \"const m=require\\('mongoose'\\);\\(async\\(\\)=>{await m.connect\\('mongodb://127.0.0.1:27017/aura_fashion'\\);const U=m.model\\('U',new m.Schema\\({},{strict:false}\\),'users'\\);const testAccts=await U.countDocuments\\({email:/@test\\\\.com$/}\\);const total=await U.countDocuments\\(\\);console.log\\('leftover @test.com accounts:',testAccts,'\\(should be 0\\)'\\);console.log\\('total users in DB:',total,'\\(should be 20 — all test accounts cleaned up\\)'\\);await m.disconnect\\(\\);}\\)\\(\\);\")",
+      "Bash(ls backend *)",
+      "Bash(ls -d */)",
+      "Bash(curl -s -m 20 \"http://localhost:3000/blog/the-saree-reimagined-modern-drapes-for-the-everyday-woman\" -o /tmp/blogdown.html -w \"HTTP %{http_code}\\\\n\")",
+      "Read(//tmp/**)",
+      "Bash(curl -s -m 20 \"http://localhost:3000/blog\" -o /tmp/bloglistdown.html -w \"HTTP %{http_code}\\\\n\")",
+      "Bash(cd \"d:/aromal/women fashion store\" && echo \"=== context around ₹ tags ===\" && grep -o '.\\\\{25\\\\}₹[0-9][0-9,]*.\\\\{10\\\\}' /tmp/home3.html | head; echo \"=== is 'Trending Products' near product cards or standalone? ===\" && grep -o 'Trending Products.\\\\{200\\\\}' /tmp/home3.html | head -c 400)"
     ]
   }
 }

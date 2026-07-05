@@ -156,3 +156,43 @@ export function mapCoupon(c: any) {
     maxDiscount: c.maxDiscount ?? 0,
   };
 }
+
+export function mapOrder(o: any) {
+  return {
+    id: String(o._id),
+    orderNumber: o.orderNumber,
+    date: o.createdAt ?? o.date,
+    items: (o.products ?? []).map((p: any) => ({
+      productId: String(p.product),
+      name: p.name,
+      thumbnail: p.thumbnail ?? "",
+      color: p.color ?? "",
+      size: p.size ?? "",
+      price: p.price,
+      quantity: p.quantity,
+    })),
+    subtotal: o.subtotal ?? 0,
+    discount: o.discount ?? 0,
+    shipping: o.shipping ?? 0,
+    tax: o.tax ?? 0,
+    total: o.total ?? 0,
+    status: o.status,
+    paymentMethod: o.paymentMethod ?? "",
+    trackingNumber: o.trackingNumber ?? undefined,
+  };
+}
+
+export function mapBanner(b: any) {
+  return {
+    id: String(b._id),
+    title: b.title,
+    subtitle: b.subtitle ?? "",
+    description: b.description ?? "",
+    image: b.image,
+    mobileImage: b.mobileImage ?? b.image,
+    ctaText: b.ctaText ?? "",
+    ctaLink: b.ctaLink ?? "",
+    type: b.type ?? "hero",
+    align: b.align ?? "left",
+  };
+}

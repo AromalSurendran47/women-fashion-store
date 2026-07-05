@@ -1,14 +1,14 @@
 import Image from "next/image";
 import { Instagram } from "lucide-react";
-import { instagramGallery } from "@/data/banners";
+import type { InstagramItem } from "@/lib/api";
 import { SectionTitle } from "@/components/ui/section-title";
 
-export function InstagramGallery() {
+export function InstagramGallery({ items }: { items: InstagramItem[] }) {
   return (
     <section className="container-wide py-14 md:py-20">
       <SectionTitle eyebrow="@sruvalle" title="Follow Our Journey" description="Tag us for a chance to be featured." />
       <div className="grid grid-cols-3 gap-2 md:grid-cols-6 md:gap-3">
-        {instagramGallery.map((item) => (
+        {items.map((item) => (
           <a
             key={item.id}
             href={item.href}

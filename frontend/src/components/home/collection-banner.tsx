@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { collectionBanner } from "@/data/banners";
+import type { Banner } from "@/types";
 import { buttonVariants } from "@/components/ui/button";
 
-export function CollectionBanner() {
-  const b = collectionBanner;
+export function CollectionBanner({ banner }: { banner: Banner }) {
+  const b = banner;
   return (
     <section className="container-wide py-14 md:py-20">
       <div className="relative overflow-hidden rounded-3xl bg-ink">

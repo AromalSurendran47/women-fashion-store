@@ -5,11 +5,17 @@ const BannerSchema = new Schema(
   {
     title: { type: String, required: true },
     subtitle: { type: String },
+    description: { type: String },
     image: { type: String, required: true },
     mobileImage: { type: String },
     ctaText: { type: String },
     ctaLink: { type: String },
-    type: { type: String, enum: ["hero", "category", "offer"], default: "hero" },
+    type: {
+      type: String,
+      enum: ["hero", "category", "offer", "collection", "instagram"],
+      default: "hero",
+    },
+    align: { type: String, enum: ["left", "center", "right"], default: "left" },
     order: { type: Number, default: 0 },
     active: { type: Boolean, default: true },
   },

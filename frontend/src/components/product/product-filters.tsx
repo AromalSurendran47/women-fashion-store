@@ -1,7 +1,7 @@
 "use client";
 
 import { X } from "lucide-react";
-import { categories } from "@/data/categories";
+import { useCategories } from "@/hooks/use-catalog";
 import { COLORS, FABRICS, SIZES } from "@/data/_pools";
 import { cn } from "@/lib/utils";
 
@@ -35,6 +35,7 @@ export function ProductFilters({
   onChange: (f: Filters) => void;
 }) {
   const set = (patch: Partial<Filters>) => onChange({ ...filters, ...patch });
+  const { data: categories } = useCategories();
 
   return (
     <div className="flex flex-col gap-7">

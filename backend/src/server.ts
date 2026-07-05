@@ -22,6 +22,8 @@ import {
   mapTestimonial,
   mapFaq,
   mapCoupon,
+  mapBanner,
+  mapOrder,
   mapUser,
 } from "./lib/mappers.js";
 import {
@@ -317,7 +319,7 @@ app.get(
     const { type } = req.query as { type?: string };
     const query = type ? { type, active: true } : { active: true };
     const items = await Banner.find(query).sort({ order: 1 }).lean();
-    res.json(items);
+    res.json(items.map(mapBanner));
   })
 );
 
@@ -359,7 +361,7 @@ app.get(
   "/api/orders",
   wrap(async (_req, res) => {
     const orders = await Order.find().sort({ createdAt: -1 }).limit(20).lean();
-    res.json(orders);
+    res.json(orders.map(mapOrder));
   })
 );
 
@@ -376,7 +378,10 @@ async function start() {
     console.warn("⚠️  MONGODB_URI is not set — using the default localhost connection.");
   }
 
-  await connectDB();
+  const conn = await connectDB();
+  console.log(
+    `🍃  MongoDB connected → ${conn.connection.host}:${conn.connection.port}/${conn.connection.name}`
+  );
   app.listen(PORT, () => {
     console.log(`🚀  Sruvalle API running at http://localhost:${PORT}/api`);
   });

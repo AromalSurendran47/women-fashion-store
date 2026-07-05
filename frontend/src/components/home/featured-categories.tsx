@@ -4,6 +4,7 @@ import { CategoryCard } from "@/components/common/category-card";
 
 export function FeaturedCategories({ categories }: { categories: Category[] }) {
   const featured = categories.filter((c) => c.featured);
+  if (featured.length === 0) return null;
   return (
     <section className="container-wide py-14 md:py-20">
       <SectionTitle

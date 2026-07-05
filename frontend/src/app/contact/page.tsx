@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Mail, Phone, MapPin, MessageCircle, Check, Send } from "lucide-react";
 import { STORE } from "@/lib/constants";
-import { faqs } from "@/data/faq";
+import { useFaqs } from "@/hooks/use-catalog";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { SectionTitle } from "@/components/ui/section-title";
 import { Accordion } from "@/components/ui/accordion";
@@ -21,6 +21,7 @@ const CONTACTS = [
 
 export default function ContactPage() {
   const [sent, setSent] = useState(false);
+  const { data: faqs } = useFaqs();
 
   return (
     <div className="container-wide py-8">

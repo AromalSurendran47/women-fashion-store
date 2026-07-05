@@ -1,11 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import { orders } from "@/data/orders";
+import { getOrders } from "@/lib/api";
 import { formatPrice, formatDate } from "@/lib/utils";
 import { OrderBadge } from "@/components/profile/order-badge";
 import { buttonVariants } from "@/components/ui/button";
 
-export default function OrdersPage() {
+export default async function OrdersPage() {
+  const orders = await getOrders();
   return (
     <div className="flex flex-col gap-6">
       <h2 className="text-lg font-medium">Order History</h2>

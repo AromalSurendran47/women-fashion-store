@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import type { Blog } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { getBlogs } from "@/lib/api";
 import { formatDate } from "@/lib/utils";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
@@ -11,8 +13,17 @@ export const metadata: Metadata = {
   description: "Styling notes, trend edits and fashion stories from the Sruvalle studio.",
 };
 
+// Always render on-demand from the live backend — never statically cached.
+export const dynamic = "force-dynamic";
+
 export default async function BlogPage() {
-  const blogs = await getBlogs();
+  let blogs: Blog[];
+  try {
+    blogs = await getBlogs();
+  } catch {
+    // Backend unreachable → show a 404 rather than stale/empty content.
+    notFound();
+  }
   const [featured, ...rest] = blogs;
 
   return (
@@ -25,6 +36,12 @@ export default async function BlogPage() {
         </p>
       </div>
 
+      {!featured ? (
+        <p className="py-20 text-center text-sm text-muted">
+          No articles have been published yet. Check back soon.
+        </p>
+      ) : (
+        <>
       {/* Featured */}
       <Link href={`/blog/${featured.slug}`} className="group mb-12 grid gap-6 md:grid-cols-2">
         <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-secondary">
@@ -64,6 +81,8 @@ export default async function BlogPage() {
           </Link>
         ))}
       </div>
+        </>
+      )}
     </div>
   );
 }
