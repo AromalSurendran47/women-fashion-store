@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
-import { ArrowLeft, Plus, Pencil, Trash2, Loader2, X, Upload } from "lucide-react";
+import { ArrowLeft, Plus, Pencil, Trash2, Loader2, X, Upload, Zap } from "lucide-react";
 import { AuthGuard } from "@/components/auth/auth-guard";
 import { useAuthStore } from "@/store/auth-store";
 import { getProducts, getCategories } from "@/lib/api";
@@ -47,6 +47,7 @@ type FormState = {
   newArrival: boolean;
   bestSeller: boolean;
   trending: boolean;
+  flashSale: boolean;
 };
 
 const emptyForm: FormState = {
@@ -69,6 +70,7 @@ const emptyForm: FormState = {
   newArrival: false,
   bestSeller: false,
   trending: false,
+  flashSale: false,
 };
 
 function productToForm(p: Product): FormState {
@@ -92,6 +94,7 @@ function productToForm(p: Product): FormState {
     newArrival: !!p.newArrival,
     bestSeller: !!p.bestSeller,
     trending: !!p.trending,
+    flashSale: !!p.flashSale,
   };
 }
 
@@ -117,6 +120,7 @@ function formToInput(f: FormState): ProductInput {
     newArrival: f.newArrival,
     bestSeller: f.bestSeller,
     trending: f.trending,
+    flashSale: f.flashSale,
   };
 }
 
@@ -338,7 +342,14 @@ function ProductsManager() {
                         )}
                       </div>
                       <div className="min-w-0">
-                        <p className="line-clamp-1 font-medium">{p.name}</p>
+                        <p className="flex items-center gap-1.5 font-medium">
+                          <span className="line-clamp-1">{p.name}</span>
+                          {p.flashSale && (
+                            <span className="inline-flex shrink-0 items-center gap-0.5 rounded-full bg-sale/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-sale">
+                              <Zap size={9} className="fill-sale" /> Flash
+                            </span>
+                          )}
+                        </p>
                         <p className="text-xs text-muted">{p.sku}</p>
                       </div>
                     </div>
@@ -579,10 +590,10 @@ function ProductsManager() {
               </Field>
 
               <div className="flex flex-wrap gap-4 pt-1">
-                {(["featured", "newArrival", "bestSeller", "trending"] as const).map((flag) => (
+                {(["featured", "newArrival", "bestSeller", "trending", "flashSale"] as const).map((flag) => (
                   <label key={flag} className="flex cursor-pointer items-center gap-2 text-sm">
                     <input type="checkbox" className="accent-ink" checked={form[flag]} onChange={(e) => set(flag, e.target.checked)} />
-                    {flag}
+                    {FLAG_LABELS[flag]}
                   </label>
                 ))}
               </div>
@@ -616,6 +627,17 @@ function ProductsManager() {
     </div>
   );
 }
+
+const FLAG_LABELS: Record<
+  "featured" | "newArrival" | "bestSeller" | "trending" | "flashSale",
+  string
+> = {
+  featured: "Featured",
+  newArrival: "New Arrival",
+  bestSeller: "Best Seller",
+  trending: "Trending",
+  flashSale: "Flash Sale",
+};
 
 const inputCls =
   "h-11 w-full rounded-xl border border-line bg-background px-3 text-sm outline-none focus:border-ink";

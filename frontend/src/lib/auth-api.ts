@@ -22,6 +22,7 @@ export interface ProductInput {
   newArrival?: boolean;
   bestSeller?: boolean;
   trending?: boolean;
+  flashSale?: boolean;
 }
 
 const BASE = process.env.NEXT_PUBLIC_API_URL;

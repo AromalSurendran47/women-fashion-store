@@ -55,7 +55,7 @@ export function mapProduct(p: any) {
     newArrival: !!p.newArrival,
     bestSeller: !!p.bestSeller,
     trending: !!p.trending,
-    flashSale: (p.discountPercentage ?? 0) >= 25,
+    flashSale: !!p.flashSale,
     sizes: p.sizes ?? [],
     colors: (p.colors ?? []).map((c: string) => ({ name: c, hex: hexFor(c) })),
     material: p.material ?? p.fabric ?? "",
