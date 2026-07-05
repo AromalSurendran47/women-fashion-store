@@ -21,7 +21,18 @@ export function ProductListing({
   products: Product[];
   initialFilters?: Partial<Filters>;
 }) {
-  const [filters, setFilters] = useState<Filters>({ ...DEFAULT_FILTERS, ...initialFilters });
+  // The price slider must reach the most expensive product, otherwise items
+  // above the (previously hard-coded ₹5,000) ceiling are silently filtered out.
+  const priceCeiling = useMemo(() => {
+    const max = products.reduce((m, p) => Math.max(m, p.discountPrice), 0);
+    return Math.max(5000, Math.ceil(max / 500) * 500);
+  }, [products]);
+
+  const [filters, setFilters] = useState<Filters>(() => ({
+    ...DEFAULT_FILTERS,
+    maxPrice: priceCeiling,
+    ...initialFilters,
+  }));
   const [sort, setSort] = useState<SortValue>("featured");
   const [view, setView] = useState<"grid" | "list">("grid");
   const [page, setPage] = useState(1);
@@ -79,7 +90,7 @@ export function ProductListing({
       {/* Desktop sidebar */}
       <aside className="hidden lg:block">
         <div className="sticky top-24">
-          <ProductFilters filters={filters} onChange={update} />
+          <ProductFilters filters={filters} onChange={update} priceCeiling={priceCeiling} />
         </div>
       </aside>
 
@@ -178,7 +189,7 @@ export function ProductListing({
                 <X size={22} />
               </button>
             </div>
-            <ProductFilters filters={filters} onChange={update} />
+            <ProductFilters filters={filters} onChange={update} priceCeiling={priceCeiling} />
             <button
               onClick={() => setMobileFilters(false)}
               className="mt-6 w-full rounded-full bg-ink py-3 text-sm font-medium text-background"

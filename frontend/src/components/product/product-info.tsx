@@ -170,14 +170,28 @@ export function ProductInfo({ product }: { product: Product }) {
 
       {/* Meta */}
       <dl className="grid grid-cols-2 gap-y-2 border-t border-line pt-5 text-sm">
+        <dt className="text-muted">Category</dt>
+        <dd>{product.categoryName}</dd>
         <dt className="text-muted">SKU</dt>
         <dd>{product.sku}</dd>
-        <dt className="text-muted">Fabric</dt>
-        <dd>{product.fabric}</dd>
-        <dt className="text-muted">Fit</dt>
-        <dd>{product.fit}</dd>
-        <dt className="text-muted">Occasion</dt>
-        <dd>{product.occasion}</dd>
+        {product.fabric && (
+          <>
+            <dt className="text-muted">Fabric</dt>
+            <dd>{product.fabric}</dd>
+          </>
+        )}
+        {product.fit && (
+          <>
+            <dt className="text-muted">Fit</dt>
+            <dd>{product.fit}</dd>
+          </>
+        )}
+        {product.occasion && (
+          <>
+            <dt className="text-muted">Occasion</dt>
+            <dd>{product.occasion}</dd>
+          </>
+        )}
       </dl>
     </div>
   );

@@ -214,12 +214,141 @@ app.get(
   })
 );
 
+const escapeRegex = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
 app.get(
   "/api/admin/users",
   adminRequired,
-  wrap(async (_req, res) => {
-    const users = await User.find().select("-password").sort({ createdAt: -1 }).limit(100).lean();
-    res.json(users.map(mapUser));
+  wrap(async (req, res) => {
+    const q = typeof req.query.q === "string" ? req.query.q.trim() : "";
+    const filter: Record<string, unknown> = {};
+    if (q) {
+      const rx = new RegExp(escapeRegex(q), "i");
+      filter.$or = [{ name: rx }, { email: rx }, { phone: rx }];
+    }
+
+    // Backward-compatible: only paginate when page/limit is requested; otherwise
+    // return a plain array (used by the dashboard's recent-customers panel).
+    const paginated = req.query.page !== undefined || req.query.limit !== undefined;
+    if (!paginated) {
+      const users = await User.find(filter)
+        .select("-password")
+        .sort({ createdAt: -1 })
+        .limit(100)
+        .lean();
+      return res.json(users.map(mapUser));
+    }
+
+    const page = Math.max(1, parseInt(String(req.query.page ?? "1"), 10) || 1);
+    const limit = Math.min(10000, Math.max(1, parseInt(String(req.query.limit ?? "10"), 10) || 10));
+    const [total, users] = await Promise.all([
+      User.countDocuments(filter),
+      User.find(filter)
+        .select("-password")
+        .sort({ createdAt: -1 })
+        .skip((page - 1) * limit)
+        .limit(limit)
+        .lean(),
+    ]);
+    res.json({
+      users: users.map(mapUser),
+      total,
+      page,
+      pages: Math.max(1, Math.ceil(total / limit)),
+      limit,
+    });
+  })
+);
+
+const USER_ROLES = ["admin", "customer", "seller"] as const;
+const isOid = (id: string) => /^[a-f0-9]{24}$/i.test(id);
+
+// Create a customer/user (admin)
+app.post(
+  "/api/admin/users",
+  adminRequired,
+  wrap(async (req, res) => {
+    const { name, email, phone, password, role } = req.body ?? {};
+    if (!name || !email || !password) {
+      return res.status(400).json({ error: "Name, email and password are required." });
+    }
+    if (String(password).length < 6) {
+      return res.status(400).json({ error: "Password must be at least 6 characters." });
+    }
+    const normalizedRole = role && USER_ROLES.includes(role) ? role : "customer";
+    const normalizedEmail = String(email).toLowerCase().trim();
+    const existing = await User.findOne({ email: normalizedEmail }).lean();
+    if (existing) {
+      return res.status(409).json({ error: "An account with this email already exists." });
+    }
+    const user = await User.create({
+      name: String(name).trim(),
+      email: normalizedEmail,
+      phone: phone ? String(phone).trim() : "",
+      password: hashPassword(String(password)),
+      role: normalizedRole,
+      emailVerified: false,
+    });
+    res.status(201).json(mapUser(user));
+  })
+);
+
+// Update a customer/user (admin)
+app.put(
+  "/api/admin/users/:id",
+  adminRequired,
+  wrap(async (req: AuthedRequest, res) => {
+    const { id } = req.params;
+    if (!isOid(id)) return res.status(400).json({ error: "Invalid user id." });
+    const { name, email, phone, role, password } = req.body ?? {};
+    const update: Record<string, unknown> = {};
+
+    if (typeof name === "string" && name.trim()) update.name = name.trim();
+    if (typeof phone === "string") update.phone = phone.trim();
+    if (typeof role === "string") {
+      if (!USER_ROLES.includes(role as any)) {
+        return res.status(400).json({ error: "Invalid role." });
+      }
+      // Don't let an admin strip their own admin role and lock themselves out.
+      if (id === req.auth!.id && role !== "admin") {
+        return res.status(400).json({ error: "You cannot change your own role." });
+      }
+      update.role = role;
+    }
+    if (typeof email === "string" && email.trim()) {
+      const normalized = email.trim().toLowerCase();
+      const clash = await User.findOne({ email: normalized, _id: { $ne: id } }).lean();
+      if (clash) return res.status(409).json({ error: "That email is already in use." });
+      update.email = normalized;
+    }
+    if (typeof password === "string" && password) {
+      if (password.length < 6) {
+        return res.status(400).json({ error: "Password must be at least 6 characters." });
+      }
+      update.password = hashPassword(password);
+    }
+
+    const user = await User.findByIdAndUpdate(id, update, { new: true, runValidators: true })
+      .select("-password")
+      .lean();
+    if (!user) return res.status(404).json({ error: "User not found" });
+    res.json(mapUser(user));
+  })
+);
+
+// Delete a customer/user (admin)
+app.delete(
+  "/api/admin/users/:id",
+  adminRequired,
+  wrap(async (req: AuthedRequest, res) => {
+    const { id } = req.params;
+    if (!isOid(id)) return res.status(400).json({ error: "Invalid user id." });
+    if (id === req.auth!.id) {
+      return res.status(400).json({ error: "You cannot delete your own account here." });
+    }
+    const deleted = await User.findByIdAndDelete(id).lean();
+    if (!deleted) return res.status(404).json({ error: "User not found" });
+    res.json({ ok: true, id });
   })
 );
 
@@ -511,6 +640,9 @@ app.get(
   "/api/reviews",
   wrap(async (req, res) => {
     const { productId } = req.query as { productId?: string };
+    // A non-ObjectId productId (e.g. a slug) would throw a cast error — treat it
+    // as "no matching reviews" rather than crashing the endpoint.
+    if (productId && !OID.test(productId)) return res.json([]);
     const query = productId ? { product: productId } : {};
     const reviews = await Review.find(query).sort({ createdAt: -1 }).lean();
     res.json(reviews.map(mapReview));

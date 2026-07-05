@@ -25,12 +25,13 @@ export const isApiEnabled = Boolean(BASE);
 /**
  * Fetch JSON from the API. On any failure (no BASE, network error, non-OK
  * response) the provided empty `fallback` is returned — never dummy content.
- * `revalidate` lets Next cache the response (ISR) so SSG/build stays fast.
+ * Uses `no-store` so admin catalog edits (price, category, flags…) reflect on
+ * the storefront immediately instead of being served stale from the ISR cache.
  */
 async function apiGet<T>(path: string, fallback: T): Promise<T> {
   if (!BASE) return fallback;
   try {
-    const res = await fetch(`${BASE}${path}`, { next: { revalidate: 60 } });
+    const res = await fetch(`${BASE}${path}`, { cache: "no-store" });
     if (!res.ok) return fallback;
     return (await res.json()) as T;
   } catch {
@@ -42,7 +43,7 @@ async function apiGet<T>(path: string, fallback: T): Promise<T> {
 async function apiGetOne<T>(path: string): Promise<T | undefined> {
   if (!BASE) return undefined;
   try {
-    const res = await fetch(`${BASE}${path}`, { next: { revalidate: 60 } });
+    const res = await fetch(`${BASE}${path}`, { cache: "no-store" });
     if (!res.ok) return undefined;
     return (await res.json()) as T;
   } catch {

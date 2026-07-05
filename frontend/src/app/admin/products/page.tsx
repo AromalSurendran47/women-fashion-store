@@ -17,6 +17,8 @@ import {
 import { formatPrice } from "@/lib/utils";
 import { useAttributes } from "@/hooks/use-catalog";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/store/toast-store";
+import { confirm } from "@/store/confirm-store";
 import type { Product, Category } from "@/types";
 
 export default function AdminProductsPage() {
@@ -269,21 +271,29 @@ function ProductsManager() {
     setProducts((list) =>
       editing ? list.map((p) => (p.id === saved.id ? saved : p)) : [saved, ...list]
     );
+    toast.success(editing ? `${saved.name} updated.` : `${saved.name} created.`);
     setEditorOpen(false);
     setEditing(null);
   };
 
   const remove = async (p: Product) => {
     if (!token) return;
-    if (!window.confirm(`Delete "${p.name}"? This cannot be undone.`)) return;
+    const ok = await confirm({
+      title: "Delete product",
+      message: `Delete "${p.name}"? This cannot be undone.`,
+      confirmText: "Delete",
+      destructive: true,
+    });
+    if (!ok) return;
     setDeletingId(p.id);
     const res = await apiDeleteProduct(token, p.id);
     setDeletingId(null);
     if (!res.ok) {
-      alert(res.error);
+      toast.error(res.error);
       return;
     }
     setProducts((list) => list.filter((x) => x.id !== p.id));
+    toast.success(`${p.name} deleted.`);
   };
 
   return (

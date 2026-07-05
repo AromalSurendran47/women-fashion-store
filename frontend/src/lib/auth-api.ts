@@ -150,6 +150,58 @@ export function apiDeleteProduct(token: string, id: string) {
   return sendAuthed<{ ok: true; id: string }>(`/products/${id}`, "DELETE", token);
 }
 
+/* --------------------------- Admin: customer CRUD -------------------------- */
+
+/** Shape the admin customer form sends to the backend. */
+export interface CustomerInput {
+  name: string;
+  email: string;
+  phone?: string;
+  role?: AuthUser["role"];
+  password?: string;
+}
+
+/** A page of customers plus pagination metadata. */
+export interface UsersPage {
+  users: AuthUser[];
+  total: number;
+  page: number;
+  pages: number;
+  limit: number;
+}
+
+const EMPTY_PAGE: UsersPage = { users: [], total: 0, page: 1, pages: 1, limit: 10 };
+
+/** Fetch a paginated, optionally-searched page of customers (admin). */
+export function apiGetUsersPage(
+  token: string,
+  opts: { page?: number; limit?: number; q?: string } = {}
+) {
+  const params = new URLSearchParams();
+  params.set("page", String(opts.page ?? 1));
+  params.set("limit", String(opts.limit ?? 10));
+  if (opts.q?.trim()) params.set("q", opts.q.trim());
+  return apiGetAuthed<UsersPage>(`/admin/users?${params.toString()}`, token, {
+    ...EMPTY_PAGE,
+    limit: opts.limit ?? 10,
+  });
+}
+
+/** Create a customer/user (admin). */
+export function apiCreateUser(token: string, input: CustomerInput) {
+  return sendAuthed<AuthUser>("/admin/users", "POST", token, input);
+}
+
+/** Update a customer/user by id (admin). */
+export function apiUpdateUser(token: string, id: string, input: Partial<CustomerInput>) {
+  return sendAuthed<AuthUser>(`/admin/users/${id}`, "PUT", token, input);
+}
+
+/** Delete a customer/user by id (admin). */
+export function apiDeleteUser(token: string, id: string) {
+  return sendAuthed<{ ok: true; id: string }>(`/admin/users/${id}`, "DELETE", token);
+}
+
 /** Upload an image file to S3 via the backend (admin). Returns the public URL. */
 export async function apiUploadImage(
   token: string,

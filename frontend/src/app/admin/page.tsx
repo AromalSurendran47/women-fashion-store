@@ -85,6 +85,12 @@ function AdminDashboard() {
             <Boxes size={15} /> Manage Products
           </Link>
           <Link
+            href="/admin/customers"
+            className="flex items-center gap-2 rounded-full border border-line px-4 py-2 text-sm hover:border-ink"
+          >
+            <Users size={15} /> Manage Customers
+          </Link>
+          <Link
             href="/"
             className="flex items-center gap-2 rounded-full border border-line px-4 py-2 text-sm hover:border-ink"
           >
@@ -150,7 +156,12 @@ function AdminDashboard() {
 
             {/* Customers */}
             <section>
-              <h2 className="mb-4 text-lg font-medium">Customers ({users.length})</h2>
+              <div className="mb-4 flex items-center justify-between">
+                <h2 className="text-lg font-medium">Customers ({users.length})</h2>
+                <Link href="/admin/customers" className="text-sm underline hover:text-accent-dark">
+                  Manage all
+                </Link>
+              </div>
               <div className="flex flex-col divide-y divide-line rounded-2xl border border-line">
                 {users.slice(0, 8).map((u) => (
                   <div key={u.id} className="flex items-center gap-3 px-4 py-3">
