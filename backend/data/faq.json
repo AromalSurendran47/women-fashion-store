@@ -1,0 +1,107 @@
+[
+  {
+    "_id": "6a48f9798a6ebda22ab49b46",
+    "question": "How do I find my correct size?",
+    "answer": "Every product page has a detailed size chart with measurements in inches and centimetres. If you're between sizes, we recommend sizing up for a relaxed fit.",
+    "category": "Sizing",
+    "order": 0
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49b47",
+    "question": "What is your return policy?",
+    "answer": "We offer easy 7-day returns and exchanges on unworn items with original tags. Refunds are processed to the original payment method within 5–7 business days.",
+    "category": "Returns",
+    "order": 1
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49b48",
+    "question": "How long does delivery take?",
+    "answer": "Standard delivery takes 4–6 business days, while express delivery arrives in 2–3 days. Metro cities are usually faster.",
+    "category": "Shipping",
+    "order": 2
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49b49",
+    "question": "Do you offer free shipping?",
+    "answer": "Yes! Orders above ₹1,499 ship free. A flat ₹99 applies to orders below that.",
+    "category": "Shipping",
+    "order": 3
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49b4a",
+    "question": "Which payment methods do you accept?",
+    "answer": "We accept UPI, all major credit and debit cards, net banking and Cash on Delivery, all secured via Razorpay.",
+    "category": "Payments",
+    "order": 4
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49b4b",
+    "question": "Is Cash on Delivery available?",
+    "answer": "COD is available on orders up to ₹5,000 across most serviceable pincodes.",
+    "category": "Payments",
+    "order": 5
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49b4c",
+    "question": "How can I track my order?",
+    "answer": "Once shipped, you'll receive a tracking link by SMS and email. You can also track it under Profile → Order History.",
+    "category": "Orders",
+    "order": 6
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49b4d",
+    "question": "Can I cancel or modify my order?",
+    "answer": "Orders can be cancelled or modified within 12 hours of placing them, as long as they haven't been packed.",
+    "category": "Orders",
+    "order": 7
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49b4e",
+    "question": "Are the product colours accurate?",
+    "answer": "We photograph in natural light for accuracy, but slight variations can occur due to screen settings.",
+    "category": "Products",
+    "order": 8
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49b4f",
+    "question": "How should I care for my garments?",
+    "answer": "Care instructions are listed on each product page. In general, gentle cold washes and shade drying keep colours vibrant.",
+    "category": "Products",
+    "order": 9
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49b50",
+    "question": "Do you restock sold-out items?",
+    "answer": "Popular styles are restocked regularly. Tap 'Notify Me' on the product page to get an alert.",
+    "category": "Products",
+    "order": 10
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49b51",
+    "question": "Do you ship internationally?",
+    "answer": "Currently we ship across India. International shipping is coming soon — join our newsletter for updates.",
+    "category": "Shipping",
+    "order": 11
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49b52",
+    "question": "How do I apply a coupon code?",
+    "answer": "Enter your code in the 'Apply Coupon' box at checkout and the discount will reflect in your order summary.",
+    "category": "Payments",
+    "order": 12
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49b53",
+    "question": "Is my payment information secure?",
+    "answer": "Absolutely. We never store card details — all transactions are encrypted and processed through Razorpay.",
+    "category": "Payments",
+    "order": 13
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49b54",
+    "question": "How do I contact customer support?",
+    "answer": "Reach us on WhatsApp, email support@sruvalle.in, or call us between 10am–7pm, Monday to Saturday.",
+    "category": "General",
+    "order": 14
+  }
+]

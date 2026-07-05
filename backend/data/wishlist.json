@@ -1,0 +1,236 @@
+[
+  {
+    "_id": "6a48f9798a6ebda22ab49ace",
+    "user": "6a48f9798a6ebda22ab499c2",
+    "products": [
+      "6a48f9798a6ebda22ab49965",
+      "6a48f9798a6ebda22ab4999e",
+      "6a48f9798a6ebda22ab49990"
+    ],
+    "createdAt": "2026-01-15T04:05:26.873Z",
+    "updatedAt": "2026-07-04T12:15:53.406Z"
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49acf",
+    "user": "6a48f9798a6ebda22ab499c3",
+    "products": [
+      "6a48f9798a6ebda22ab499be",
+      "6a48f9798a6ebda22ab4996d",
+      "6a48f9798a6ebda22ab499a3"
+    ],
+    "createdAt": "2026-02-13T11:09:57.612Z",
+    "updatedAt": "2026-07-04T12:15:53.406Z"
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49ad0",
+    "user": "6a48f9798a6ebda22ab499c4",
+    "products": [
+      "6a48f9798a6ebda22ab499b1"
+    ],
+    "createdAt": "2025-09-28T11:01:09.480Z",
+    "updatedAt": "2026-07-04T12:15:53.406Z"
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49ad1",
+    "user": "6a48f9798a6ebda22ab499c5",
+    "products": [
+      "6a48f9798a6ebda22ab499a2",
+      "6a48f9798a6ebda22ab499bb",
+      "6a48f9798a6ebda22ab49995",
+      "6a48f9798a6ebda22ab499ab",
+      "6a48f9798a6ebda22ab49988",
+      "6a48f9798a6ebda22ab49982",
+      "6a48f9798a6ebda22ab499b2",
+      "6a48f9798a6ebda22ab4995e"
+    ],
+    "createdAt": "2025-12-28T06:46:54.578Z",
+    "updatedAt": "2026-07-04T12:15:53.406Z"
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49ad2",
+    "user": "6a48f9798a6ebda22ab499c6",
+    "products": [
+      "6a48f9798a6ebda22ab499b8"
+    ],
+    "createdAt": "2026-01-28T03:49:08.539Z",
+    "updatedAt": "2026-07-04T12:15:53.406Z"
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49ad3",
+    "user": "6a48f9798a6ebda22ab499c7",
+    "products": [
+      "6a48f9798a6ebda22ab499b9",
+      "6a48f9798a6ebda22ab49991",
+      "6a48f9798a6ebda22ab4996b",
+      "6a48f9798a6ebda22ab499be",
+      "6a48f9798a6ebda22ab49964"
+    ],
+    "createdAt": "2026-05-21T23:19:28.275Z",
+    "updatedAt": "2026-07-04T12:15:53.406Z"
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49ad4",
+    "user": "6a48f9798a6ebda22ab499c8",
+    "products": [
+      "6a48f9798a6ebda22ab4997c",
+      "6a48f9798a6ebda22ab4995d",
+      "6a48f9798a6ebda22ab49981",
+      "6a48f9798a6ebda22ab49968",
+      "6a48f9798a6ebda22ab499af",
+      "6a48f9798a6ebda22ab49983",
+      "6a48f9798a6ebda22ab4997a"
+    ],
+    "createdAt": "2026-06-02T23:02:52.121Z",
+    "updatedAt": "2026-07-04T12:15:53.406Z"
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49ad5",
+    "user": "6a48f9798a6ebda22ab499c9",
+    "products": [
+      "6a48f9798a6ebda22ab499bb",
+      "6a48f9798a6ebda22ab49966",
+      "6a48f9798a6ebda22ab499b4",
+      "6a48f9798a6ebda22ab4999d",
+      "6a48f9798a6ebda22ab49960",
+      "6a48f9798a6ebda22ab499b9",
+      "6a48f9798a6ebda22ab499a2",
+      "6a48f9798a6ebda22ab4998c"
+    ],
+    "createdAt": "2025-08-13T19:42:38.523Z",
+    "updatedAt": "2026-07-04T12:15:53.406Z"
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49ad6",
+    "user": "6a48f9798a6ebda22ab499ca",
+    "products": [
+      "6a48f9798a6ebda22ab499b6",
+      "6a48f9798a6ebda22ab4999c",
+      "6a48f9798a6ebda22ab49969",
+      "6a48f9798a6ebda22ab49968",
+      "6a48f9798a6ebda22ab49998",
+      "6a48f9798a6ebda22ab499b1",
+      "6a48f9798a6ebda22ab4998c",
+      "6a48f9798a6ebda22ab4999f"
+    ],
+    "createdAt": "2026-02-08T10:10:44.724Z",
+    "updatedAt": "2026-07-04T12:15:53.406Z"
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49ad7",
+    "user": "6a48f9798a6ebda22ab499cb",
+    "products": [
+      "6a48f9798a6ebda22ab499a4",
+      "6a48f9798a6ebda22ab499b4",
+      "6a48f9798a6ebda22ab4999a",
+      "6a48f9798a6ebda22ab499bf",
+      "6a48f9798a6ebda22ab499ba",
+      "6a48f9798a6ebda22ab499ae",
+      "6a48f9798a6ebda22ab4998a",
+      "6a48f9798a6ebda22ab499ad"
+    ],
+    "createdAt": "2025-10-13T17:15:47.550Z",
+    "updatedAt": "2026-07-04T12:15:53.406Z"
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49ad8",
+    "user": "6a48f9798a6ebda22ab499cc",
+    "products": [
+      "6a48f9798a6ebda22ab499b4",
+      "6a48f9798a6ebda22ab49970",
+      "6a48f9798a6ebda22ab49975",
+      "6a48f9798a6ebda22ab4997c",
+      "6a48f9798a6ebda22ab49976",
+      "6a48f9798a6ebda22ab49992",
+      "6a48f9798a6ebda22ab4999b"
+    ],
+    "createdAt": "2026-02-09T09:11:36.688Z",
+    "updatedAt": "2026-07-04T12:15:53.406Z"
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49ad9",
+    "user": "6a48f9798a6ebda22ab499cd",
+    "products": [
+      "6a48f9798a6ebda22ab49987",
+      "6a48f9798a6ebda22ab49975",
+      "6a48f9798a6ebda22ab49972",
+      "6a48f9798a6ebda22ab49974",
+      "6a48f9798a6ebda22ab499b8",
+      "6a48f9798a6ebda22ab4999b",
+      "6a48f9798a6ebda22ab499a3",
+      "6a48f9798a6ebda22ab4996e"
+    ],
+    "createdAt": "2026-02-17T12:55:32.877Z",
+    "updatedAt": "2026-07-04T12:15:53.406Z"
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49ada",
+    "user": "6a48f9798a6ebda22ab499ce",
+    "products": [
+      "6a48f9798a6ebda22ab49987",
+      "6a48f9798a6ebda22ab49999"
+    ],
+    "createdAt": "2025-12-26T23:41:06.936Z",
+    "updatedAt": "2026-07-04T12:15:53.406Z"
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49adb",
+    "user": "6a48f9798a6ebda22ab499cf",
+    "products": [
+      "6a48f9798a6ebda22ab499b1",
+      "6a48f9798a6ebda22ab49986",
+      "6a48f9798a6ebda22ab49983"
+    ],
+    "createdAt": "2025-12-07T04:54:39.137Z",
+    "updatedAt": "2026-07-04T12:15:53.406Z"
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49adc",
+    "user": "6a48f9798a6ebda22ab499d0",
+    "products": [
+      "6a48f9798a6ebda22ab499b3",
+      "6a48f9798a6ebda22ab49967",
+      "6a48f9798a6ebda22ab499a0",
+      "6a48f9798a6ebda22ab499a1",
+      "6a48f9798a6ebda22ab4997e",
+      "6a48f9798a6ebda22ab49985"
+    ],
+    "createdAt": "2026-06-27T04:39:03.658Z",
+    "updatedAt": "2026-07-04T12:15:53.406Z"
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49add",
+    "user": "6a48f9798a6ebda22ab499d1",
+    "products": [
+      "6a48f9798a6ebda22ab4997e",
+      "6a48f9798a6ebda22ab499b0"
+    ],
+    "createdAt": "2026-04-27T02:54:28.113Z",
+    "updatedAt": "2026-07-04T12:15:53.406Z"
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49ade",
+    "user": "6a48f9798a6ebda22ab499d2",
+    "products": [
+      "6a48f9798a6ebda22ab49997",
+      "6a48f9798a6ebda22ab49978",
+      "6a48f9798a6ebda22ab4995d",
+      "6a48f9798a6ebda22ab49985"
+    ],
+    "createdAt": "2026-02-13T04:25:23.475Z",
+    "updatedAt": "2026-07-04T12:15:53.406Z"
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49adf",
+    "user": "6a48f9798a6ebda22ab499d3",
+    "products": [
+      "6a48f9798a6ebda22ab4998f",
+      "6a48f9798a6ebda22ab49999",
+      "6a48f9798a6ebda22ab4999b",
+      "6a48f9798a6ebda22ab49988",
+      "6a48f9798a6ebda22ab49989",
+      "6a48f9798a6ebda22ab499af"
+    ],
+    "createdAt": "2026-01-02T21:45:54.365Z",
+    "updatedAt": "2026-07-04T12:15:53.406Z"
+  }
+]

@@ -1,0 +1,15 @@
+/** Barrel export for all Mongoose models. */
+export { default as User } from "./User.js";
+export { default as Category } from "./Category.js";
+export { default as Product } from "./Product.js";
+export { default as Review } from "./Review.js";
+export { default as Wishlist } from "./Wishlist.js";
+export { default as Cart } from "./Cart.js";
+export { default as Coupon } from "./Coupon.js";
+export { default as Order } from "./Order.js";
+export { default as Banner } from "./Banner.js";
+export { default as Testimonial } from "./Testimonial.js";
+export { default as Faq } from "./Faq.js";
+export { default as Newsletter } from "./Newsletter.js";
+export { default as Blog } from "./Blog.js";
+export { default as Settings } from "./Settings.js";

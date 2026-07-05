@@ -1,0 +1,62 @@
+[
+  {
+    "_id": "6a48f9798a6ebda22ab49b40",
+    "name": "Ananya Iyer",
+    "avatar": "https://i.pravatar.cc/150?img=25",
+    "location": "Bengaluru",
+    "rating": 5,
+    "message": "Sruvalle has completely changed my wardrobe. The fabrics are premium and the fits are so flattering. My third order this month!",
+    "active": true,
+    "createdAt": "2025-09-14T07:49:03.258Z"
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49b41",
+    "name": "Priya Menon",
+    "avatar": "https://i.pravatar.cc/150?img=26",
+    "location": "Kochi",
+    "rating": 5,
+    "message": "I was nervous about buying ethnic wear online, but the quality blew me away. It looks like something from a boutique.",
+    "active": true,
+    "createdAt": "2025-09-28T04:16:24.365Z"
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49b42",
+    "name": "Sneha Kapoor",
+    "avatar": "https://i.pravatar.cc/150?img=27",
+    "location": "Mumbai",
+    "rating": 5,
+    "message": "Fast delivery, gorgeous packaging and clothes that actually match the photos. This is now my go-to store.",
+    "active": true,
+    "createdAt": "2026-05-05T05:57:55.109Z"
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49b43",
+    "name": "Riya Sharma",
+    "avatar": "https://i.pravatar.cc/150?img=28",
+    "location": "Delhi",
+    "rating": 5,
+    "message": "The co-ord sets are worth every rupee. Comfortable, chic and I get compliments every single time.",
+    "active": true,
+    "createdAt": "2026-04-07T17:39:57.507Z"
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49b44",
+    "name": "Meera Nair",
+    "avatar": "https://i.pravatar.cc/150?img=29",
+    "location": "Chennai",
+    "rating": 5,
+    "message": "Their customer support is lovely and returns were hassle-free. Rare to find a brand that gets it all right.",
+    "active": true,
+    "createdAt": "2025-08-15T16:40:46.711Z"
+  },
+  {
+    "_id": "6a48f9798a6ebda22ab49b45",
+    "name": "Kavya Reddy",
+    "avatar": "https://i.pravatar.cc/150?img=30",
+    "location": "Hyderabad",
+    "rating": 5,
+    "message": "Finally a store that makes workwear that's both comfortable and stylish. The blazers are chef's kiss.",
+    "active": true,
+    "createdAt": "2026-05-21T07:56:23.840Z"
+  }
+]

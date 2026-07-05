@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-playfair: "Playfair Display", serif;
+    --font-montserrat: "Montserrat", sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-ink font-body antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-heading;
+  }
+
+  ::selection {
+    @apply bg-ink text-background;
+  }
+}
+
+@layer components {
+  .container-wide {
+    @apply mx-auto w-full max-w-container px-4 sm:px-6 lg:px-10;
+  }
+
+  .btn-base {
+    @apply inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium
+      tracking-wide transition-all duration-300 disabled:pointer-events-none disabled:opacity-50;
+  }
+
+  .link-underline {
+    @apply relative after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-0
+      after:bg-current after:transition-all after:duration-300 hover:after:w-full;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Reusable image-zoom-on-hover wrapper */
+.zoom-img {
+  @apply transition-transform duration-700 ease-out will-change-transform;
+}
+.group:hover .zoom-img {
+  transform: scale(1.06);
+}

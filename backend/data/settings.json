@@ -1,0 +1,72 @@
+[
+  {
+    "_id": "6a48f9798a6ebda22ab49b91",
+    "storeName": "Sruvalle",
+    "tagline": "Effortless fashion, thoughtfully made.",
+    "logo": "https://picsum.photos/seed/aura-logo/240/80",
+    "favicon": "https://picsum.photos/seed/aura-fav/64/64",
+    "currency": "INR",
+    "contact": {
+      "email": "support@sruvalle.in",
+      "phone": "+91 98765 43210",
+      "whatsapp": "+91 98765 43210",
+      "address": "Sruvalle Studio, 4th Floor, Prestige Tower, MG Road, Bengaluru 560001"
+    },
+    "social": {
+      "instagram": "https://instagram.com/sruvalle",
+      "facebook": "https://facebook.com/sruvalle",
+      "twitter": "https://twitter.com/sruvalle",
+      "pinterest": "https://pinterest.com/sruvalle",
+      "youtube": "https://youtube.com/@sruvalle"
+    },
+    "shipping": {
+      "freeShippingThreshold": 1499,
+      "standardRate": 99,
+      "expressRate": 199,
+      "estimatedDays": "4–6 business days"
+    },
+    "returnPolicy": "Easy 7-day returns and exchanges on unworn items with original tags. Refunds are processed within 5–7 business days to your original payment method.",
+    "about": "Sruvalle is a premium women's fashion label crafting contemporary and ethnic wear for the modern Indian woman. We design in small batches, obsess over fabric and fit, and believe great style should feel effortless.",
+    "footerLinks": [
+      {
+        "label": "About Us",
+        "url": "/about"
+      },
+      {
+        "label": "Contact",
+        "url": "/contact"
+      },
+      {
+        "label": "Shipping Policy",
+        "url": "/shipping"
+      },
+      {
+        "label": "Returns & Exchanges",
+        "url": "/returns"
+      },
+      {
+        "label": "Privacy Policy",
+        "url": "/privacy"
+      },
+      {
+        "label": "Terms of Service",
+        "url": "/terms"
+      },
+      {
+        "label": "Track Order",
+        "url": "/track"
+      },
+      {
+        "label": "FAQs",
+        "url": "/faq"
+      }
+    ],
+    "theme": {
+      "primary": "#7C2D45",
+      "secondary": "#D8C3A5",
+      "accent": "#E8B4C0",
+      "fontHeading": "Playfair Display",
+      "fontBody": "Inter"
+    }
+  }
+]
