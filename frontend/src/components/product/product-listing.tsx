@@ -32,7 +32,8 @@ export function ProductListing({
       if (filters.categories.length && !filters.categories.includes(p.category)) return false;
       if (filters.sizes.length && !filters.sizes.some((s) => p.sizes.includes(s as never)))
         return false;
-      if (filters.colors.length && !filters.colors.some((c) => p.colors.some((pc) => pc.name === c)))
+      // Colour: show only products that have one of the selected colours.
+      if (filters.colors.length && !p.colors.some((pc) => filters.colors.includes(pc.name)))
         return false;
       if (filters.fabrics.length && !filters.fabrics.includes(p.fabric)) return false;
       if (p.discountPrice > filters.maxPrice) return false;
@@ -52,11 +53,16 @@ export function ProductListing({
         sorted.sort((a, b) => b.rating - a.rating);
         break;
       case "newest":
-        sorted.sort((a, b) => Number(b.newArrival) - Number(a.newArrival));
+        sorted.sort((a, b) => {
+          const ta = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+          const tb = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+          return tb - ta;
+        });
         break;
       default:
         sorted.sort((a, b) => Number(b.featured) - Number(a.featured));
     }
+
     return sorted;
   }, [products, filters, sort]);
 

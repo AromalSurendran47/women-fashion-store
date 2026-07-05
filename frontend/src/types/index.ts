@@ -16,6 +16,15 @@ export interface ColorOption {
   hex: string;
 }
 
+/** Controlled option lists for product attributes, served from the backend. */
+export interface Attributes {
+  fabrics: string[];
+  fits: string[];
+  occasions: string[];
+  sizes: string[];
+  colors: ColorOption[];
+}
+
 export interface Category {
   id: string;
   name: string;
@@ -64,6 +73,10 @@ export interface Product {
   images: string[];
   thumbnail: string;
   variants: ProductVariant[];
+  /** ISO timestamp the product was created (from the backend). */
+  createdAt?: string | null;
+  /** True only when the product was created today — drives the "New" badge. */
+  isNew?: boolean;
 }
 
 export interface Review {

@@ -8,7 +8,9 @@
       "Bash(curl -s -m 20 \"http://localhost:3000/blog/the-saree-reimagined-modern-drapes-for-the-everyday-woman\" -o /tmp/blogdown.html -w \"HTTP %{http_code}\\\\n\")",
       "Read(//tmp/**)",
       "Bash(curl -s -m 20 \"http://localhost:3000/blog\" -o /tmp/bloglistdown.html -w \"HTTP %{http_code}\\\\n\")",
-      "Bash(cd \"d:/aromal/women fashion store\" && echo \"=== context around ₹ tags ===\" && grep -o '.\\\\{25\\\\}₹[0-9][0-9,]*.\\\\{10\\\\}' /tmp/home3.html | head; echo \"=== is 'Trending Products' near product cards or standalone? ===\" && grep -o 'Trending Products.\\\\{200\\\\}' /tmp/home3.html | head -c 400)"
+      "Bash(cd \"d:/aromal/women fashion store\" && echo \"=== context around ₹ tags ===\" && grep -o '.\\\\{25\\\\}₹[0-9][0-9,]*.\\\\{10\\\\}' /tmp/home3.html | head; echo \"=== is 'Trending Products' near product cards or standalone? ===\" && grep -o 'Trending Products.\\\\{200\\\\}' /tmp/home3.html | head -c 400)",
+      "Bash(curl -s -m 15 \"http://localhost:3000/admin/products\" -o /dev/null -w \"admin/products HTTP %{http_code}\\\\n\")",
+      "Bash(node --input-type=module -e ' *)"
     ]
   }
 }

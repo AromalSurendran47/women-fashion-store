@@ -8,7 +8,9 @@ import type {
   Faq,
   Coupon,
   Order,
+  Attributes,
 } from "@/types";
+import { FABRICS, FITS, OCCASIONS, SIZES, COLORS } from "@/data/_pools";
 
 // All application data is served exclusively by the backend API. There is no
 // bundled dummy-data fallback: if NEXT_PUBLIC_API_URL is unset or the API is
@@ -139,6 +141,21 @@ export async function getTestimonials(): Promise<Testimonial[]> {
 
 export function getFaqs(): Promise<Faq[]> {
   return apiGet<Faq[]>("/faqs", []);
+}
+
+/* ------------------------------ Attributes ------------------------------ */
+// Controlled option lists (fabric/fit/occasion/size/colour) from the backend.
+// Falls back to the bundled lists so the UI still works if the API is down.
+export const ATTRIBUTES_FALLBACK: Attributes = {
+  fabrics: [...FABRICS],
+  fits: [...FITS],
+  occasions: [...OCCASIONS],
+  sizes: [...SIZES],
+  colors: [...COLORS],
+};
+
+export function getAttributes(): Promise<Attributes> {
+  return apiGet<Attributes>("/attributes", ATTRIBUTES_FALLBACK);
 }
 
 /* -------------------------------- Coupons ------------------------------- */

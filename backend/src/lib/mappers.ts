@@ -29,6 +29,9 @@ function categoryFields(category: any): { slug: string; name: string } {
 
 export function mapProduct(p: any) {
   const cat = categoryFields(p.category);
+  // "New" badge shows only for products created today (server-local date).
+  const created = p.createdAt ? new Date(p.createdAt) : null;
+  const isNew = created ? created.toDateString() === new Date().toDateString() : false;
   return {
     id: String(p._id),
     name: p.name,
@@ -64,6 +67,8 @@ export function mapProduct(p: any) {
       size: v.size,
       stock: v.stock,
     })),
+    createdAt: p.createdAt ?? null,
+    isNew,
   };
 }
 
@@ -161,7 +166,9 @@ export function mapOrder(o: any) {
   return {
     id: String(o._id),
     orderNumber: o.orderNumber,
+    customerName: o.customerName ?? "",
     date: o.createdAt ?? o.date,
+    createdAt: o.createdAt ?? o.date,
     items: (o.products ?? []).map((p: any) => ({
       productId: String(p.product),
       name: p.name,

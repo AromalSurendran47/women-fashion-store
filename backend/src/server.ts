@@ -1,7 +1,9 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
+import multer from "multer";
 import { connectDB } from "./lib/db.js";
+import { uploadImageToBlob } from "./lib/azure-blob.js";
 import {
   User,
   Category,
@@ -13,6 +15,7 @@ import {
   Testimonial,
   Faq,
   Banner,
+  Attribute,
 } from "./models/index.js";
 import {
   mapProduct,
@@ -41,6 +44,29 @@ const PORT = Number(process.env.PORT) || 5000;
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// In-memory multipart parsing for image uploads (buffer streamed straight to S3).
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB
+  fileFilter: (_req, file, cb) => {
+    if (file.mimetype.startsWith("image/")) cb(null, true);
+    else cb(new Error("Only image files are allowed."));
+  },
+});
+
+/** Wrap multer so its errors return clean JSON instead of an HTML 500. */
+const uploadSingle =
+  (field: string) =>
+  (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    upload.single(field)(req, res, (err: unknown) => {
+      if (err) {
+        const message = err instanceof Error ? err.message : "Upload failed.";
+        return res.status(400).json({ error: message });
+      }
+      next();
+    });
+  };
 
 const wrap =
   (fn: (req: express.Request, res: express.Response) => Promise<unknown>) =>
@@ -197,6 +223,50 @@ app.get(
   })
 );
 
+// Upload an image to S3 (admin). Returns { url } of the stored object.
+app.post(
+  "/api/admin/upload",
+  adminRequired,
+  uploadSingle("file"),
+  wrap(async (req, res) => {
+    const file = (req as express.Request & { file?: Express.Multer.File }).file;
+    if (!file) return res.status(400).json({ error: "No file uploaded." });
+    try {
+      const url = await uploadImageToBlob({ buffer: file.buffer, mimetype: file.mimetype });
+      res.json({ url });
+    } catch (err: any) {
+      if (err?.status === 503) return res.status(503).json({ error: err.message });
+      // Surface the real storage error to the admin (this is an admin-only route).
+      console.error("Blob upload error:", err?.name, err?.message);
+      return res
+        .status(502)
+        .json({ error: `Upload failed: ${err?.message || err?.name || "unknown error"}` });
+    }
+  })
+);
+
+/* ---------------------------- Attributes ---------------------------- */
+// Controlled vocabulary for product options — consumed by the admin form and
+// the storefront filters. Grouped by type for easy frontend consumption.
+app.get(
+  "/api/attributes",
+  wrap(async (_req, res) => {
+    const items = (await Attribute.find({ active: true })
+      .sort({ type: 1, order: 1 })
+      .lean()) as any[];
+    const values = (t: string) => items.filter((i) => i.type === t).map((i) => i.value);
+    res.json({
+      fabrics: values("fabric"),
+      fits: values("fit"),
+      occasions: values("occasion"),
+      sizes: values("size"),
+      colors: items
+        .filter((i) => i.type === "color")
+        .map((i) => ({ name: i.value, hex: i.hex ?? "#CCCCCC" })),
+    });
+  })
+);
+
 /* ---------------------------- Categories ---------------------------- */
 app.get(
   "/api/categories",
@@ -235,7 +305,10 @@ app.get(
       if (cat) query.category = cat._id;
     }
 
-    const products = await Product.find(query).populate("category", "slug name").lean();
+    const products = await Product.find(query)
+      .sort({ createdAt: -1 }) // newest first
+      .populate("category", "slug name")
+      .lean();
     res.json(products.map(mapProduct));
   })
 );
@@ -264,6 +337,172 @@ app.get(
       .limit(8)
       .lean();
     res.json(related.map(mapProduct));
+  })
+);
+
+/* ---------------- Product admin CRUD (adminRequired) ---------------- */
+
+const OID = /^[a-f0-9]{24}$/i;
+
+const slugify = (s: string) =>
+  String(s)
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+
+async function resolveCategoryId(value: unknown): Promise<any | null> {
+  const raw = String(value ?? "").trim();
+  if (!raw) return null;
+  if (OID.test(raw)) {
+    const byId = (await Category.findById(raw).lean()) as any;
+    if (byId) return byId._id;
+  }
+  const bySlug = (await Category.findOne({ slug: raw }).lean()) as any;
+  return bySlug ? bySlug._id : null;
+}
+
+/** Build the set of product fields from a request body (create or update). */
+async function buildProductFields(body: any): Promise<Record<string, unknown>> {
+  const fields: Record<string, unknown> = {};
+  const set = (k: string, v: unknown) => {
+    if (v !== undefined) fields[k] = v;
+  };
+  const toArray = (v: unknown) =>
+    Array.isArray(v)
+      ? v.map((x) => String(x).trim()).filter(Boolean)
+      : typeof v === "string"
+      ? v.split(",").map((s) => s.trim()).filter(Boolean)
+      : undefined;
+
+  if (body.name !== undefined) fields.name = String(body.name).trim();
+  if (body.slug !== undefined) fields.slug = slugify(body.slug);
+
+  if (body.category !== undefined) {
+    const catId = await resolveCategoryId(body.category);
+    if (!catId) throw Object.assign(new Error("Invalid category."), { status: 400 });
+    fields.category = catId;
+  }
+
+  set("description", body.description !== undefined ? String(body.description) : undefined);
+  set("shortDescription", body.shortDescription);
+  set("brand", body.brand);
+  set("fabric", body.fabric);
+  set("material", body.material ?? body.fabric);
+  set("fit", body.fit);
+  set("occasion", body.occasion);
+  set("sku", body.sku ? String(body.sku).trim() : undefined);
+  set("thumbnail", body.thumbnail);
+
+  if (body.price !== undefined) fields.price = Number(body.price);
+  if (body.discountPrice !== undefined && body.discountPrice !== null && body.discountPrice !== "")
+    fields.discountPrice = Number(body.discountPrice);
+
+  const price = body.price !== undefined ? Number(body.price) : undefined;
+  const dp = fields.discountPrice as number | undefined;
+  if (price !== undefined && dp !== undefined && price > 0) {
+    fields.discountPercentage = Math.max(0, Math.round(((price - dp) / price) * 100));
+  } else if (body.discountPercentage !== undefined) {
+    fields.discountPercentage = Number(body.discountPercentage);
+  }
+
+  if (body.stock !== undefined) fields.stock = Number(body.stock);
+  set("sizes", toArray(body.sizes));
+  set("colors", toArray(body.colors));
+  set("images", toArray(body.images));
+
+  for (const flag of ["featured", "newArrival", "bestSeller", "trending"] as const) {
+    if (body[flag] !== undefined) fields[flag] = Boolean(body[flag]);
+  }
+
+  return fields;
+}
+
+/** Next sequential admin SKU: SRUVALLE-1001, SRUVALLE-1002, … */
+async function nextSku(): Promise<string> {
+  const rows = await Product.find({ sku: { $regex: /^SRUVALLE-\d+$/ } }, { sku: 1 }).lean();
+  let max = 1000; // first generated SKU is SRUVALLE-1001
+  for (const r of rows as any[]) {
+    const n = parseInt(String(r.sku).replace("SRUVALLE-", ""), 10);
+    if (Number.isFinite(n) && n > max) max = n;
+  }
+  return `SRUVALLE-${max + 1}`;
+}
+
+// Create
+app.post(
+  "/api/products",
+  adminRequired,
+  wrap(async (req, res) => {
+    const body = req.body ?? {};
+    if (!body.name || body.price === undefined || body.price === "" || !body.category) {
+      return res.status(400).json({ error: "Name, price and category are required." });
+    }
+    try {
+      const fields: any = await buildProductFields(body);
+      fields.slug = fields.slug || slugify(fields.name);
+      fields.thumbnail =
+        fields.thumbnail || (Array.isArray(fields.images) && fields.images[0]) || "";
+      if (!fields.thumbnail) {
+        return res.status(400).json({ error: "A thumbnail image URL is required." });
+      }
+      // SKU is always assigned by the server as the next sequential number.
+      fields.sku = await nextSku();
+      if (fields.description === undefined) fields.description = fields.name;
+
+      const clash = await Product.findOne({
+        $or: [{ slug: fields.slug }, { sku: fields.sku }],
+      }).lean();
+      if (clash) {
+        return res.status(409).json({ error: "A product with this slug or SKU already exists." });
+      }
+
+      const created = await Product.create(fields);
+      const populated = await Product.findById(created._id)
+        .populate("category", "slug name")
+        .lean();
+      res.status(201).json(mapProduct(populated));
+    } catch (err: any) {
+      if (err?.status === 400) return res.status(400).json({ error: err.message });
+      throw err;
+    }
+  })
+);
+
+// Update
+app.put(
+  "/api/products/:id",
+  adminRequired,
+  wrap(async (req, res) => {
+    const { id } = req.params;
+    if (!OID.test(id)) return res.status(400).json({ error: "Invalid product id." });
+    try {
+      const fields = await buildProductFields(req.body ?? {});
+      const updated = await Product.findByIdAndUpdate(id, fields, {
+        new: true,
+        runValidators: true,
+      })
+        .populate("category", "slug name")
+        .lean();
+      if (!updated) return res.status(404).json({ error: "Product not found" });
+      res.json(mapProduct(updated));
+    } catch (err: any) {
+      if (err?.status === 400) return res.status(400).json({ error: err.message });
+      throw err;
+    }
+  })
+);
+
+// Delete
+app.delete(
+  "/api/products/:id",
+  adminRequired,
+  wrap(async (req, res) => {
+    const { id } = req.params;
+    if (!OID.test(id)) return res.status(400).json({ error: "Invalid product id." });
+    const deleted = await Product.findByIdAndDelete(id).lean();
+    if (!deleted) return res.status(404).json({ error: "Product not found" });
+    res.json({ ok: true, id });
   })
 );
 

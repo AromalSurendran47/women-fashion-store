@@ -1,8 +1,7 @@
 "use client";
 
 import { X } from "lucide-react";
-import { useCategories } from "@/hooks/use-catalog";
-import { COLORS, FABRICS, SIZES } from "@/data/_pools";
+import { useCategories, useAttributes } from "@/hooks/use-catalog";
 import { cn } from "@/lib/utils";
 
 export interface Filters {
@@ -36,6 +35,8 @@ export function ProductFilters({
 }) {
   const set = (patch: Partial<Filters>) => onChange({ ...filters, ...patch });
   const { data: categories } = useCategories();
+  const { data: attributes } = useAttributes();
+  const { fabrics: FABRICS, sizes: SIZES, colors: COLORS } = attributes;
 
   return (
     <div className="flex flex-col gap-7">
@@ -103,7 +104,7 @@ export function ProductFilters({
       </FilterGroup>
 
       <FilterGroup title="Fabric">
-        {FABRICS.slice(0, 8).map((f) => (
+        {FABRICS.map((f) => (
           <label key={f} className="flex cursor-pointer items-center gap-2 text-sm text-muted hover:text-ink">
             <input
               type="checkbox"

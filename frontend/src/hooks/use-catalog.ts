@@ -1,8 +1,8 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { getProducts, getCategories, getFaqs } from "@/lib/api";
-import type { Product, Category, Faq } from "@/types";
+import { getProducts, getCategories, getFaqs, getAttributes, ATTRIBUTES_FALLBACK } from "@/lib/api";
+import type { Product, Category, Faq, Attributes } from "@/types";
 
 /**
  * Client-side data via React Query. Everything comes from the backend API —
@@ -42,6 +42,15 @@ export function useFaqs() {
     queryKey: ["faqs"],
     queryFn: () => getFaqs(),
     initialData: [],
+    initialDataUpdatedAt: 0,
+  });
+}
+
+export function useAttributes() {
+  return useQuery<Attributes>({
+    queryKey: ["attributes"],
+    queryFn: () => getAttributes(),
+    initialData: ATTRIBUTES_FALLBACK,
     initialDataUpdatedAt: 0,
   });
 }
