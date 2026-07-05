@@ -186,12 +186,6 @@ export function ProductInfo({ product }: { product: Product }) {
             <dd>{product.fit}</dd>
           </>
         )}
-        {product.occasion && (
-          <>
-            <dt className="text-muted">Occasion</dt>
-            <dd>{product.occasion}</dd>
-          </>
-        )}
       </dl>
     </div>
   );

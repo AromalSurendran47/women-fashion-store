@@ -39,11 +39,11 @@ type FormState = {
   brand: string;
   fabric: string;
   fit: string;
-  occasion: string;
   thumbnail: string;
   images: string;
   sizes: string;
   colors: string;
+  careInstructions: string;
   description: string;
   featured: boolean;
   newArrival: boolean;
@@ -62,11 +62,11 @@ const emptyForm: FormState = {
   brand: "",
   fabric: "",
   fit: "",
-  occasion: "",
   thumbnail: "",
   images: "",
   sizes: "",
   colors: "",
+  careInstructions: "",
   description: "",
   featured: false,
   newArrival: false,
@@ -86,11 +86,11 @@ function productToForm(p: Product): FormState {
     brand: p.brand ?? "",
     fabric: p.fabric ?? "",
     fit: p.fit ?? "",
-    occasion: p.occasion ?? "",
     thumbnail: p.thumbnail,
     images: (p.images ?? []).join(", "),
     sizes: (p.sizes ?? []).join(", "),
     colors: (p.colors ?? []).map((c) => c.name).join(", "),
+    careInstructions: (p.careInstructions ?? []).join("\n"),
     description: p.description ?? "",
     featured: !!p.featured,
     newArrival: !!p.newArrival,
@@ -112,12 +112,12 @@ function formToInput(f: FormState): ProductInput {
     brand: f.brand.trim() || undefined,
     fabric: f.fabric.trim() || undefined,
     fit: f.fit || undefined,
-    occasion: f.occasion || undefined,
     description: f.description.trim() || undefined,
     thumbnail: f.thumbnail.trim(),
     images: list(f.images),
     sizes: list(f.sizes),
     colors: list(f.colors),
+    careInstructions: f.careInstructions.split("\n").map((x) => x.trim()).filter(Boolean),
     featured: f.featured,
     newArrival: f.newArrival,
     bestSeller: f.bestSeller,
@@ -129,8 +129,7 @@ function formToInput(f: FormState): ProductInput {
 function ProductsManager() {
   const token = useAuthStore((s) => s.token);
   const { data: attributes } = useAttributes();
-  const { fabrics: FABRICS, fits: FITS, occasions: OCCASIONS, sizes: SIZES, colors: COLORS } =
-    attributes;
+  const { fabrics: FABRICS, fits: FITS, sizes: SIZES, colors: COLORS } = attributes;
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
@@ -203,6 +202,16 @@ function ProductsManager() {
       ? selectedSizes.filter((s) => s !== sz)
       : [...selectedSizes, sz];
     set("sizes", next.join(", "));
+  };
+
+  // Care instructions are stored newline-separated (they may contain commas);
+  // toggled from a fixed vocabulary of chips.
+  const selectedCare = form.careInstructions.split("\n").map((s) => s.trim()).filter(Boolean);
+  const toggleCare = (c: string) => {
+    const next = selectedCare.includes(c)
+      ? selectedCare.filter((x) => x !== c)
+      : [...selectedCare, c];
+    set("careInstructions", next.join("\n"));
   };
 
   // Colors are stored as a comma-separated string of names; toggle swatches.
@@ -463,28 +472,16 @@ function ProductsManager() {
                 </select>
               </Field>
 
-              <div className="grid grid-cols-2 gap-4">
-                <Field label="Fit">
-                  <select className={inputCls} value={form.fit} onChange={(e) => set("fit", e.target.value)}>
-                    <option value="">Select fit</option>
-                    {FITS.map((f) => (
-                      <option key={f} value={f}>
-                        {f}
-                      </option>
-                    ))}
-                  </select>
-                </Field>
-                <Field label="Occasion">
-                  <select className={inputCls} value={form.occasion} onChange={(e) => set("occasion", e.target.value)}>
-                    <option value="">Select occasion</option>
-                    {OCCASIONS.map((o) => (
-                      <option key={o} value={o}>
-                        {o}
-                      </option>
-                    ))}
-                  </select>
-                </Field>
-              </div>
+              <Field label="Fit">
+                <select className={inputCls} value={form.fit} onChange={(e) => set("fit", e.target.value)}>
+                  <option value="">Select fit</option>
+                  {FITS.map((f) => (
+                    <option key={f} value={f}>
+                      {f}
+                    </option>
+                  ))}
+                </select>
+              </Field>
 
               <Field label="SKU (auto-generated)">
                 <input
@@ -599,6 +596,26 @@ function ProductsManager() {
                 <textarea rows={4} className={`${inputCls} h-auto py-3`} value={form.description} onChange={(e) => set("description", e.target.value)} />
               </Field>
 
+              <Field label="Care instructions">
+                <div className="flex flex-wrap gap-2">
+                  {[...CARE_OPTIONS, ...selectedCare.filter((c) => !CARE_OPTIONS.includes(c))].map((c) => {
+                    const active = selectedCare.includes(c);
+                    return (
+                      <button
+                        type="button"
+                        key={c}
+                        onClick={() => toggleCare(c)}
+                        className={`rounded-full border px-3 py-1.5 text-sm transition ${
+                          active ? "border-ink bg-ink text-background" : "border-line hover:border-ink"
+                        }`}
+                      >
+                        {c}
+                      </button>
+                    );
+                  })}
+                </div>
+              </Field>
+
               <div className="flex flex-wrap gap-4 pt-1">
                 {(["featured", "newArrival", "bestSeller", "trending", "flashSale"] as const).map((flag) => (
                   <label key={flag} className="flex cursor-pointer items-center gap-2 text-sm">
@@ -637,6 +654,21 @@ function ProductsManager() {
     </div>
   );
 }
+
+const CARE_OPTIONS = [
+  "Machine wash cold",
+  "Hand wash only",
+  "Gentle cycle",
+  "Wash with similar colours",
+  "Do not bleach",
+  "Do not wring",
+  "Do not soak",
+  "Line dry in shade",
+  "Tumble dry low",
+  "Iron on low heat",
+  "Do not iron print",
+  "Dry clean only",
+];
 
 const FLAG_LABELS: Record<
   "featured" | "newArrival" | "bestSeller" | "trending" | "flashSale",

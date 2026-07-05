@@ -539,6 +539,7 @@ async function buildProductFields(body: any): Promise<Record<string, unknown>> {
   set("sizes", toArray(body.sizes));
   set("colors", toArray(body.colors));
   set("images", toArray(body.images));
+  set("careInstructions", toArray(body.careInstructions));
 
   for (const flag of ["featured", "newArrival", "bestSeller", "trending", "flashSale"] as const) {
     if (body[flag] !== undefined) fields[flag] = Boolean(body[flag]);

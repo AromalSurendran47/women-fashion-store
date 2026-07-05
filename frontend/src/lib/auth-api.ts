@@ -18,6 +18,7 @@ export interface ProductInput {
   images?: string[];
   sizes?: string[];
   colors?: string[];
+  careInstructions?: string[];
   featured?: boolean;
   newArrival?: boolean;
   bestSeller?: boolean;

@@ -57,7 +57,6 @@ export function ProductTabs({ product, reviews }: { product: Product; reviews: R
               ["Material", product.material],
               ["Fabric", product.fabric],
               ["Fit", product.fit],
-              ["Occasion", product.occasion],
               ["Category", product.categoryName],
               ["Available sizes", product.sizes.join(", ")],
               ["SKU", product.sku],
