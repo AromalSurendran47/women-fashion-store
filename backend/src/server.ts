@@ -194,6 +194,136 @@ app.delete(
   })
 );
 
+/* ----------------------------- Addresses ---------------------------- */
+
+const mapAddress = (a: any) => ({
+  id: String(a._id),
+  label: a.label ?? "Home",
+  fullName: a.fullName,
+  phone: a.phone,
+  line1: a.line1,
+  line2: a.line2 ?? "",
+  city: a.city,
+  state: a.state,
+  pincode: a.pincode,
+  country: a.country ?? "India",
+  isDefault: !!a.isDefault,
+});
+
+const addressesOf = (user: any) => (user.addresses ?? []).map(mapAddress);
+
+/** Validate and normalize an address payload. Returns an error string or the clean fields. */
+function readAddressBody(body: any): { error: string } | { fields: Record<string, string> } {
+  const required = ["fullName", "phone", "line1", "city", "state", "pincode"] as const;
+  const fields: Record<string, string> = {};
+  for (const key of required) {
+    const value = String(body?.[key] ?? "").trim();
+    if (!value) return { error: `${key} is required.` };
+    fields[key] = value;
+  }
+  fields.label = String(body?.label ?? "").trim() || "Home";
+  fields.line2 = String(body?.line2 ?? "").trim();
+  fields.country = String(body?.country ?? "").trim() || "India";
+  return { fields };
+}
+
+app.get(
+  "/api/addresses",
+  authRequired,
+  wrap(async (req: AuthedRequest, res) => {
+    const user = await User.findById(req.auth!.id).lean();
+    if (!user) return res.status(404).json({ error: "User not found" });
+    res.json({ addresses: addressesOf(user) });
+  })
+);
+
+app.post(
+  "/api/addresses",
+  authRequired,
+  wrap(async (req: AuthedRequest, res) => {
+    const parsed = readAddressBody(req.body);
+    if ("error" in parsed) return res.status(400).json({ error: parsed.error });
+
+    const user = (await User.findById(req.auth!.id)) as any;
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    // First address, or an explicit request, becomes the default.
+    const makeDefault = user.addresses.length === 0 || Boolean(req.body?.isDefault);
+    if (makeDefault) user.addresses.forEach((a: any) => (a.isDefault = false));
+    user.addresses.push({ ...parsed.fields, isDefault: makeDefault });
+    await user.save();
+    res.status(201).json({ addresses: addressesOf(user) });
+  })
+);
+
+app.put(
+  "/api/addresses/:addressId",
+  authRequired,
+  wrap(async (req: AuthedRequest, res) => {
+    const { addressId } = req.params;
+    if (!mongoose.isValidObjectId(addressId)) {
+      return res.status(400).json({ error: "Invalid address id" });
+    }
+    const parsed = readAddressBody(req.body);
+    if ("error" in parsed) return res.status(400).json({ error: parsed.error });
+
+    const user = (await User.findById(req.auth!.id)) as any;
+    if (!user) return res.status(404).json({ error: "User not found" });
+    const address = user.addresses.id(addressId);
+    if (!address) return res.status(404).json({ error: "Address not found" });
+
+    Object.assign(address, parsed.fields);
+    if (req.body?.isDefault === true) {
+      user.addresses.forEach((a: any) => (a.isDefault = false));
+      address.isDefault = true;
+    }
+    await user.save();
+    res.json({ addresses: addressesOf(user) });
+  })
+);
+
+app.put(
+  "/api/addresses/:addressId/default",
+  authRequired,
+  wrap(async (req: AuthedRequest, res) => {
+    const { addressId } = req.params;
+    if (!mongoose.isValidObjectId(addressId)) {
+      return res.status(400).json({ error: "Invalid address id" });
+    }
+    const user = (await User.findById(req.auth!.id)) as any;
+    if (!user) return res.status(404).json({ error: "User not found" });
+    const address = user.addresses.id(addressId);
+    if (!address) return res.status(404).json({ error: "Address not found" });
+
+    user.addresses.forEach((a: any) => (a.isDefault = false));
+    address.isDefault = true;
+    await user.save();
+    res.json({ addresses: addressesOf(user) });
+  })
+);
+
+app.delete(
+  "/api/addresses/:addressId",
+  authRequired,
+  wrap(async (req: AuthedRequest, res) => {
+    const { addressId } = req.params;
+    if (!mongoose.isValidObjectId(addressId)) {
+      return res.status(400).json({ error: "Invalid address id" });
+    }
+    const user = (await User.findById(req.auth!.id)) as any;
+    if (!user) return res.status(404).json({ error: "User not found" });
+    const address = user.addresses.id(addressId);
+    if (!address) return res.status(404).json({ error: "Address not found" });
+
+    const wasDefault = Boolean(address.isDefault);
+    address.deleteOne();
+    // Keep exactly one default while any addresses remain.
+    if (wasDefault && user.addresses.length > 0) user.addresses[0].isDefault = true;
+    await user.save();
+    res.json({ addresses: addressesOf(user) });
+  })
+);
+
 /* ------------------------------ Admin ------------------------------- */
 app.get(
   "/api/admin/stats",

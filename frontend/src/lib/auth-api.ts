@@ -134,6 +134,64 @@ export function apiDeleteAccount(token: string) {
   return sendAuthed<{ ok: true }>("/auth/me", "DELETE", token);
 }
 
+/* ------------------------------ Addresses ------------------------------ */
+
+/** A saved address as returned by the backend. */
+export interface SavedAddress {
+  id: string;
+  label: string;
+  fullName: string;
+  phone: string;
+  line1: string;
+  line2: string;
+  city: string;
+  state: string;
+  pincode: string;
+  country: string;
+  isDefault: boolean;
+}
+
+/** Shape the address form sends to the backend (create/update). */
+export interface AddressInput {
+  label?: string;
+  fullName: string;
+  phone: string;
+  line1: string;
+  line2?: string;
+  city: string;
+  state: string;
+  pincode: string;
+  country?: string;
+  isDefault?: boolean;
+}
+
+type AddressList = { addresses: SavedAddress[] };
+
+/** Fetch the signed-in user's saved addresses. */
+export function apiGetAddresses(token: string) {
+  return apiGetAuthed<AddressList | null>("/addresses", token, null);
+}
+
+/** Add a new address. Returns the full updated list. */
+export function apiAddAddress(token: string, input: AddressInput) {
+  return sendAuthed<AddressList>("/addresses", "POST", token, input);
+}
+
+/** Update an address by id. Returns the full updated list. */
+export function apiUpdateAddress(token: string, id: string, input: AddressInput) {
+  return sendAuthed<AddressList>(`/addresses/${id}`, "PUT", token, input);
+}
+
+/** Mark an address as the default. Returns the full updated list. */
+export function apiSetDefaultAddress(token: string, id: string) {
+  return sendAuthed<AddressList>(`/addresses/${id}/default`, "PUT", token);
+}
+
+/** Delete an address by id. Returns the full updated list. */
+export function apiDeleteAddress(token: string, id: string) {
+  return sendAuthed<AddressList>(`/addresses/${id}`, "DELETE", token);
+}
+
 /* ------------------------------- Wishlist ------------------------------- */
 
 /** Fetch the signed-in user's wishlist product ids. */

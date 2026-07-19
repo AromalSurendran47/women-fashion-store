@@ -3,11 +3,11 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CreditCard, Truck, Wallet, Banknote, Lock, Loader2 } from "lucide-react";
 import { useCartStore } from "@/store/cart-store";
 import { useAuthStore } from "@/store/auth-store";
-import { apiCreateOrder } from "@/lib/auth-api";
+import { apiCreateOrder, apiGetAddresses } from "@/lib/auth-api";
 import { toast } from "@/store/toast-store";
 import { formatPrice, cn, isValidImageSrc } from "@/lib/utils";
 import { STORE } from "@/lib/constants";
@@ -40,6 +40,7 @@ export default function CheckoutPage() {
   const router = useRouter();
   const { items, clear } = useCartStore();
   const token = useAuthStore((s) => s.token);
+  const user = useAuthStore((s) => s.user);
   const [payment, setPayment] = useState("razorpay");
   const [billingSame, setBillingSame] = useState(true);
   const [placing, setPlacing] = useState(false);
@@ -50,8 +51,38 @@ export default function CheckoutPage() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<CheckoutForm>();
+
+  // Prefill shipping from the default saved address (profile → Addresses) and the
+  // account's contact details. keepDirtyValues makes sure a slow fetch never
+  // overwrites fields the user has already started typing into.
+  useEffect(() => {
+    if (!token) return;
+    let cancelled = false;
+    (async () => {
+      const res = await apiGetAddresses(token);
+      if (cancelled) return;
+      const addr = res?.addresses.find((a) => a.isDefault) ?? res?.addresses[0];
+      reset(
+        {
+          fullName: addr?.fullName ?? user?.name ?? "",
+          email: user?.email ?? "",
+          phone: addr?.phone ?? user?.phone ?? "",
+          line1: addr?.line1 ?? "",
+          line2: addr?.line2 ?? "",
+          city: addr?.city ?? "",
+          state: addr?.state ?? "",
+          pincode: addr?.pincode ?? "",
+        },
+        { keepDirtyValues: true }
+      );
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [token, user, reset]);
 
   const subtotal = items.reduce((s, l) => s + l.price * l.quantity, 0);
   const shipping = subtotal >= STORE.freeShippingThreshold ? 0 : 99;
