@@ -2,6 +2,7 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import multer from "multer";
+import mongoose from "mongoose";
 import { connectDB } from "./lib/db.js";
 import { uploadImageToBlob } from "./lib/azure-blob.js";
 import {
@@ -16,6 +17,7 @@ import {
   Faq,
   Banner,
   Attribute,
+  Wishlist,
 } from "./models/index.js";
 import {
   mapProduct,
@@ -187,6 +189,7 @@ app.delete(
   wrap(async (req: AuthedRequest, res) => {
     const deleted = await User.findByIdAndDelete(req.auth!.id).lean();
     if (!deleted) return res.status(404).json({ error: "User not found" });
+    await Wishlist.deleteOne({ user: req.auth!.id });
     res.json({ ok: true });
   })
 );
@@ -348,6 +351,7 @@ app.delete(
     }
     const deleted = await User.findByIdAndDelete(id).lean();
     if (!deleted) return res.status(404).json({ error: "User not found" });
+    await Wishlist.deleteOne({ user: id });
     res.json({ ok: true, id });
   })
 );
@@ -466,6 +470,77 @@ app.get(
       .limit(8)
       .lean();
     res.json(related.map(mapProduct));
+  })
+);
+
+/* ----------------------------- Wishlist ----------------------------- */
+
+const wishlistIds = (doc: any): string[] => (doc?.products ?? []).map((p: any) => String(p));
+
+app.get(
+  "/api/wishlist",
+  authRequired,
+  wrap(async (req: AuthedRequest, res) => {
+    const doc = await Wishlist.findOne({ user: req.auth!.id }).lean();
+    res.json({ ids: wishlistIds(doc) });
+  })
+);
+
+app.post(
+  "/api/wishlist/:productId",
+  authRequired,
+  wrap(async (req: AuthedRequest, res) => {
+    const { productId } = req.params;
+    if (!mongoose.isValidObjectId(productId)) {
+      return res.status(400).json({ error: "Invalid product id" });
+    }
+    const exists = await Product.exists({ _id: productId });
+    if (!exists) return res.status(404).json({ error: "Product not found" });
+    const doc = await Wishlist.findOneAndUpdate(
+      { user: req.auth!.id },
+      { $addToSet: { products: productId } },
+      { upsert: true, new: true }
+    ).lean();
+    res.json({ ids: wishlistIds(doc) });
+  })
+);
+
+app.delete(
+  "/api/wishlist/:productId",
+  authRequired,
+  wrap(async (req: AuthedRequest, res) => {
+    const { productId } = req.params;
+    if (!mongoose.isValidObjectId(productId)) {
+      return res.status(400).json({ error: "Invalid product id" });
+    }
+    const doc = await Wishlist.findOneAndUpdate(
+      { user: req.auth!.id },
+      { $pull: { products: productId } },
+      { new: true }
+    ).lean();
+    res.json({ ids: wishlistIds(doc) });
+  })
+);
+
+// Replace the whole list — used to merge a guest (localStorage) wishlist into the account on login.
+app.put(
+  "/api/wishlist",
+  authRequired,
+  wrap(async (req: AuthedRequest, res) => {
+    const raw = req.body?.ids;
+    if (!Array.isArray(raw)) {
+      return res.status(400).json({ error: "ids must be an array of product ids" });
+    }
+    const candidates = [...new Set(raw.map(String))].filter((id) => mongoose.isValidObjectId(id));
+    const found = await Product.find({ _id: { $in: candidates } }, { _id: 1 }).lean();
+    const validIds = new Set(found.map((p: any) => String(p._id)));
+    const products = candidates.filter((id) => validIds.has(id));
+    const doc = await Wishlist.findOneAndUpdate(
+      { user: req.auth!.id },
+      { $set: { products } },
+      { upsert: true, new: true }
+    ).lean();
+    res.json({ ids: wishlistIds(doc) });
   })
 );
 
@@ -632,6 +707,7 @@ app.delete(
     if (!OID.test(id)) return res.status(400).json({ error: "Invalid product id." });
     const deleted = await Product.findByIdAndDelete(id).lean();
     if (!deleted) return res.status(404).json({ error: "Product not found" });
+    await Wishlist.updateMany({ products: id }, { $pull: { products: id } });
     res.json({ ok: true, id });
   })
 );

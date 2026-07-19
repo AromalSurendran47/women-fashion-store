@@ -3,6 +3,7 @@ import { Package, Truck, Heart, Wallet } from "lucide-react";
 import { getOrders } from "@/lib/api";
 import { formatPrice, formatDate } from "@/lib/utils";
 import { OrderBadge } from "@/components/profile/order-badge";
+import { WishlistCount } from "@/components/profile/wishlist-count";
 
 export default async function ProfileDashboard() {
   const orders = await getOrders();
@@ -12,7 +13,7 @@ export default async function ProfileDashboard() {
   const stats = [
     { icon: Package, label: "Total Orders", value: orders.length },
     { icon: Truck, label: "In Transit", value: active.length },
-    { icon: Heart, label: "Wishlist Items", value: 4 },
+    { icon: Heart, label: "Wishlist Items", value: <WishlistCount /> },
     { icon: Wallet, label: "Total Spent", value: formatPrice(totalSpent) },
   ];
 

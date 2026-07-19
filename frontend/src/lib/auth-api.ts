@@ -134,6 +134,28 @@ export function apiDeleteAccount(token: string) {
   return sendAuthed<{ ok: true }>("/auth/me", "DELETE", token);
 }
 
+/* ------------------------------- Wishlist ------------------------------- */
+
+/** Fetch the signed-in user's wishlist product ids. */
+export function apiGetWishlist(token: string) {
+  return apiGetAuthed<{ ids: string[] }>("/wishlist", token, { ids: [] });
+}
+
+/** Add a product to the signed-in user's wishlist. */
+export function apiAddToWishlist(token: string, productId: string) {
+  return sendAuthed<{ ids: string[] }>(`/wishlist/${productId}`, "POST", token);
+}
+
+/** Remove a product from the signed-in user's wishlist. */
+export function apiRemoveFromWishlist(token: string, productId: string) {
+  return sendAuthed<{ ids: string[] }>(`/wishlist/${productId}`, "DELETE", token);
+}
+
+/** Replace the whole wishlist — used to merge a guest wishlist into the account. */
+export function apiReplaceWishlist(token: string, ids: string[]) {
+  return sendAuthed<{ ids: string[] }>("/wishlist", "PUT", token, { ids });
+}
+
 /* --------------------------- Admin: product CRUD --------------------------- */
 
 /** Create a product (admin). Returns the created product on success. */
