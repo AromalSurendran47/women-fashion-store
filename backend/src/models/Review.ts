@@ -12,6 +12,7 @@ const ReviewSchema = new Schema(
     images: [{ type: String }],
     verifiedPurchase: { type: Boolean, default: false },
     helpfulCount: { type: Number, default: 0 },
+    helpfulVotedBy: [{ type: Schema.Types.ObjectId, ref: "User" }],
   },
   { timestamps: { createdAt: true, updatedAt: false } }
 );

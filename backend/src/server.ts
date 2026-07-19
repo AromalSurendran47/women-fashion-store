@@ -967,8 +967,119 @@ app.get(
     // as "no matching reviews" rather than crashing the endpoint.
     if (productId && !OID.test(productId)) return res.json([]);
     const query = productId ? { product: productId } : {};
-    const reviews = await Review.find(query).sort({ createdAt: -1 }).lean();
+    const reviews = await Review.find(query)
+      .sort({ createdAt: -1 })
+      .populate("user", "name avatar")
+      .lean();
     res.json(reviews.map(mapReview));
+  })
+);
+
+// Submit (or update) the signed-in user's review for a product.
+app.post(
+  "/api/reviews",
+  authRequired,
+  wrap(async (req: AuthedRequest, res) => {
+    const { productId, rating, title, comment } = req.body ?? {};
+    if (!productId || !OID.test(String(productId))) {
+      return res.status(400).json({ error: "Invalid product id." });
+    }
+    const stars = Number(rating);
+    if (!Number.isInteger(stars) || stars < 1 || stars > 5) {
+      return res.status(400).json({ error: "Rating must be between 1 and 5." });
+    }
+    const text = String(comment ?? "").trim();
+    if (!text) return res.status(400).json({ error: "Please write a few words about the product." });
+
+    const product = (await Product.findById(productId).lean()) as any;
+    if (!product) return res.status(404).json({ error: "Product not found" });
+    const user = (await User.findById(req.auth!.id).lean()) as any;
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    // "Verified" when the user has a non-cancelled order containing this product.
+    const verifiedPurchase = Boolean(
+      await Order.exists({
+        user: user._id,
+        "products.product": product._id,
+        status: { $nin: ["Cancelled", "Returned"] },
+      })
+    );
+
+    // One review per user per product — submitting again updates the existing one.
+    const review = await Review.findOneAndUpdate(
+      { product: product._id, user: user._id },
+      {
+        $set: {
+          userName: user.name,
+          rating: stars,
+          title: String(title ?? "").trim(),
+          comment: text,
+          verifiedPurchase,
+        },
+      },
+      { upsert: true, new: true, setDefaultsOnInsert: true }
+    )
+      .populate("user", "name avatar")
+      .lean();
+
+    // Keep the product's rating aggregates in sync.
+    const agg = await Review.aggregate([
+      { $match: { product: product._id } },
+      { $group: { _id: null, avg: { $avg: "$rating" }, n: { $sum: 1 } } },
+    ]);
+    const avgRating = agg[0] ? Math.round(agg[0].avg * 10) / 10 : 0;
+    const reviewCount = agg[0]?.n ?? 0;
+    await Product.updateOne({ _id: product._id }, { rating: avgRating, reviewCount });
+
+    res.status(201).json({ review: mapReview(review), rating: avgRating, reviewCount });
+  })
+);
+
+// Delete a review — its author (or an admin) only. Keeps product aggregates in sync.
+app.delete(
+  "/api/reviews/:id",
+  authRequired,
+  wrap(async (req: AuthedRequest, res) => {
+    const { id } = req.params;
+    if (!OID.test(id)) return res.status(400).json({ error: "Invalid review id." });
+    const review = (await Review.findById(id).lean()) as any;
+    if (!review) return res.status(404).json({ error: "Review not found" });
+    if (String(review.user) !== req.auth!.id && req.auth!.role !== "admin") {
+      return res.status(403).json({ error: "You can only delete your own review." });
+    }
+    await Review.deleteOne({ _id: id });
+
+    const agg = await Review.aggregate([
+      { $match: { product: review.product } },
+      { $group: { _id: null, avg: { $avg: "$rating" }, n: { $sum: 1 } } },
+    ]);
+    const avgRating = agg[0] ? Math.round(agg[0].avg * 10) / 10 : 0;
+    const reviewCount = agg[0]?.n ?? 0;
+    await Product.updateOne({ _id: review.product }, { rating: avgRating, reviewCount });
+
+    res.json({ ok: true, id, rating: avgRating, reviewCount });
+  })
+);
+
+// Toggle the signed-in user's "helpful" vote on a review.
+app.post(
+  "/api/reviews/:id/helpful",
+  authRequired,
+  wrap(async (req: AuthedRequest, res) => {
+    const { id } = req.params;
+    if (!OID.test(id)) return res.status(400).json({ error: "Invalid review id." });
+    const review = (await Review.findById(id)) as any;
+    if (!review) return res.status(404).json({ error: "Review not found" });
+
+    const uid = req.auth!.id;
+    const voted = review.helpfulVotedBy.some((v: any) => String(v) === uid);
+    if (voted) review.helpfulVotedBy.pull(uid);
+    else review.helpfulVotedBy.push(uid);
+    // Adjust by ±1 (rather than recount) so seeded counts survive.
+    review.helpfulCount = Math.max(0, (review.helpfulCount ?? 0) + (voted ? -1 : 1));
+    await review.save();
+
+    res.json({ id, helpfulCount: review.helpfulCount, voted: !voted });
   })
 );
 

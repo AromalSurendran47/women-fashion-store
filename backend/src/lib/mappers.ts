@@ -99,19 +99,28 @@ export function mapCategory(c: any) {
 }
 
 export function mapReview(r: any) {
-  // Deterministic face avatar from the review id (pravatar has 70 portraits).
+  // When the author is populated, show their live name/avatar; otherwise fall back
+  // to the stored snapshot and a deterministic pravatar face from the review id.
+  const author = r.user && typeof r.user === "object" ? r.user : null;
   const n = (parseInt(String(r._id).slice(-2), 16) % 70) + 1;
+  // Same fallback formula as mapUser, so a user without an uploaded photo gets an
+  // identical face here and in their profile header.
+  const authorFallback = author
+    ? `https://i.pravatar.cc/150?img=${(String(author._id).charCodeAt(0) % 70) + 1}`
+    : `https://i.pravatar.cc/150?img=${n}`;
   return {
     id: String(r._id),
     productId: String(r.product),
-    userName: r.userName,
-    avatar: `https://i.pravatar.cc/150?img=${n}`,
+    userId: String(author?._id ?? r.user),
+    userName: author?.name ?? r.userName,
+    avatar: author?.avatar || authorFallback,
     rating: r.rating,
     title: r.title ?? "",
     comment: r.comment,
     verifiedPurchase: !!r.verifiedPurchase,
     date: r.createdAt,
     helpfulCount: r.helpfulCount ?? 0,
+    votedBy: (r.helpfulVotedBy ?? []).map(String),
   };
 }
 

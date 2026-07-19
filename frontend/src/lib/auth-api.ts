@@ -1,4 +1,4 @@
-import type { AuthUser, Product, Order, Category } from "@/types";
+import type { AuthUser, Product, Order, Category, Review } from "@/types";
 
 /** Shape the admin product form sends to the backend (create/update). */
 export interface ProductInput {
@@ -213,6 +213,43 @@ export function apiSetDefaultAddress(token: string, id: string) {
 /** Delete an address by id. Returns the full updated list. */
 export function apiDeleteAddress(token: string, id: string) {
   return sendAuthed<AddressList>(`/addresses/${id}`, "DELETE", token);
+}
+
+/* -------------------------------- Reviews -------------------------------- */
+
+export interface ReviewInput {
+  productId: string;
+  rating: number;
+  title?: string;
+  comment: string;
+}
+
+/** Submit (or update) the signed-in user's review. Returns it plus fresh product aggregates. */
+export function apiSubmitReview(token: string, input: ReviewInput) {
+  return sendAuthed<{ review: Review; rating: number; reviewCount: number }>(
+    "/reviews",
+    "POST",
+    token,
+    input
+  );
+}
+
+/** Toggle a "helpful" vote on a review. */
+export function apiToggleHelpful(token: string, reviewId: string) {
+  return sendAuthed<{ id: string; helpfulCount: number; voted: boolean }>(
+    `/reviews/${reviewId}/helpful`,
+    "POST",
+    token
+  );
+}
+
+/** Delete the signed-in user's own review. Returns fresh product aggregates. */
+export function apiDeleteReview(token: string, reviewId: string) {
+  return sendAuthed<{ ok: true; id: string; rating: number; reviewCount: number }>(
+    `/reviews/${reviewId}`,
+    "DELETE",
+    token
+  );
 }
 
 /* ------------------------------- Wishlist ------------------------------- */

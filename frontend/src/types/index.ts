@@ -82,6 +82,7 @@ export interface Product {
 export interface Review {
   id: string;
   productId: string;
+  userId: string;
   userName: string;
   avatar: string;
   rating: number;
@@ -90,6 +91,7 @@ export interface Review {
   verifiedPurchase: boolean;
   date: string;
   helpfulCount: number;
+  votedBy: string[];
 }
 
 export interface Banner {
