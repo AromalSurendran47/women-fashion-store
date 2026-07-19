@@ -159,6 +159,27 @@ app.put(
   })
 );
 
+// Upload / change the profile photo. Multipart field: "file".
+app.post(
+  "/api/auth/avatar",
+  authRequired,
+  uploadSingle("file"),
+  wrap(async (req: AuthedRequest, res) => {
+    const file = (req as AuthedRequest & { file?: Express.Multer.File }).file;
+    if (!file) return res.status(400).json({ error: "No file uploaded." });
+    try {
+      const url = await uploadImageToBlob({ buffer: file.buffer, mimetype: file.mimetype }, "avatars");
+      const user = await User.findByIdAndUpdate(req.auth!.id, { avatar: url }, { new: true }).lean();
+      if (!user) return res.status(404).json({ error: "User not found" });
+      res.json({ user: mapUser(user) });
+    } catch (err: any) {
+      if (err?.status === 503) return res.status(503).json({ error: err.message });
+      console.error("Avatar upload error:", err?.name, err?.message);
+      return res.status(502).json({ error: "Upload failed. Please try again." });
+    }
+  })
+);
+
 // Change password
 app.put(
   "/api/auth/password",

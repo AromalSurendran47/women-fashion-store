@@ -1,22 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Check, AlertCircle, Loader2, Trash2 } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import { Check, AlertCircle, Loader2, Trash2, Camera } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
 import { useMounted } from "@/hooks/use-mounted";
+import { toast } from "@/store/toast-store";
 
 const inputCls =
   "h-12 w-full rounded-xl border border-line bg-background px-4 text-sm outline-none focus:border-ink";
 
 export default function AccountPage() {
   const mounted = useMounted();
-  const { user, updateProfile, changePassword, deleteAccount } = useAuth();
+  const { user, updateProfile, uploadAvatar, changePassword, deleteAccount } = useAuth();
 
   return (
     <div className="flex max-w-xl flex-col gap-10">
       {mounted && user ? (
         <>
+          <AvatarSection user={user} onUpload={uploadAvatar} />
           <ProfileForm user={user} onSave={updateProfile} />
           <PasswordForm onChange={changePassword} />
           <DangerZone onDelete={deleteAccount} />
@@ -26,6 +29,63 @@ export default function AccountPage() {
           <Loader2 className="animate-spin text-accent-dark" size={24} />
         </div>
       )}
+    </div>
+  );
+}
+
+/* --------------------------- Profile photo -------------------------- */
+
+function AvatarSection({
+  user,
+  onUpload,
+}: {
+  user: { name: string; avatar: string };
+  onUpload: (file: File) => Promise<{ ok: boolean; error?: string }>;
+}) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
+
+  async function onPick(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    e.target.value = ""; // allow re-selecting the same file later
+    if (!file) return;
+    if (!file.type.startsWith("image/")) return toast.error("Please choose an image file.");
+    if (file.size > 5 * 1024 * 1024) return toast.error("Image must be under 5 MB.");
+    setUploading(true);
+    const res = await onUpload(file);
+    setUploading(false);
+    if (res.ok) toast.success("Profile photo updated.");
+    else toast.error(res.error ?? "Upload failed. Please try again.");
+  }
+
+  return (
+    <div className="flex items-center gap-5">
+      <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full bg-secondary">
+        {user.avatar && (
+          <Image src={user.avatar} alt={user.name} fill sizes="80px" className="object-cover" />
+        )}
+      </div>
+      <div className="flex flex-col items-start gap-2">
+        <Button
+          type="button"
+          size="sm"
+          variant="outline"
+          onClick={() => inputRef.current?.click()}
+          disabled={uploading}
+        >
+          {uploading ? (
+            <>
+              <Loader2 size={15} className="animate-spin" /> Uploading…
+            </>
+          ) : (
+            <>
+              <Camera size={15} /> Change Photo
+            </>
+          )}
+        </Button>
+        <p className="text-xs text-muted">JPG, PNG or WebP · up to 5 MB</p>
+      </div>
+      <input ref={inputRef} type="file" accept="image/*" hidden onChange={onPick} />
     </div>
   );
 }

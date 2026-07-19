@@ -8,6 +8,7 @@ import {
   apiUpdateProfile,
   apiChangePassword,
   apiDeleteAccount,
+  apiUploadAvatar,
 } from "@/lib/auth-api";
 import { useCartStore } from "@/store/cart-store";
 import { useWishlistStore } from "@/store/wishlist-store";
@@ -53,6 +54,13 @@ export function useAuth() {
     return res;
   }
 
+  async function uploadAvatar(file: File) {
+    if (!token) return { ok: false as const, error: "You're not signed in." };
+    const res = await apiUploadAvatar(token, file);
+    if (res.ok) setUser(res.data.user);
+    return res;
+  }
+
   async function changePassword(input: { currentPassword: string; newPassword: string }) {
     if (!token) return { ok: false as const, error: "You're not signed in." };
     return apiChangePassword(token, input);
@@ -79,6 +87,7 @@ export function useAuth() {
     register,
     logout,
     updateProfile,
+    uploadAvatar,
     changePassword,
     deleteAccount,
   };

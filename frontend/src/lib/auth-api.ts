@@ -123,6 +123,29 @@ export function apiUpdateProfile(
   return sendAuthed<{ user: AuthUser }>("/auth/me", "PUT", token, input);
 }
 
+/** Upload a profile photo (multipart). Returns the updated user. */
+export async function apiUploadAvatar(
+  token: string,
+  file: File
+): Promise<WriteResult<{ user: AuthUser }>> {
+  if (!BASE) return { ok: false, error: NO_API };
+  try {
+    const fd = new FormData();
+    fd.append("file", file);
+    const res = await fetch(`${BASE}/auth/avatar`, {
+      method: "POST",
+      // Do NOT set Content-Type — the browser adds the multipart boundary itself.
+      headers: { Authorization: `Bearer ${token}` },
+      body: fd,
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) return { ok: false, error: data.error || "Upload failed. Please try again." };
+    return { ok: true, data: data as { user: AuthUser } };
+  } catch {
+    return { ok: false, error: "Cannot reach the server. Is the backend running?" };
+  }
+}
+
 export function apiChangePassword(
   token: string,
   input: { currentPassword: string; newPassword: string }

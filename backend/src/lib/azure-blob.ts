@@ -25,10 +25,13 @@ const EXT: Record<string, string> = {
 };
 
 /** Upload an image buffer to Azure Blob Storage and return its public URL. */
-export async function uploadImageToBlob(file: {
-  buffer: Buffer;
-  mimetype: string;
-}): Promise<string> {
+export async function uploadImageToBlob(
+  file: {
+    buffer: Buffer;
+    mimetype: string;
+  },
+  folder: string = "products"
+): Promise<string> {
   if (!containerClient) {
     throw Object.assign(
       new Error("Image uploads are not configured. Set AZURE_STORAGE_* in backend/.env."),
@@ -36,7 +39,7 @@ export async function uploadImageToBlob(file: {
     );
   }
   const ext = EXT[file.mimetype] ?? "bin";
-  const name = `products/${Date.now()}-${randomBytes(6).toString("hex")}.${ext}`;
+  const name = `${folder}/${Date.now()}-${randomBytes(6).toString("hex")}.${ext}`;
   const block = containerClient.getBlockBlobClient(name);
   await block.upload(file.buffer, file.buffer.length, {
     blobHTTPHeaders: { blobContentType: file.mimetype },
