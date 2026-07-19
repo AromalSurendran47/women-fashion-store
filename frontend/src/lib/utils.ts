@@ -59,3 +59,11 @@ export function formatDate(iso: string) {
 export function truncate(text: string, max: number) {
   return text.length > max ? text.slice(0, max).trimEnd() + "…" : text;
 }
+
+/**
+ * True only for values next/image can safely load — an absolute http(s) URL or
+ * a root-relative path. Guards against junk like "x" that throws "Invalid URL".
+ */
+export function isValidImageSrc(src?: string | null): src is string {
+  return !!src && /^(https?:\/\/|\/)/.test(src);
+}

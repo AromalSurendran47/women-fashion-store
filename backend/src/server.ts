@@ -766,7 +766,10 @@ app.get(
   "/api/orders",
   authRequired,
   wrap(async (req: AuthedRequest, res) => {
-    const isAdmin = req.auth!.role === "admin";
+    // `?mine=1` forces "my orders only" even for admins — the profile page uses
+    // it so an admin's personal Order History isn't flooded with everyone's.
+    const forceMine = req.query.mine === "1" || req.query.mine === "true";
+    const isAdmin = req.auth!.role === "admin" && !forceMine;
     const query: Record<string, unknown> = isAdmin ? {} : { user: req.auth!.id };
 
     if (isAdmin) {
@@ -896,6 +899,23 @@ app.post(
         return res.status(400).json({ error: "A complete shipping address is required." });
       }
     }
+
+    // Idempotency net: if the same user just placed an identical order (same
+    // items + total) within 30s, return that one instead of creating a duplicate.
+    const since = new Date(Date.now() - 30_000);
+    const sig = products
+      .map((p) => `${p.name}x${p.quantity}`)
+      .sort()
+      .join("|");
+    const recent = (await Order.find({ user: user._id, total, createdAt: { $gte: since } }).lean()) as any[];
+    const dup = recent.find(
+      (c) =>
+        (c.products ?? [])
+          .map((p: any) => `${p.name}x${p.quantity}`)
+          .sort()
+          .join("|") === sig
+    );
+    if (dup) return res.status(201).json(mapOrder(dup));
 
     const order = await Order.create({
       orderNumber: await nextOrderNumber(),

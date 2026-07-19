@@ -7,7 +7,7 @@ import { ArrowLeft, Loader2, X, ChevronLeft, ChevronRight, Eye } from "lucide-re
 import { AuthGuard } from "@/components/auth/auth-guard";
 import { useAuthStore } from "@/store/auth-store";
 import { apiGetOrdersPage, apiUpdateOrder } from "@/lib/auth-api";
-import { formatPrice, formatDate } from "@/lib/utils";
+import { formatPrice, formatDate, isValidImageSrc } from "@/lib/utils";
 import { OrderBadge } from "@/components/profile/order-badge";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/store/toast-store";
@@ -291,7 +291,7 @@ function OrderDetail({
             {order.items.map((it, i) => (
               <div key={i} className="flex items-center gap-3">
                 <div className="relative h-16 w-12 shrink-0 overflow-hidden rounded-lg bg-secondary">
-                  {it.thumbnail && (
+                  {isValidImageSrc(it.thumbnail) && (
                     <Image src={it.thumbnail} alt={it.name} fill sizes="48px" className="object-cover" />
                   )}
                 </div>

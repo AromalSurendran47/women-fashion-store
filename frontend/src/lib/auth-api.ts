@@ -186,9 +186,9 @@ export function apiCreateOrder(token: string, input: OrderInput) {
   return sendAuthed<Order>("/orders", "POST", token, input);
 }
 
-/** Fetch the signed-in user's orders (admin gets everyone's). */
+/** Fetch the signed-in user's own orders (for the profile page — never others'). */
 export function apiGetOrders(token: string) {
-  return apiGetAuthed<Order[]>("/orders", token, []);
+  return apiGetAuthed<Order[]>("/orders?mine=1", token, []);
 }
 
 /** A page of orders plus pagination metadata (admin). */

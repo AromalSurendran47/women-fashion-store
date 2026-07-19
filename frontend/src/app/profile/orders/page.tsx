@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { Loader2, Package } from "lucide-react";
 import { useAuthStore } from "@/store/auth-store";
 import { apiGetOrders } from "@/lib/auth-api";
-import { formatPrice, formatDate } from "@/lib/utils";
+import { formatPrice, formatDate, isValidImageSrc } from "@/lib/utils";
 import { OrderBadge } from "@/components/profile/order-badge";
 import { buttonVariants } from "@/components/ui/button";
 import type { Order } from "@/types";
@@ -77,7 +77,9 @@ export default function OrdersPage() {
             {o.items.map((it, i) => (
               <div key={i} className="flex items-center gap-3">
                 <div className="relative h-16 w-12 shrink-0 overflow-hidden rounded-lg bg-secondary">
-                  <Image src={it.thumbnail} alt={it.name} fill sizes="48px" className="object-cover" />
+                  {isValidImageSrc(it.thumbnail) && (
+                    <Image src={it.thumbnail} alt={it.name} fill sizes="48px" className="object-cover" />
+                  )}
                 </div>
                 <div className="flex-1 text-sm">
                   <p className="line-clamp-1 font-medium">{it.name}</p>

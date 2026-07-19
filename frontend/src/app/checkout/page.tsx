@@ -3,13 +3,13 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { CreditCard, Truck, Wallet, Banknote, Lock, Loader2 } from "lucide-react";
 import { useCartStore } from "@/store/cart-store";
 import { useAuthStore } from "@/store/auth-store";
 import { apiCreateOrder } from "@/lib/auth-api";
 import { toast } from "@/store/toast-store";
-import { formatPrice, cn } from "@/lib/utils";
+import { formatPrice, cn, isValidImageSrc } from "@/lib/utils";
 import { STORE } from "@/lib/constants";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -43,6 +43,9 @@ export default function CheckoutPage() {
   const [payment, setPayment] = useState("razorpay");
   const [billingSame, setBillingSame] = useState(true);
   const [placing, setPlacing] = useState(false);
+  // Synchronous re-entry lock: blocks a second submit before `placing` re-renders,
+  // so a fast double-click / double Enter can never create a duplicate order.
+  const placingRef = useRef(false);
 
   const {
     register,
@@ -56,49 +59,60 @@ export default function CheckoutPage() {
   const total = subtotal + shipping + tax;
 
   const onSubmit = async (data: CheckoutForm) => {
+    if (placingRef.current) return; // already submitting — ignore repeat clicks
     if (!token) {
       toast.error("Please sign in to place your order.");
       router.push("/login");
       return;
     }
+    placingRef.current = true;
     setPlacing(true);
-    const res = await apiCreateOrder(token, {
-      items: items.map((l) => ({
-        productId: l.productId,
-        name: l.name,
-        thumbnail: l.thumbnail,
-        color: l.color,
-        size: l.size,
-        price: l.price,
-        quantity: l.quantity,
-      })),
-      shippingAddress: {
-        fullName: data.fullName,
-        phone: data.phone,
-        line1: data.line1,
-        line2: data.line2,
-        city: data.city,
-        state: data.state,
-        pincode: data.pincode,
-      },
-      paymentMethod: payment,
-    });
-    setPlacing(false);
+    try {
+      const res = await apiCreateOrder(token, {
+        items: items.map((l) => ({
+          productId: l.productId,
+          name: l.name,
+          thumbnail: l.thumbnail,
+          color: l.color,
+          size: l.size,
+          price: l.price,
+          quantity: l.quantity,
+        })),
+        shippingAddress: {
+          fullName: data.fullName,
+          phone: data.phone,
+          line1: data.line1,
+          line2: data.line2,
+          city: data.city,
+          state: data.state,
+          pincode: data.pincode,
+        },
+        paymentMethod: payment,
+      });
 
-    if (!res.ok) {
-      toast.error(res.error);
-      return;
-    }
+      if (!res.ok) {
+        toast.error(res.error);
+        placingRef.current = false;
+        setPlacing(false);
+        return;
+      }
 
-    if (typeof window !== "undefined") {
-      sessionStorage.setItem(
-        "aura-last-order",
-        JSON.stringify({ orderNumber: res.data.orderNumber, total: res.data.total, payment })
-      );
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem(
+          "aura-last-order",
+          JSON.stringify({ orderNumber: res.data.orderNumber, total: res.data.total, payment })
+        );
+      }
+      toast.success(`Order ${res.data.orderNumber} placed!`);
+      clear();
+      router.push("/checkout/success");
+      // Intentionally keep the lock set — we're navigating away; leaving it locked
+      // prevents any late duplicate submit during the redirect.
+    } catch {
+      toast.error("Something went wrong placing your order. Please try again.");
+      placingRef.current = false;
+      setPlacing(false);
     }
-    toast.success(`Order ${res.data.orderNumber} placed!`);
-    clear();
-    router.push("/checkout/success");
   };
 
   if (items.length === 0) {
@@ -203,7 +217,9 @@ export default function CheckoutPage() {
             {items.map((l) => (
               <div key={`${l.productId}-${l.color}-${l.size}`} className="flex gap-3">
                 <div className="relative h-16 w-12 shrink-0 overflow-hidden rounded-lg bg-background">
-                  <Image src={l.thumbnail} alt={l.name} fill sizes="48px" className="object-cover" />
+                  {isValidImageSrc(l.thumbnail) && (
+                    <Image src={l.thumbnail} alt={l.name} fill sizes="48px" className="object-cover" />
+                  )}
                 </div>
                 <div className="flex-1 text-sm">
                   <p className="line-clamp-1 font-medium">{l.name}</p>
