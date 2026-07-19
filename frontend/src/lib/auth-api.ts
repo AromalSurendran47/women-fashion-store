@@ -1,4 +1,4 @@
-import type { AuthUser, Product, Order } from "@/types";
+import type { AuthUser, Product, Order, Category } from "@/types";
 
 /** Shape the admin product form sends to the backend (create/update). */
 export interface ProductInput {
@@ -252,6 +252,34 @@ export function apiUpdateProduct(token: string, id: string, input: Partial<Produ
 /** Delete a product by id (admin). */
 export function apiDeleteProduct(token: string, id: string) {
   return sendAuthed<{ ok: true; id: string }>(`/products/${id}`, "DELETE", token);
+}
+
+/* --------------------------- Admin: category CRUD --------------------------- */
+
+/** Shape the admin category form sends to the backend (create/update). */
+export interface CategoryInput {
+  name: string;
+  slug?: string;
+  image: string;
+  banner?: string;
+  description?: string;
+  featured?: boolean;
+  order?: number;
+}
+
+/** Create a category (admin). Returns the created category. */
+export function apiCreateCategory(token: string, input: CategoryInput) {
+  return sendAuthed<Category>("/categories", "POST", token, input);
+}
+
+/** Update a category by id (admin). Returns the updated category. */
+export function apiUpdateCategory(token: string, id: string, input: Partial<CategoryInput>) {
+  return sendAuthed<Category>(`/categories/${id}`, "PUT", token, input);
+}
+
+/** Delete a category by id (admin). Fails while products still use it. */
+export function apiDeleteCategory(token: string, id: string) {
+  return sendAuthed<{ ok: true; id: string }>(`/categories/${id}`, "DELETE", token);
 }
 
 /* ------------------------------- Orders ------------------------------- */

@@ -17,9 +17,12 @@ const PAGE_SIZE = 12;
 export function ProductListing({
   products,
   initialFilters,
+  showFilters = true,
 }: {
   products: Product[];
   initialFilters?: Partial<Filters>;
+  /** Hide the filter sidebar/drawer (e.g. on category collection pages). */
+  showFilters?: boolean;
 }) {
   // The price slider must reach the most expensive product, otherwise items
   // above the (previously hard-coded ₹5,000) ceiling are silently filtered out.
@@ -86,24 +89,30 @@ export function ProductListing({
   };
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[240px_1fr]">
+    <div className={cn("grid gap-8", showFilters && "lg:grid-cols-[240px_1fr]")}>
       {/* Desktop sidebar */}
-      <aside className="hidden lg:block">
-        <div className="sticky top-24">
-          <ProductFilters filters={filters} onChange={update} priceCeiling={priceCeiling} />
-        </div>
-      </aside>
+      {showFilters && (
+        <aside className="hidden lg:block">
+          <div className="sticky top-24">
+            <ProductFilters filters={filters} onChange={update} priceCeiling={priceCeiling} />
+          </div>
+        </aside>
+      )}
 
       <div>
         {/* Toolbar */}
         <div className="mb-6 flex items-center justify-between gap-3 border-b border-line pb-4">
-          <button
-            onClick={() => setMobileFilters(true)}
-            className="flex items-center gap-2 text-sm font-medium lg:hidden"
-          >
-            <SlidersHorizontal size={16} /> Filters
-          </button>
-          <p className="hidden text-sm text-muted lg:block">{filtered.length} products</p>
+          {showFilters && (
+            <button
+              onClick={() => setMobileFilters(true)}
+              className="flex items-center gap-2 text-sm font-medium lg:hidden"
+            >
+              <SlidersHorizontal size={16} /> Filters
+            </button>
+          )}
+          <p className={cn("text-sm text-muted", showFilters && "hidden lg:block")}>
+            {filtered.length} products
+          </p>
 
           <div className="flex items-center gap-3">
             <div className="relative">
@@ -142,7 +151,12 @@ export function ProductListing({
         {filtered.length === 0 ? (
           <p className="py-20 text-center text-muted">No products match your filters.</p>
         ) : view === "grid" ? (
-          <div className="grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-3">
+          <div
+            className={cn(
+              "grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-3",
+              !showFilters && "lg:grid-cols-4"
+            )}
+          >
             {visible.map((p) => (
               <ProductCard key={p.id} product={p} />
             ))}
@@ -179,7 +193,7 @@ export function ProductListing({
       </div>
 
       {/* Mobile filter drawer */}
-      {mobileFilters && (
+      {showFilters && mobileFilters && (
         <div className="fixed inset-0 z-50 lg:hidden">
           <div className="absolute inset-0 bg-ink/40" onClick={() => setMobileFilters(false)} />
           <div className="absolute left-0 top-0 h-full w-[85%] max-w-sm overflow-y-auto bg-background p-5">

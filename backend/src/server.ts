@@ -863,6 +863,101 @@ app.delete(
   })
 );
 
+/* ---------------- Category admin CRUD (adminRequired) ---------------- */
+
+/** Map a category with its live product count attached. */
+async function mapCategoryWithCount(cat: any) {
+  const productCount = await Product.countDocuments({ category: cat._id });
+  return mapCategory({ ...cat, productCount });
+}
+
+// Create
+app.post(
+  "/api/categories",
+  adminRequired,
+  wrap(async (req, res) => {
+    const body = req.body ?? {};
+    const name = String(body.name ?? "").trim();
+    const image = String(body.image ?? "").trim();
+    if (!name) return res.status(400).json({ error: "Name is required." });
+    if (!image) return res.status(400).json({ error: "Image is required." });
+
+    const slug = slugify(body.slug || name);
+    if (!slug) return res.status(400).json({ error: "Could not derive a slug from the name." });
+    const clash = await Category.findOne({ slug }).lean();
+    if (clash) return res.status(409).json({ error: `A category with slug "${slug}" already exists.` });
+
+    const cat = await Category.create({
+      name,
+      slug,
+      image,
+      banner: String(body.banner ?? "").trim() || undefined,
+      description: String(body.description ?? "").trim(),
+      featured: Boolean(body.featured),
+      order: Number.isFinite(Number(body.order)) ? Number(body.order) : 0,
+    });
+    res.status(201).json(await mapCategoryWithCount(cat.toObject()));
+  })
+);
+
+// Update
+app.put(
+  "/api/categories/:id",
+  adminRequired,
+  wrap(async (req, res) => {
+    const { id } = req.params;
+    if (!OID.test(id)) return res.status(400).json({ error: "Invalid category id." });
+    const body = req.body ?? {};
+
+    const update: Record<string, unknown> = {};
+    if (body.name !== undefined) {
+      const name = String(body.name).trim();
+      if (!name) return res.status(400).json({ error: "Name cannot be empty." });
+      update.name = name;
+    }
+    if (body.slug !== undefined || body.name !== undefined) {
+      const slug = slugify(body.slug || body.name || "");
+      if (slug) {
+        const clash = await Category.findOne({ slug, _id: { $ne: id } }).lean();
+        if (clash) return res.status(409).json({ error: `A category with slug "${slug}" already exists.` });
+        update.slug = slug;
+      }
+    }
+    if (body.image !== undefined) {
+      const image = String(body.image).trim();
+      if (!image) return res.status(400).json({ error: "Image cannot be empty." });
+      update.image = image;
+    }
+    if (body.banner !== undefined) update.banner = String(body.banner).trim() || undefined;
+    if (body.description !== undefined) update.description = String(body.description).trim();
+    if (body.featured !== undefined) update.featured = Boolean(body.featured);
+    if (body.order !== undefined && Number.isFinite(Number(body.order))) update.order = Number(body.order);
+
+    const cat = await Category.findByIdAndUpdate(id, update, { new: true }).lean();
+    if (!cat) return res.status(404).json({ error: "Category not found" });
+    res.json(await mapCategoryWithCount(cat));
+  })
+);
+
+// Delete — refused while products still belong to the category.
+app.delete(
+  "/api/categories/:id",
+  adminRequired,
+  wrap(async (req, res) => {
+    const { id } = req.params;
+    if (!OID.test(id)) return res.status(400).json({ error: "Invalid category id." });
+    const inUse = await Product.countDocuments({ category: id });
+    if (inUse > 0) {
+      return res.status(400).json({
+        error: `Cannot delete: ${inUse} product${inUse > 1 ? "s" : ""} still use${inUse > 1 ? "" : "s"} this category. Move or delete them first.`,
+      });
+    }
+    const deleted = await Category.findByIdAndDelete(id).lean();
+    if (!deleted) return res.status(404).json({ error: "Category not found" });
+    res.json({ ok: true, id });
+  })
+);
+
 /* ------------------------------ Reviews ----------------------------- */
 app.get(
   "/api/reviews",
