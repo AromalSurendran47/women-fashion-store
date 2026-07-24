@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { CheckCircle2, Package, Truck, Home } from "lucide-react";
+import { CheckCircle2, Package, Truck, Home, MessageCircle } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 
@@ -11,6 +11,7 @@ export default function OrderSuccessPage() {
     orderNumber: string;
     total: number;
     payment?: string;
+    waUrl?: string;
   } | null>(null);
 
   useEffect(() => {
@@ -64,7 +65,18 @@ export default function OrderSuccessPage() {
         ))}
       </div>
 
-      <div className="mt-10 flex gap-3">
+      {order?.waUrl && (
+        <a
+          href={order.waUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-10 flex items-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-sm font-medium text-white hover:bg-[#1fb959]"
+        >
+          <MessageCircle size={16} /> Send order details on WhatsApp
+        </a>
+      )}
+
+      <div className={order?.waUrl ? "mt-4 flex gap-3" : "mt-10 flex gap-3"}>
         <Link href="/profile/orders" className={buttonVariants({ variant: "outline" })}>
           View Orders
         </Link>

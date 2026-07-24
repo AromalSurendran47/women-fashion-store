@@ -4,11 +4,19 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { CartLine, Product, Size } from "@/types";
 
+export interface AppliedCoupon {
+  code: string;
+  amount: number;
+}
+
 interface CartState {
   items: CartLine[];
+  /** Coupon applied on the cart page — carried through to checkout and the order. */
+  coupon: AppliedCoupon | null;
   addItem: (product: Product, opts?: { color?: string; size?: Size; quantity?: number }) => void;
   removeItem: (productId: string, color: string, size: Size) => void;
   updateQuantity: (productId: string, color: string, size: Size, quantity: number) => void;
+  setCoupon: (coupon: AppliedCoupon | null) => void;
   clear: () => void;
   totalItems: () => number;
   subtotal: () => number;
@@ -21,6 +29,7 @@ export const useCartStore = create<CartState>()(
   persist(
     (set, get) => ({
       items: [],
+      coupon: null,
 
       addItem: (product, opts) => {
         const color = opts?.color ?? product.colors[0]?.name ?? "Default";
@@ -68,7 +77,9 @@ export const useCartStore = create<CartState>()(
             .filter((l) => l.quantity > 0),
         })),
 
-      clear: () => set({ items: [] }),
+      setCoupon: (coupon) => set({ coupon }),
+
+      clear: () => set({ items: [], coupon: null }),
 
       totalItems: () => get().items.reduce((n, l) => n + l.quantity, 0),
       subtotal: () => get().items.reduce((s, l) => s + l.price * l.quantity, 0),

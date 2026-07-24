@@ -36,9 +36,52 @@ const PAYMENTS = [
 const inputCls =
   "h-12 w-full rounded-xl border border-line bg-background px-4 text-sm outline-none focus:border-ink";
 
+/** Compose the full order summary sent to the store's WhatsApp number. */
+function buildWhatsAppMessage(args: {
+  orderNumber: string;
+  items: { name: string; color: string; size: string; price: number; quantity: number }[];
+  form: CheckoutForm;
+  subtotal: number;
+  discount: number;
+  couponCode?: string;
+  shipping: number;
+  tax: number;
+  total: number;
+  payment: string;
+}) {
+  const { orderNumber, items, form, subtotal, discount, couponCode, shipping, tax, total, payment } =
+    args;
+  const lines = [
+    `🛍️ New Order — ${orderNumber}`,
+    "",
+    "Items:",
+    ...items.map(
+      (l, i) =>
+        `${i + 1}. ${l.name} (${l.color} / ${l.size}) x${l.quantity} — ${formatPrice(l.price * l.quantity)}`
+    ),
+    "",
+    `Subtotal: ${formatPrice(subtotal)}`,
+    ...(discount > 0
+      ? [`Discount${couponCode ? ` (${couponCode})` : ""}: - ${formatPrice(discount)}`]
+      : []),
+    `Shipping: ${shipping === 0 ? "Free" : formatPrice(shipping)}`,
+    `Tax (5% GST): ${formatPrice(tax)}`,
+    `Total: ${formatPrice(total)}`,
+    `Payment: ${payment.toUpperCase()}`,
+    "",
+    `Customer: ${form.fullName}`,
+    `Phone: ${form.phone}`,
+    `Email: ${form.email}`,
+    "",
+    "Deliver to:",
+    [form.line1, form.line2, form.city, `${form.state} ${form.pincode}`].filter(Boolean).join(", "),
+  ];
+  return lines.join("\n");
+}
+
 export default function CheckoutPage() {
   const router = useRouter();
-  const { items, clear } = useCartStore();
+  const { items, clear, coupon } = useCartStore();
   const token = useAuthStore((s) => s.token);
   const user = useAuthStore((s) => s.user);
   const [payment, setPayment] = useState("razorpay");
@@ -84,10 +127,12 @@ export default function CheckoutPage() {
     };
   }, [token, user, reset]);
 
+  // Same formulas as the backend order route (and the cart page).
   const subtotal = items.reduce((s, l) => s + l.price * l.quantity, 0);
+  const discount = coupon?.amount ?? 0;
   const shipping = subtotal >= STORE.freeShippingThreshold ? 0 : 99;
   const tax = Math.round(subtotal * 0.05);
-  const total = subtotal + shipping + tax;
+  const total = Math.max(0, subtotal + shipping + tax - discount);
 
   const onSubmit = async (data: CheckoutForm) => {
     if (placingRef.current) return; // already submitting — ignore repeat clicks
@@ -119,6 +164,8 @@ export default function CheckoutPage() {
           pincode: data.pincode,
         },
         paymentMethod: payment,
+        discount,
+        couponCode: coupon?.code,
       });
 
       if (!res.ok) {
@@ -128,11 +175,28 @@ export default function CheckoutPage() {
         return;
       }
 
+      // Forward the full order details to the store's WhatsApp.
+      const waMessage = buildWhatsAppMessage({
+        orderNumber: res.data.orderNumber,
+        items,
+        form: data,
+        subtotal,
+        discount,
+        couponCode: coupon?.code,
+        shipping,
+        tax,
+        total,
+        payment,
+      });
+      const waUrl = `https://wa.me/${STORE.orderWhatsapp}?text=${encodeURIComponent(waMessage)}`;
+
       if (typeof window !== "undefined") {
         sessionStorage.setItem(
           "aura-last-order",
-          JSON.stringify({ orderNumber: res.data.orderNumber, total: res.data.total, payment })
+          JSON.stringify({ orderNumber: res.data.orderNumber, total: res.data.total, payment, waUrl })
         );
+        // Popup blockers may stop this — the success page offers the same link as a button.
+        window.open(waUrl, "_blank", "noopener");
       }
       toast.success(`Order ${res.data.orderNumber} placed!`);
       clear();
@@ -264,6 +328,12 @@ export default function CheckoutPage() {
           </div>
           <dl className="space-y-2 border-t border-line py-4 text-sm">
             <div className="flex justify-between"><dt className="text-muted">Subtotal</dt><dd>{formatPrice(subtotal)}</dd></div>
+            {discount > 0 && (
+              <div className="flex justify-between">
+                <dt className="text-muted">Discount{coupon?.code ? ` (${coupon.code})` : ""}</dt>
+                <dd className="text-green-700">- {formatPrice(discount)}</dd>
+              </div>
+            )}
             <div className="flex justify-between"><dt className="text-muted">Shipping</dt><dd>{shipping === 0 ? "Free" : formatPrice(shipping)}</dd></div>
             <div className="flex justify-between"><dt className="text-muted">Tax (5% GST)</dt><dd>{formatPrice(tax)}</dd></div>
           </dl>

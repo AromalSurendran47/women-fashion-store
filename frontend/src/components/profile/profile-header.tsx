@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useAuthStore } from "@/store/auth-store";
 import { useMounted } from "@/hooks/use-mounted";
+import { AVATAR_FALLBACK } from "@/lib/constants";
 
 export function ProfileHeader() {
   const mounted = useMounted();
@@ -10,8 +11,7 @@ export function ProfileHeader() {
 
   const name = mounted && user ? user.name : "";
   const email = mounted && user ? user.email : "";
-  const avatar =
-    mounted && user?.avatar ? user.avatar : "https://i.pravatar.cc/150?img=8";
+  const avatar = mounted && user?.avatar ? user.avatar : AVATAR_FALLBACK;
 
   return (
     <div className="mb-8 mt-4 flex items-center gap-4">

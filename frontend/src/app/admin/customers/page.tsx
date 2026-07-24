@@ -25,6 +25,7 @@ import {
   type CustomerInput,
 } from "@/lib/auth-api";
 import { formatDate } from "@/lib/utils";
+import { AVATAR_FALLBACK } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "@/store/toast-store";
@@ -280,9 +281,13 @@ function CustomersManager() {
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
                         <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full bg-secondary">
-                          {u.avatar && (
-                            <Image src={u.avatar} alt={u.name} fill sizes="36px" className="object-cover" />
-                          )}
+                          <Image
+                            src={u.avatar || AVATAR_FALLBACK}
+                            alt={u.name}
+                            fill
+                            sizes="36px"
+                            className="object-cover"
+                          />
                         </div>
                         <div className="min-w-0">
                           <p className="line-clamp-1 font-medium">

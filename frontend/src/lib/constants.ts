@@ -14,10 +14,15 @@ export const STORE = {
   tagline: "Effortless fashion, thoughtfully made.",
   email: "support@sruvalle.in",
   phone: "+91 98765 43210",
-  whatsapp: "+91 98765 43210",
+  whatsapp: "+91 75580 83325",
+  // Order details are forwarded to this WhatsApp number (country code + digits, no "+").
+  orderWhatsapp: "917558083325",
   address: "Sruvalle Studio, 4th Floor, Prestige Tower, MG Road, Bengaluru 560001",
   freeShippingThreshold: 1499,
 };
+
+/** Standard fallback profile picture shown when a user has no avatar. */
+export const AVATAR_FALLBACK = "/avatar-fallback.svg";
 
 export const ANNOUNCEMENTS = [
   "Free shipping on orders over ₹1,499",

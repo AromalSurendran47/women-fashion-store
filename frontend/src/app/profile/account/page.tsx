@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
 import { useMounted } from "@/hooks/use-mounted";
 import { toast } from "@/store/toast-store";
+import { AVATAR_FALLBACK } from "@/lib/constants";
 
 const inputCls =
   "h-12 w-full rounded-xl border border-line bg-background px-4 text-sm outline-none focus:border-ink";
@@ -61,9 +62,13 @@ function AvatarSection({
   return (
     <div className="flex items-center gap-5">
       <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full bg-secondary">
-        {user.avatar && (
-          <Image src={user.avatar} alt={user.name} fill sizes="80px" className="object-cover" />
-        )}
+        <Image
+          src={user.avatar || AVATAR_FALLBACK}
+          alt={user.name}
+          fill
+          sizes="80px"
+          className="object-cover"
+        />
       </div>
       <div className="flex flex-col items-start gap-2">
         <Button

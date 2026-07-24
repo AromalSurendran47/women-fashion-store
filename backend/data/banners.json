@@ -1,66 +1,66 @@
 [
   {
-    "_id": "6a48f9798a6ebda22ab49b34",
+    "_id": "6a638ee1d121d069f6f8c025",
     "title": "The Summer Edit",
     "subtitle": "New Season",
     "description": "Breezy weaves and sun-ready shades, made for long golden days.",
-    "image": "https://images.unsplash.com/photo-1502716119720-b23a93e5fe1b?auto=format&fit=crop&w=1920&h=1080&q=80",
-    "mobileImage": "https://images.unsplash.com/photo-1502716119720-b23a93e5fe1b?auto=format&fit=crop&w=1920&h=1080&q=80",
     "ctaText": "Shop Summer",
     "ctaLink": "/collections/summer-collection",
-    "type": "hero",
     "align": "left",
+    "image": "https://images.unsplash.com/photo-1502716119720-b23a93e5fe1b?auto=format&fit=crop&w=1920&h=1080&q=80",
+    "mobileImage": "https://images.unsplash.com/photo-1502716119720-b23a93e5fe1b?auto=format&fit=crop&w=1920&h=1080&q=80",
+    "type": "hero",
     "order": 0,
     "active": true,
-    "createdAt": "2026-01-27T20:21:40.772Z"
+    "createdAt": "2026-01-22T06:04:30.862Z"
   },
   {
-    "_id": "6a48f9798a6ebda22ab49b35",
+    "_id": "6a638ee1d121d069f6f8c026",
     "title": "Festive Reverie",
     "subtitle": "Ethnic Wear",
     "description": "Handcrafted silhouettes for every celebration on your calendar.",
-    "image": "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=1920&h=1080&q=80",
-    "mobileImage": "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=1920&h=1080&q=80",
     "ctaText": "Explore Ethnic",
     "ctaLink": "/collections/ethnic-wear",
-    "type": "hero",
     "align": "center",
+    "image": "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=1920&h=1080&q=80",
+    "mobileImage": "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=1920&h=1080&q=80",
+    "type": "hero",
     "order": 1,
     "active": true,
-    "createdAt": "2025-10-06T20:23:04.535Z"
+    "createdAt": "2026-07-09T02:22:12.970Z"
   },
   {
-    "_id": "6a48f9798a6ebda22ab49b36",
+    "_id": "6a638ee1d121d069f6f8c027",
     "title": "Effortless Co-Ords",
     "subtitle": "Matching Sets",
     "description": "One decision, one polished look. Throw it on and go.",
-    "image": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1920&h=1080&q=80",
-    "mobileImage": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1920&h=1080&q=80",
     "ctaText": "Shop Co-Ords",
     "ctaLink": "/collections/co-ord-sets",
-    "type": "hero",
     "align": "right",
+    "image": "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=1920&h=1080&q=80",
+    "mobileImage": "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=1920&h=1080&q=80",
+    "type": "hero",
     "order": 2,
     "active": true,
-    "createdAt": "2026-04-06T07:17:27.417Z"
+    "createdAt": "2025-09-20T00:55:10.889Z"
   },
   {
-    "_id": "6a48f9798a6ebda22ab49c01",
+    "_id": "6a638ee1d121d069f6f8c028",
     "title": "The New Arrivals",
     "subtitle": "Just In",
     "description": "Fresh drops, restocked weekly. Be the first to wear what's next.",
-    "image": "https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=1920&h=900&q=80",
-    "mobileImage": "https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=1920&h=900&q=80",
     "ctaText": "Discover New In",
     "ctaLink": "/products?filter=new",
-    "type": "collection",
     "align": "left",
+    "image": "https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=1920&h=900&q=80",
+    "mobileImage": "https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=1920&h=900&q=80",
+    "type": "collection",
     "order": 3,
     "active": true,
-    "createdAt": "2026-03-18T09:12:00.000Z"
+    "createdAt": "2026-01-09T22:44:12.552Z"
   },
   {
-    "_id": "6a48f9798a6ebda22ab49b38",
+    "_id": "6a638ee1d121d069f6f8c029",
     "title": "Dresses",
     "subtitle": "From breezy midis to statement maxis — dresses for every moment.",
     "image": "https://images.unsplash.com/photo-1502716119720-b23a93e5fe1b?auto=format&fit=crop&w=1600&h=600&q=80",
@@ -68,13 +68,12 @@
     "ctaText": "Shop Dresses",
     "ctaLink": "/collections/dresses",
     "type": "category",
-    "align": "left",
     "order": 4,
     "active": true,
-    "createdAt": "2025-09-03T22:20:36.655Z"
+    "createdAt": "2025-11-30T07:05:44.222Z"
   },
   {
-    "_id": "6a48f9798a6ebda22ab49b39",
+    "_id": "6a638ee1d121d069f6f8c02a",
     "title": "Kurtis",
     "subtitle": "Everyday elegance in handcrafted prints and easy silhouettes.",
     "image": "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=1600&h=600&q=80",
@@ -82,13 +81,12 @@
     "ctaText": "Shop Kurtis",
     "ctaLink": "/collections/kurtis",
     "type": "category",
-    "align": "left",
     "order": 5,
     "active": true,
-    "createdAt": "2025-12-25T03:10:57.561Z"
+    "createdAt": "2025-10-28T19:16:09.469Z"
   },
   {
-    "_id": "6a48f9798a6ebda22ab49b3a",
+    "_id": "6a638ee1d121d069f6f8c02b",
     "title": "Sarees",
     "subtitle": "Drapes that tell a story — woven, printed and hand-embellished.",
     "image": "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=1600&h=600&q=80",
@@ -96,13 +94,12 @@
     "ctaText": "Shop Sarees",
     "ctaLink": "/collections/sarees",
     "type": "category",
-    "align": "left",
     "order": 6,
     "active": true,
-    "createdAt": "2026-01-11T08:57:31.419Z"
+    "createdAt": "2025-09-11T00:00:28.401Z"
   },
   {
-    "_id": "6a48f9798a6ebda22ab49b3b",
+    "_id": "6a638ee1d121d069f6f8c02c",
     "title": "Tops",
     "subtitle": "The everyday hero — tanks, blouses and statement sleeves.",
     "image": "https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?auto=format&fit=crop&w=1600&h=600&q=80",
@@ -110,13 +107,12 @@
     "ctaText": "Shop Tops",
     "ctaLink": "/collections/tops",
     "type": "category",
-    "align": "left",
     "order": 7,
     "active": true,
-    "createdAt": "2026-02-05T20:23:55.695Z"
+    "createdAt": "2026-02-21T16:10:42.038Z"
   },
   {
-    "_id": "6a48f9798a6ebda22ab49b3c",
+    "_id": "6a638ee1d121d069f6f8c02d",
     "title": "Co-Ord Sets",
     "subtitle": "Effortlessly put-together matching sets for a done-in-one look.",
     "image": "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=1600&h=600&q=80",
@@ -124,13 +120,12 @@
     "ctaText": "Shop Co-Ord Sets",
     "ctaLink": "/collections/co-ord-sets",
     "type": "category",
-    "align": "left",
     "order": 8,
     "active": true,
-    "createdAt": "2025-08-16T01:56:41.890Z"
+    "createdAt": "2026-06-06T20:09:34.584Z"
   },
   {
-    "_id": "6a48f9798a6ebda22ab49b3d",
+    "_id": "6a638ee1d121d069f6f8c02e",
     "title": "Ethnic Wear",
     "subtitle": "Timeless Indian craftsmanship reimagined for the modern woman.",
     "image": "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=1600&h=600&q=80",
@@ -138,43 +133,42 @@
     "ctaText": "Shop Ethnic Wear",
     "ctaLink": "/collections/ethnic-wear",
     "type": "category",
-    "align": "left",
     "order": 9,
     "active": true,
-    "createdAt": "2025-08-14T14:45:57.156Z"
+    "createdAt": "2025-09-04T17:27:02.922Z"
   },
   {
-    "_id": "6a48f9798a6ebda22ab49b3e",
+    "_id": "6a638ee1d121d069f6f8c02f",
     "title": "Flat 20% Off",
     "subtitle": "Festive Sale",
     "description": "Use code FESTIVE20 at checkout on orders over ₹1,999.",
-    "image": "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1600&h=600&q=80",
-    "mobileImage": "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1600&h=600&q=80",
     "ctaText": "Grab the Deal",
     "ctaLink": "/collections/party-wear",
-    "type": "offer",
     "align": "center",
+    "image": "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1600&h=600&q=80",
+    "mobileImage": "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1600&h=600&q=80",
+    "type": "offer",
     "order": 10,
     "active": true,
-    "createdAt": "2026-05-23T06:45:59.569Z"
+    "createdAt": "2025-12-26T03:48:35.228Z"
   },
   {
-    "_id": "6a48f9798a6ebda22ab49b3f",
+    "_id": "6a638ee1d121d069f6f8c030",
     "title": "Free Shipping over ₹1499",
     "subtitle": "Always On",
     "description": "On every order, everywhere in India — no minimum, no code.",
-    "image": "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1600&h=600&q=80",
-    "mobileImage": "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1600&h=600&q=80",
     "ctaText": "Start Shopping",
     "ctaLink": "/collections/new-arrivals",
-    "type": "offer",
     "align": "center",
+    "image": "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1600&h=600&q=80",
+    "mobileImage": "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1600&h=600&q=80",
+    "type": "offer",
     "order": 11,
     "active": true,
-    "createdAt": "2026-06-15T15:30:09.435Z"
+    "createdAt": "2025-10-22T23:02:06.971Z"
   },
   {
-    "_id": "6a48f9798a6ebda22ab49d00",
+    "_id": "6a638ee1d121d069f6f8c031",
     "title": "@sruvalle",
     "subtitle": "Instagram",
     "image": "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=600&h=600&q=80",
@@ -184,10 +178,10 @@
     "type": "instagram",
     "order": 12,
     "active": true,
-    "createdAt": "2026-06-01T10:00:00.000Z"
+    "createdAt": "2026-03-07T16:07:27.205Z"
   },
   {
-    "_id": "6a48f9798a6ebda22ab49d01",
+    "_id": "6a638ee1d121d069f6f8c032",
     "title": "@sruvalle",
     "subtitle": "Instagram",
     "image": "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=600&h=600&q=80",
@@ -197,10 +191,10 @@
     "type": "instagram",
     "order": 13,
     "active": true,
-    "createdAt": "2026-06-01T10:01:00.000Z"
+    "createdAt": "2025-08-20T22:04:57.619Z"
   },
   {
-    "_id": "6a48f9798a6ebda22ab49d02",
+    "_id": "6a638ee1d121d069f6f8c033",
     "title": "@sruvalle",
     "subtitle": "Instagram",
     "image": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=600&h=600&q=80",
@@ -210,10 +204,10 @@
     "type": "instagram",
     "order": 14,
     "active": true,
-    "createdAt": "2026-06-01T10:02:00.000Z"
+    "createdAt": "2026-07-17T19:09:39.861Z"
   },
   {
-    "_id": "6a48f9798a6ebda22ab49d03",
+    "_id": "6a638ee1d121d069f6f8c034",
     "title": "@sruvalle",
     "subtitle": "Instagram",
     "image": "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=600&h=600&q=80",
@@ -223,10 +217,10 @@
     "type": "instagram",
     "order": 15,
     "active": true,
-    "createdAt": "2026-06-01T10:03:00.000Z"
+    "createdAt": "2026-04-22T01:24:39.498Z"
   },
   {
-    "_id": "6a48f9798a6ebda22ab49d04",
+    "_id": "6a638ee1d121d069f6f8c035",
     "title": "@sruvalle",
     "subtitle": "Instagram",
     "image": "https://images.unsplash.com/photo-1479064555552-3ef4979f8908?auto=format&fit=crop&w=600&h=600&q=80",
@@ -236,10 +230,10 @@
     "type": "instagram",
     "order": 16,
     "active": true,
-    "createdAt": "2026-06-01T10:04:00.000Z"
+    "createdAt": "2025-09-06T13:40:53.242Z"
   },
   {
-    "_id": "6a48f9798a6ebda22ab49d05",
+    "_id": "6a638ee1d121d069f6f8c036",
     "title": "@sruvalle",
     "subtitle": "Instagram",
     "image": "https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?auto=format&fit=crop&w=600&h=600&q=80",
@@ -249,6 +243,6 @@
     "type": "instagram",
     "order": 17,
     "active": true,
-    "createdAt": "2026-06-01T10:05:00.000Z"
+    "createdAt": "2025-11-24T19:26:13.162Z"
   }
 ]

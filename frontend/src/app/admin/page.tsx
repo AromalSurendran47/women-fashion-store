@@ -9,6 +9,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { useAuthStore } from "@/store/auth-store";
 import { apiGetAuthed } from "@/lib/auth-api";
 import { formatPrice, formatDate } from "@/lib/utils";
+import { AVATAR_FALLBACK } from "@/lib/constants";
 import { Badge } from "@/components/ui/badge";
 import type { AuthUser } from "@/types";
 
@@ -183,7 +184,13 @@ function AdminDashboard() {
                 {users.slice(0, 8).map((u) => (
                   <div key={u.id} className="flex items-center gap-3 px-4 py-3">
                     <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full bg-secondary">
-                      <Image src={u.avatar} alt={u.name} fill sizes="36px" className="object-cover" />
+                      <Image
+                        src={u.avatar || AVATAR_FALLBACK}
+                        alt={u.name}
+                        fill
+                        sizes="36px"
+                        className="object-cover"
+                      />
                     </div>
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-medium">{u.name}</p>

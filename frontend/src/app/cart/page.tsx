@@ -13,17 +13,18 @@ import { EmptyState } from "@/components/ui/empty-state";
 import { buttonVariants } from "@/components/ui/button";
 
 export default function CartPage() {
-  const { items, updateQuantity, removeItem } = useCartStore();
+  const { items, updateQuantity, removeItem, coupon: applied, setCoupon } = useCartStore();
   const [code, setCode] = useState("");
-  const [applied, setApplied] = useState<{ code: string; amount: number } | null>(null);
   const [error, setError] = useState("");
   const [applying, setApplying] = useState(false);
 
+  // Same formulas as the backend order route: shipping and tax are computed on the
+  // raw subtotal; the discount comes off the final total.
   const subtotal = items.reduce((s, l) => s + l.price * l.quantity, 0);
   const discount = applied?.amount ?? 0;
-  const shipping = subtotal - discount >= STORE.freeShippingThreshold || subtotal === 0 ? 0 : 99;
-  const tax = Math.round((subtotal - discount) * 0.05);
-  const total = subtotal - discount + shipping + tax;
+  const shipping = subtotal >= STORE.freeShippingThreshold || subtotal === 0 ? 0 : 99;
+  const tax = Math.round(subtotal * 0.05);
+  const total = Math.max(0, subtotal + shipping + tax - discount);
 
   const apply = async () => {
     if (!code.trim() || applying) return;
@@ -32,10 +33,10 @@ export default function CartPage() {
     const result = await validateCoupon(code, subtotal);
     setApplying(false);
     if (!result.valid) {
-      setApplied(null);
+      setCoupon(null);
       return setError(result.message ?? "Invalid coupon code.");
     }
-    setApplied({ code: result.code ?? code.trim().toUpperCase(), amount: result.discount ?? 0 });
+    setCoupon({ code: result.code ?? code.trim().toUpperCase(), amount: result.discount ?? 0 });
     setError("");
   };
 

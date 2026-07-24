@@ -6,6 +6,7 @@ import { useMemo, useState } from "react";
 import { CheckCircle2, ThumbsUp, Star, Loader2 } from "lucide-react";
 import type { Product, Review } from "@/types";
 import { cn, formatDate } from "@/lib/utils";
+import { AVATAR_FALLBACK } from "@/lib/constants";
 import { Rating } from "@/components/ui/rating";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -191,7 +192,13 @@ function ReviewsTab({
           return (
             <article key={r.id} className="flex gap-4 py-5 first:pt-0">
               <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full bg-secondary">
-                <Image src={r.avatar} alt={r.userName} fill sizes="44px" className="object-cover" />
+                <Image
+                  src={r.avatar || AVATAR_FALLBACK}
+                  alt={r.userName}
+                  fill
+                  sizes="44px"
+                  className="object-cover"
+                />
               </div>
               <div className="flex flex-1 flex-col gap-1.5">
                 <div className="flex flex-wrap items-center gap-2">
