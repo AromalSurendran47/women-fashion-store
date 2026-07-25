@@ -149,7 +149,7 @@ export default function AddressesPage() {
 
       {addresses.length === 0 && editing === null ? (
         <p className="rounded-2xl border border-line p-5 text-sm text-muted">
-          You haven't saved any addresses yet. Add one to speed up checkout.
+          You haven&apos;t saved any addresses yet. Add one to speed up checkout.
         </p>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2">
