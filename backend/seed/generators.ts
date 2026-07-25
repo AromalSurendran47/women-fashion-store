@@ -476,6 +476,19 @@ export function genBanners(categories: Category[]) {
     });
   });
 
+  P.COLLECTION_BANNERS.forEach((b) => {
+    banners.push({
+      _id: oid(),
+      ...b,
+      image: IMG.collectionImage(),
+      mobileImage: IMG.collectionImage(),
+      type: "collection",
+      order: order++,
+      active: true,
+      createdAt: faker.date.past({ years: 1 }),
+    });
+  });
+
   categories
     .filter((c) => c.featured)
     .slice(0, 6)
@@ -502,6 +515,22 @@ export function genBanners(categories: Category[]) {
       image: IMG.offerImage(),
       mobileImage: IMG.offerImage(),
       type: "offer",
+      order: order++,
+      active: true,
+      createdAt: faker.date.past({ years: 1 }),
+    });
+  });
+
+  Array.from({ length: P.INSTAGRAM_COUNT }).forEach((_, i) => {
+    banners.push({
+      _id: oid(),
+      title: `@${P.INSTAGRAM_HANDLE}`,
+      subtitle: "Instagram",
+      image: IMG.instagramImage(i),
+      mobileImage: IMG.instagramImage(i),
+      ctaText: "View on Instagram",
+      ctaLink: `https://instagram.com/${P.INSTAGRAM_HANDLE}`,
+      type: "instagram",
       order: order++,
       active: true,
       createdAt: faker.date.past({ years: 1 }),

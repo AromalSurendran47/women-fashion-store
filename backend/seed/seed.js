@@ -37,6 +37,7 @@ const COLLECTIONS = {
   newsletter: "Newsletter",
   blogs: "Blog",
   settings: "Settings",
+  attributes: "Attribute",
 };
 
 const OID_RE = /^[a-f0-9]{24}$/;

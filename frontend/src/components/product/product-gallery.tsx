@@ -17,11 +17,23 @@ export function ProductGallery({ images, name }: { images: string[]; name: strin
     });
   };
 
+  // Drop any empty/undefined entries so next/image never gets a blank src.
+  const gallery = images.filter(Boolean);
+  if (gallery.length === 0) {
+    return (
+      <div
+        className="aspect-[4/5] w-full rounded-2xl bg-secondary"
+        aria-label={`${name} image unavailable`}
+      />
+    );
+  }
+  const current = gallery[Math.min(active, gallery.length - 1)];
+
   return (
     <div className="flex flex-col-reverse gap-4 md:flex-row">
       {/* Thumbnails */}
       <div className="no-scrollbar flex gap-3 overflow-x-auto md:flex-col">
-        {images.map((src, i) => (
+        {gallery.map((src, i) => (
           <button
             key={i}
             onClick={() => setActive(i)}
@@ -43,7 +55,7 @@ export function ProductGallery({ images, name }: { images: string[]; name: strin
         onMouseMove={onMove}
       >
         <Image
-          src={images[active]}
+          src={current}
           alt={name}
           fill
           priority

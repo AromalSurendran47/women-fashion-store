@@ -1,179 +1,223 @@
 [
   {
-    "_id": "6a48f9798a6ebda22ab499c0",
+    "_id": "6a638ee1d121d069f6f8beb2",
     "name": "Sruvalle Admin",
     "email": "admin@sruvalle.in",
-    "phone": "+91 7774136374",
-    "password": "$2a$10$Lpx6xcQ1CH.psRyhpxIyGO7djnsrxyooHrjgyLeXmMDZcAHfOUOXa",
+    "phone": "+91 9372703911",
+    "password": "$2a$10$AIvVQjGwHv/XkVxDDShQbuspW/pJgF4MJd/iD8ngQnUwS6TRgX/7u",
     "role": "admin",
     "avatar": "https://i.pravatar.cc/150?img=1",
     "wishlist": [
-      "6a48f9798a6ebda22ab49982",
-      "6a48f9798a6ebda22ab49970",
-      "6a48f9798a6ebda22ab49993",
-      "6a48f9798a6ebda22ab499b9"
+      "6a638ee1d121d069f6f8be9a",
+      "6a638ee1d121d069f6f8be7f",
+      "6a638ee1d121d069f6f8be60",
+      "6a638ee1d121d069f6f8be8e",
+      "6a638ee1d121d069f6f8be76"
     ],
     "cart": [
       {
-        "product": "6a48f9798a6ebda22ab4996b",
-        "variantSku": "SRUVALLE-SMOCKE-GR-XS",
-        "name": "Smocked Handloom Cotton Peplum Top",
+        "product": "6a638ee1d121d069f6f8beb1",
+        "variantSku": "SRUVALLE-IKAT-S-MU-XS",
+        "name": "Ikat Silk Blend Ruffle Top",
         "thumbnail": "https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "White",
-        "size": "S",
-        "price": 1229,
-        "quantity": 3
+        "color": "Brown",
+        "size": "M",
+        "price": 1969,
+        "quantity": 2
       }
     ],
     "addresses": [
       {
-        "label": "Work",
-        "fullName": "Sruvalle Admin",
-        "phone": "+91 9179088320",
-        "line1": "Rose Villa, MG Road",
-        "line2": "Near Ring Road",
-        "city": "Kochi",
-        "state": "Kerala",
-        "pincode": "682001",
-        "country": "India",
-        "isDefault": true
-      },
-      {
         "label": "Other",
         "fullName": "Sruvalle Admin",
-        "phone": "+91 8595307716",
-        "line1": "204 Sea Breeze, Marine Drive",
-        "line2": "Near Metro Station",
+        "phone": "+91 7395503706",
+        "line1": "Rose Villa, MG Road",
+        "line2": "Near Ring Road",
         "city": "Ahmedabad",
         "state": "Gujarat",
         "pincode": "380001",
         "country": "India",
-        "isDefault": false
+        "isDefault": true
       }
     ],
     "emailVerified": true,
-    "createdAt": "2024-08-20T11:01:48.076Z",
-    "updatedAt": "2026-07-04T12:15:53.402Z"
+    "createdAt": "2024-09-30T22:26:35.158Z",
+    "updatedAt": "2026-07-24T16:12:17.137Z"
   },
   {
-    "_id": "6a48f9798a6ebda22ab499c1",
+    "_id": "6a638ee1d121d069f6f8beb3",
     "name": "Studio Seller",
     "email": "seller@sruvalle.in",
-    "phone": "+91 9661043852",
-    "password": "$2a$10$Lpx6xcQ1CH.psRyhpxIyGO7djnsrxyooHrjgyLeXmMDZcAHfOUOXa",
+    "phone": "+91 7467581254",
+    "password": "$2a$10$AIvVQjGwHv/XkVxDDShQbuspW/pJgF4MJd/iD8ngQnUwS6TRgX/7u",
     "role": "seller",
     "avatar": "https://i.pravatar.cc/150?img=2",
     "wishlist": [
-      "6a48f9798a6ebda22ab4995e",
-      "6a48f9798a6ebda22ab49992",
-      "6a48f9798a6ebda22ab49980",
-      "6a48f9798a6ebda22ab499a7"
+      "6a638ee1d121d069f6f8be4e",
+      "6a638ee1d121d069f6f8be7e",
+      "6a638ee1d121d069f6f8be98"
     ],
     "cart": [
       {
-        "product": "6a48f9798a6ebda22ab49987",
-        "variantSku": "SRUVALLE-RUCHED-BL-XS",
-        "name": "Ruched Silk Blend Jumpsuit",
-        "thumbnail": "https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "White",
+        "product": "6a638ee1d121d069f6f8be83",
+        "variantSku": "SRUVALLE-BLOCK--GR-XS",
+        "name": "Block-Print Silk Blend Crop & Skirt Set",
+        "thumbnail": "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=700&h=900&q=80",
+        "color": "Green",
         "size": "S",
-        "price": 2049,
-        "quantity": 1
+        "price": 2909,
+        "quantity": 3
       },
       {
-        "product": "6a48f9798a6ebda22ab49996",
-        "variantSku": "SRUVALLE-EMBROI-MU-XS",
-        "name": "Embroidered Denim Beach Kaftan",
-        "thumbnail": "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Mustard",
-        "size": "XL",
-        "price": 4539,
-        "quantity": 2
-      },
-      {
-        "product": "6a48f9798a6ebda22ab49982",
-        "variantSku": "SRUVALLE-GATHER-OL-XS",
-        "name": "Gathered Rayon Georgette Saree",
-        "thumbnail": "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Olive",
-        "size": "S",
-        "price": 3939,
-        "quantity": 2
-      }
-    ],
-    "addresses": [
-      {
-        "label": "Work",
-        "fullName": "Studio Seller",
-        "phone": "+91 8481376813",
-        "line1": "204 Sea Breeze, Marine Drive",
-        "line2": "Near City Mall",
-        "city": "Kolkata",
-        "state": "West Bengal",
-        "pincode": "700001",
-        "country": "India",
-        "isDefault": true
-      },
-      {
-        "label": "Work",
-        "fullName": "Studio Seller",
-        "phone": "+91 7847778810",
-        "line1": "Rose Villa, MG Road",
-        "line2": "Near Metro Station",
-        "city": "Bengaluru",
-        "state": "Karnataka",
-        "pincode": "560001",
-        "country": "India",
-        "isDefault": false
-      }
-    ],
-    "emailVerified": true,
-    "createdAt": "2025-08-11T04:07:10.490Z",
-    "updatedAt": "2026-07-04T12:15:53.402Z"
-  },
-  {
-    "_id": "6a48f9798a6ebda22ab499c2",
-    "name": "Trisha Desai",
-    "email": "trisha.desai2@example.com",
-    "phone": "+91 9050212099",
-    "password": "$2a$10$Lpx6xcQ1CH.psRyhpxIyGO7djnsrxyooHrjgyLeXmMDZcAHfOUOXa",
-    "role": "customer",
-    "avatar": "https://i.pravatar.cc/150?img=3",
-    "wishlist": [
-      "6a48f9798a6ebda22ab499bd",
-      "6a48f9798a6ebda22ab4996e",
-      "6a48f9798a6ebda22ab499a5",
-      "6a48f9798a6ebda22ab49981"
-    ],
-    "cart": [
-      {
-        "product": "6a48f9798a6ebda22ab499be",
-        "variantSku": "SRUVALLE-ABSTRA-BL-XS",
-        "name": "Abstract Cotton Linen Saree",
+        "product": "6a638ee1d121d069f6f8be7f",
+        "variantSku": "SRUVALLE-CUTWOR-BL-XS",
+        "name": "Cutwork Denim A-Line Kurti",
         "thumbnail": "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=700&h=900&q=80",
         "color": "Pink",
-        "size": "S",
-        "price": 1829,
-        "quantity": 2
-      },
-      {
-        "product": "6a48f9798a6ebda22ab499b3",
-        "variantSku": "SRUVALLE-STRIPE-MU-XS",
-        "name": "Striped Crepe Wrap Top",
-        "thumbnail": "https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Olive",
-        "size": "XS",
-        "price": 2779,
+        "size": "XL",
+        "price": 2219,
         "quantity": 2
       }
     ],
     "addresses": [
       {
         "label": "Other",
-        "fullName": "Trisha Desai",
-        "phone": "+91 8011249693",
+        "fullName": "Studio Seller",
+        "phone": "+91 9448594072",
+        "line1": "18 Orchid Street, Vashi",
+        "line2": "Near Metro Station",
+        "city": "Jaipur",
+        "state": "Rajasthan",
+        "pincode": "302001",
+        "country": "India",
+        "isDefault": true
+      },
+      {
+        "label": "Work",
+        "fullName": "Studio Seller",
+        "phone": "+91 8236696640",
+        "line1": "Rose Villa, MG Road",
+        "line2": "Near Central Park",
+        "city": "Kolkata",
+        "state": "West Bengal",
+        "pincode": "700001",
+        "country": "India",
+        "isDefault": false
+      }
+    ],
+    "emailVerified": true,
+    "createdAt": "2025-06-21T17:00:46.972Z",
+    "updatedAt": "2026-07-24T16:12:17.137Z"
+  },
+  {
+    "_id": "6a638ee1d121d069f6f8beb4",
+    "name": "Kavya Bose",
+    "email": "kavya.bose2@example.com",
+    "phone": "+91 7927803422",
+    "password": "$2a$10$AIvVQjGwHv/XkVxDDShQbuspW/pJgF4MJd/iD8ngQnUwS6TRgX/7u",
+    "role": "customer",
+    "avatar": "https://i.pravatar.cc/150?img=3",
+    "wishlist": [],
+    "cart": [
+      {
+        "product": "6a638ee1d121d069f6f8bea9",
+        "variantSku": "SRUVALLE-SOLID--PI-XS",
+        "name": "Solid Linen Jumpsuit",
+        "thumbnail": "https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?auto=format&fit=crop&w=700&h=900&q=80",
+        "color": "Pink",
+        "size": "XS",
+        "price": 1269,
+        "quantity": 1
+      },
+      {
+        "product": "6a638ee1d121d069f6f8be5f",
+        "variantSku": "SRUVALLE-IKAT-S-PI-XS",
+        "name": "Ikat Silk Blend Linen Co-Ord Set",
+        "thumbnail": "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=700&h=900&q=80",
+        "color": "Olive",
+        "size": "XS",
+        "price": 2139,
+        "quantity": 1
+      }
+    ],
+    "addresses": [
+      {
+        "label": "Other",
+        "fullName": "Kavya Bose",
+        "phone": "+91 9841134462",
         "line1": "7 Jasmine Lane, Banjara Hills",
-        "line2": "Near Ring Road",
+        "line2": "Near Metro Station",
+        "city": "Hyderabad",
+        "state": "Telangana",
+        "pincode": "500001",
+        "country": "India",
+        "isDefault": true
+      },
+      {
+        "label": "Other",
+        "fullName": "Kavya Bose",
+        "phone": "+91 7631514770",
+        "line1": "7 Jasmine Lane, Banjara Hills",
+        "line2": "Near Metro Station",
+        "city": "Ahmedabad",
+        "state": "Gujarat",
+        "pincode": "380001",
+        "country": "India",
+        "isDefault": false
+      }
+    ],
+    "emailVerified": true,
+    "createdAt": "2026-07-03T13:25:40.371Z",
+    "updatedAt": "2026-07-24T16:12:17.137Z"
+  },
+  {
+    "_id": "6a638ee1d121d069f6f8beb5",
+    "name": "Ananya Nair",
+    "email": "ananya.nair3@example.com",
+    "phone": "+91 8780674974",
+    "password": "$2a$10$AIvVQjGwHv/XkVxDDShQbuspW/pJgF4MJd/iD8ngQnUwS6TRgX/7u",
+    "role": "customer",
+    "avatar": "https://i.pravatar.cc/150?img=4",
+    "wishlist": [],
+    "cart": [
+      {
+        "product": "6a638ee1d121d069f6f8be75",
+        "variantSku": "SRUVALLE-STRIPE-BR-XS",
+        "name": "Striped Modal Puff-Sleeve Top",
+        "thumbnail": "https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?auto=format&fit=crop&w=700&h=900&q=80",
+        "color": "Black",
+        "size": "XS",
+        "price": 2339,
+        "quantity": 3
+      },
+      {
+        "product": "6a638ee1d121d069f6f8beb0",
+        "variantSku": "SRUVALLE-SMOCKE-RE-XS",
+        "name": "Smocked Crepe Chiffon Saree",
+        "thumbnail": "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=700&h=900&q=80",
+        "color": "Pink",
+        "size": "XL",
+        "price": 3639,
+        "quantity": 2
+      },
+      {
+        "product": "6a638ee1d121d069f6f8be6b",
+        "variantSku": "SRUVALLE-DITSY--WH-XS",
+        "name": "Ditsy Floral Linen Linen Co-Ord Set",
+        "thumbnail": "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=700&h=900&q=80",
+        "color": "Beige",
+        "size": "XL",
+        "price": 2839,
+        "quantity": 1
+      }
+    ],
+    "addresses": [
+      {
+        "label": "Work",
+        "fullName": "Ananya Nair",
+        "phone": "+91 8975913393",
+        "line1": "18 Orchid Street, Vashi",
+        "line2": "Near Central Park",
         "city": "Kolkata",
         "state": "West Bengal",
         "pincode": "700001",
@@ -181,27 +225,72 @@
         "isDefault": true
       }
     ],
-    "emailVerified": true,
-    "createdAt": "2024-09-10T07:06:44.531Z",
-    "updatedAt": "2026-07-04T12:15:53.402Z"
+    "emailVerified": false,
+    "createdAt": "2026-07-24T05:51:48.719Z",
+    "updatedAt": "2026-07-24T16:12:17.137Z"
   },
   {
-    "_id": "6a48f9798a6ebda22ab499c3",
-    "name": "Diya Desai",
-    "email": "diya.desai3@example.com",
-    "phone": "+91 7641289569",
-    "password": "$2a$10$Lpx6xcQ1CH.psRyhpxIyGO7djnsrxyooHrjgyLeXmMDZcAHfOUOXa",
+    "_id": "6a638ee1d121d069f6f8beb6",
+    "name": "Lavanya Nair",
+    "email": "lavanya.nair4@example.com",
+    "phone": "+91 9374902693",
+    "password": "$2a$10$AIvVQjGwHv/XkVxDDShQbuspW/pJgF4MJd/iD8ngQnUwS6TRgX/7u",
     "role": "customer",
-    "avatar": "https://i.pravatar.cc/150?img=4",
-    "wishlist": [],
+    "avatar": "https://i.pravatar.cc/150?img=5",
+    "wishlist": [
+      "6a638ee1d121d069f6f8be94"
+    ],
     "cart": [],
     "addresses": [
       {
-        "label": "Work",
-        "fullName": "Diya Desai",
-        "phone": "+91 8541323023",
+        "label": "Other",
+        "fullName": "Lavanya Nair",
+        "phone": "+91 7829356319",
+        "line1": "301 Sunrise Apartments, Anna Nagar",
+        "line2": "Near Central Park",
+        "city": "Jaipur",
+        "state": "Rajasthan",
+        "pincode": "302001",
+        "country": "India",
+        "isDefault": true
+      },
+      {
+        "label": "Home",
+        "fullName": "Lavanya Nair",
+        "phone": "+91 9424316536",
+        "line1": "Rose Villa, MG Road",
+        "line2": "Near Central Park",
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "pincode": "400001",
+        "country": "India",
+        "isDefault": false
+      }
+    ],
+    "emailVerified": true,
+    "createdAt": "2026-01-22T09:54:04.517Z",
+    "updatedAt": "2026-07-24T16:12:17.137Z"
+  },
+  {
+    "_id": "6a638ee1d121d069f6f8beb7",
+    "name": "Tara Kulkarni",
+    "email": "tara.kulkarni5@example.com",
+    "phone": "+91 8270000058",
+    "password": "$2a$10$AIvVQjGwHv/XkVxDDShQbuspW/pJgF4MJd/iD8ngQnUwS6TRgX/7u",
+    "role": "customer",
+    "avatar": "https://i.pravatar.cc/150?img=6",
+    "wishlist": [
+      "6a638ee1d121d069f6f8be85",
+      "6a638ee1d121d069f6f8beab"
+    ],
+    "cart": [],
+    "addresses": [
+      {
+        "label": "Home",
+        "fullName": "Tara Kulkarni",
+        "phone": "+91 7052647446",
         "line1": "45 Lotus Residency, Koramangala",
-        "line2": "Near Metro Station",
+        "line2": "Near Ring Road",
         "city": "Ahmedabad",
         "state": "Gujarat",
         "pincode": "380001",
@@ -209,895 +298,713 @@
         "isDefault": true
       }
     ],
-    "emailVerified": false,
-    "createdAt": "2025-09-12T03:48:23.586Z",
-    "updatedAt": "2026-07-04T12:15:53.402Z"
+    "emailVerified": true,
+    "createdAt": "2026-02-18T15:04:36.049Z",
+    "updatedAt": "2026-07-24T16:12:17.137Z"
   },
   {
-    "_id": "6a48f9798a6ebda22ab499c4",
-    "name": "Divya Sinha",
-    "email": "divya.sinha4@example.com",
-    "phone": "+91 9418246037",
-    "password": "$2a$10$Lpx6xcQ1CH.psRyhpxIyGO7djnsrxyooHrjgyLeXmMDZcAHfOUOXa",
+    "_id": "6a638ee1d121d069f6f8beb8",
+    "name": "Harini Sharma",
+    "email": "harini.sharma6@example.com",
+    "phone": "+91 8955935276",
+    "password": "$2a$10$AIvVQjGwHv/XkVxDDShQbuspW/pJgF4MJd/iD8ngQnUwS6TRgX/7u",
     "role": "customer",
-    "avatar": "https://i.pravatar.cc/150?img=5",
+    "avatar": "https://i.pravatar.cc/150?img=7",
+    "wishlist": [
+      "6a638ee1d121d069f6f8bea9",
+      "6a638ee1d121d069f6f8be5c",
+      "6a638ee1d121d069f6f8be76"
+    ],
+    "cart": [],
+    "addresses": [
+      {
+        "label": "Other",
+        "fullName": "Harini Sharma",
+        "phone": "+91 8984306272",
+        "line1": "301 Sunrise Apartments, Anna Nagar",
+        "line2": "Near Metro Station",
+        "city": "Jaipur",
+        "state": "Rajasthan",
+        "pincode": "302001",
+        "country": "India",
+        "isDefault": true
+      }
+    ],
+    "emailVerified": false,
+    "createdAt": "2025-01-20T07:42:19.823Z",
+    "updatedAt": "2026-07-24T16:12:17.137Z"
+  },
+  {
+    "_id": "6a638ee1d121d069f6f8beb9",
+    "name": "Vaani Nair",
+    "email": "vaani.nair7@example.com",
+    "phone": "+91 8623443744",
+    "password": "$2a$10$AIvVQjGwHv/XkVxDDShQbuspW/pJgF4MJd/iD8ngQnUwS6TRgX/7u",
+    "role": "customer",
+    "avatar": "https://i.pravatar.cc/150?img=8",
+    "wishlist": [
+      "6a638ee1d121d069f6f8be84",
+      "6a638ee1d121d069f6f8be72"
+    ],
+    "cart": [
+      {
+        "product": "6a638ee1d121d069f6f8be50",
+        "variantSku": "SRUVALLE-BLOCK--BE-XS",
+        "name": "Block-Print Rayon Chiffon Saree",
+        "thumbnail": "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=700&h=900&q=80",
+        "color": "White",
+        "size": "S",
+        "price": 1289,
+        "quantity": 2
+      }
+    ],
+    "addresses": [
+      {
+        "label": "Other",
+        "fullName": "Vaani Nair",
+        "phone": "+91 7596933164",
+        "line1": "12 Palm Grove, Indiranagar",
+        "line2": "Near City Mall",
+        "city": "Chennai",
+        "state": "Tamil Nadu",
+        "pincode": "600001",
+        "country": "India",
+        "isDefault": true
+      }
+    ],
+    "emailVerified": true,
+    "createdAt": "2025-10-15T20:07:08.296Z",
+    "updatedAt": "2026-07-24T16:12:17.138Z"
+  },
+  {
+    "_id": "6a638ee1d121d069f6f8beba",
+    "name": "Pooja Verma",
+    "email": "pooja.verma8@example.com",
+    "phone": "+91 9411558905",
+    "password": "$2a$10$AIvVQjGwHv/XkVxDDShQbuspW/pJgF4MJd/iD8ngQnUwS6TRgX/7u",
+    "role": "customer",
+    "avatar": "https://i.pravatar.cc/150?img=9",
     "wishlist": [],
     "cart": [
       {
-        "product": "6a48f9798a6ebda22ab49965",
-        "variantSku": "SRUVALLE-IKAT-H-PI-XS",
-        "name": "Ikat Handloom Cotton Tailored Trousers",
-        "thumbnail": "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Green",
+        "product": "6a638ee1d121d069f6f8be79",
+        "variantSku": "SRUVALLE-ABSTRA-WH-XS",
+        "name": "Abstract Viscose Jumpsuit",
+        "thumbnail": "https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?auto=format&fit=crop&w=700&h=900&q=80",
+        "color": "Mustard",
+        "size": "L",
+        "price": 2489,
+        "quantity": 1
+      },
+      {
+        "product": "6a638ee1d121d069f6f8be89",
+        "variantSku": "SRUVALLE-BLOCK--BR-XS",
+        "name": "Block-Print Silk Blend Printed Blouse",
+        "thumbnail": "https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?auto=format&fit=crop&w=700&h=900&q=80",
+        "color": "Olive",
         "size": "XS",
-        "price": 1339,
+        "price": 3939,
+        "quantity": 1
+      }
+    ],
+    "addresses": [
+      {
+        "label": "Home",
+        "fullName": "Pooja Verma",
+        "phone": "+91 7392912829",
+        "line1": "18 Orchid Street, Vashi",
+        "line2": "Near Metro Station",
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "pincode": "400001",
+        "country": "India",
+        "isDefault": true
+      }
+    ],
+    "emailVerified": true,
+    "createdAt": "2025-08-31T08:03:34.226Z",
+    "updatedAt": "2026-07-24T16:12:17.138Z"
+  },
+  {
+    "_id": "6a638ee1d121d069f6f8bebb",
+    "name": "Pooja Nair",
+    "email": "pooja.nair9@example.com",
+    "phone": "+91 8582205958",
+    "password": "$2a$10$AIvVQjGwHv/XkVxDDShQbuspW/pJgF4MJd/iD8ngQnUwS6TRgX/7u",
+    "role": "customer",
+    "avatar": "https://i.pravatar.cc/150?img=10",
+    "wishlist": [
+      "6a638ee1d121d069f6f8be60",
+      "6a638ee1d121d069f6f8be97",
+      "6a638ee1d121d069f6f8be73"
+    ],
+    "cart": [
+      {
+        "product": "6a638ee1d121d069f6f8beaf",
+        "variantSku": "SRUVALLE-ABSTRA-BE-XS",
+        "name": "Abstract Georgette Printed Kurti",
+        "thumbnail": "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=700&h=900&q=80",
+        "color": "White",
+        "size": "L",
+        "price": 1749,
         "quantity": 2
       },
       {
-        "product": "6a48f9798a6ebda22ab499b7",
-        "variantSku": "SRUVALLE-DITSY--RE-XS",
-        "name": "Ditsy Floral Rayon Bodysuit",
+        "product": "6a638ee1d121d069f6f8bea4",
+        "variantSku": "SRUVALLE-EMBROI-GR-XS",
+        "name": "Embroidered Silk Blend Organza Saree",
+        "thumbnail": "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=700&h=900&q=80",
+        "color": "Green",
+        "size": "XS",
+        "price": 2579,
+        "quantity": 2
+      },
+      {
+        "product": "6a638ee1d121d069f6f8be61",
+        "variantSku": "SRUVALLE-RUCHED-BL-XS",
+        "name": "Ruched Modal Playsuit",
         "thumbnail": "https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Olive",
+        "color": "White",
         "size": "M",
-        "price": 1519,
+        "price": 2299,
         "quantity": 2
       }
     ],
     "addresses": [
       {
         "label": "Home",
-        "fullName": "Divya Sinha",
-        "phone": "+91 8456955960",
-        "line1": "204 Sea Breeze, Marine Drive",
-        "line2": "Near City Mall",
-        "city": "Chennai",
-        "state": "Tamil Nadu",
-        "pincode": "600001",
+        "fullName": "Pooja Nair",
+        "phone": "+91 8216312228",
+        "line1": "45 Lotus Residency, Koramangala",
+        "line2": "Near Metro Station",
+        "city": "Jaipur",
+        "state": "Rajasthan",
+        "pincode": "302001",
         "country": "India",
         "isDefault": true
       },
       {
         "label": "Work",
-        "fullName": "Divya Sinha",
-        "phone": "+91 9060986655",
-        "line1": "301 Sunrise Apartments, Anna Nagar",
+        "fullName": "Pooja Nair",
+        "phone": "+91 8540003902",
+        "line1": "7 Jasmine Lane, Banjara Hills",
+        "line2": "Near Ring Road",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "pincode": "560001",
+        "country": "India",
+        "isDefault": false
+      }
+    ],
+    "emailVerified": false,
+    "createdAt": "2024-09-30T11:03:08.267Z",
+    "updatedAt": "2026-07-24T16:12:17.138Z"
+  },
+  {
+    "_id": "6a638ee1d121d069f6f8bebc",
+    "name": "Rhea Chowdhury",
+    "email": "rhea.chowdhury10@example.com",
+    "phone": "+91 8391259116",
+    "password": "$2a$10$AIvVQjGwHv/XkVxDDShQbuspW/pJgF4MJd/iD8ngQnUwS6TRgX/7u",
+    "role": "customer",
+    "avatar": "https://i.pravatar.cc/150?img=11",
+    "wishlist": [
+      "6a638ee1d121d069f6f8bea8",
+      "6a638ee1d121d069f6f8be76"
+    ],
+    "cart": [],
+    "addresses": [
+      {
+        "label": "Work",
+        "fullName": "Rhea Chowdhury",
+        "phone": "+91 8715874896",
+        "line1": "7 Jasmine Lane, Banjara Hills",
         "line2": "Near City Mall",
-        "city": "Kolkata",
-        "state": "West Bengal",
-        "pincode": "700001",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "pincode": "560001",
+        "country": "India",
+        "isDefault": true
+      },
+      {
+        "label": "Work",
+        "fullName": "Rhea Chowdhury",
+        "phone": "+91 9843380915",
+        "line1": "Rose Villa, MG Road",
+        "line2": "Near City Mall",
+        "city": "Hyderabad",
+        "state": "Telangana",
+        "pincode": "500001",
         "country": "India",
         "isDefault": false
       }
     ],
     "emailVerified": true,
-    "createdAt": "2026-03-26T14:21:01.621Z",
-    "updatedAt": "2026-07-04T12:15:53.402Z"
+    "createdAt": "2026-05-14T16:38:05.806Z",
+    "updatedAt": "2026-07-24T16:12:17.138Z"
   },
   {
-    "_id": "6a48f9798a6ebda22ab499c5",
-    "name": "Kiara Kapoor",
-    "email": "kiara.kapoor5@example.com",
-    "phone": "+91 9976295793",
-    "password": "$2a$10$Lpx6xcQ1CH.psRyhpxIyGO7djnsrxyooHrjgyLeXmMDZcAHfOUOXa",
+    "_id": "6a638ee1d121d069f6f8bebd",
+    "name": "Riya Mehta",
+    "email": "riya.mehta11@example.com",
+    "phone": "+91 9458403874",
+    "password": "$2a$10$AIvVQjGwHv/XkVxDDShQbuspW/pJgF4MJd/iD8ngQnUwS6TRgX/7u",
     "role": "customer",
-    "avatar": "https://i.pravatar.cc/150?img=6",
+    "avatar": "https://i.pravatar.cc/150?img=12",
     "wishlist": [
-      "6a48f9798a6ebda22ab4999d"
+      "6a638ee1d121d069f6f8beae",
+      "6a638ee1d121d069f6f8be89",
+      "6a638ee1d121d069f6f8be5e",
+      "6a638ee1d121d069f6f8be8e",
+      "6a638ee1d121d069f6f8be5b"
     ],
     "cart": [
       {
-        "product": "6a48f9798a6ebda22ab4996c",
-        "variantSku": "SRUVALLE-EMBROI-WH-XS",
-        "name": "Embroidered Viscose Culottes",
+        "product": "6a638ee1d121d069f6f8be8e",
+        "variantSku": "SRUVALLE-SOLID--BE-XS",
+        "name": "Solid Cotton Paperbag Shorts",
         "thumbnail": "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Brown",
-        "size": "L",
-        "price": 3699,
+        "color": "Pink",
+        "size": "XS",
+        "price": 3599,
         "quantity": 2
-      }
-    ],
-    "addresses": [
+      },
       {
-        "label": "Other",
-        "fullName": "Kiara Kapoor",
-        "phone": "+91 8084531362",
-        "line1": "7 Jasmine Lane, Banjara Hills",
-        "line2": "Near City Mall",
-        "city": "Chennai",
-        "state": "Tamil Nadu",
-        "pincode": "600001",
-        "country": "India",
-        "isDefault": true
-      }
-    ],
-    "emailVerified": true,
-    "createdAt": "2025-04-12T20:39:10.959Z",
-    "updatedAt": "2026-07-04T12:15:53.402Z"
-  },
-  {
-    "_id": "6a48f9798a6ebda22ab499c6",
-    "name": "Aanya Bhat",
-    "email": "aanya.bhat6@example.com",
-    "phone": "+91 8583656127",
-    "password": "$2a$10$Lpx6xcQ1CH.psRyhpxIyGO7djnsrxyooHrjgyLeXmMDZcAHfOUOXa",
-    "role": "customer",
-    "avatar": "https://i.pravatar.cc/150?img=7",
-    "wishlist": [
-      "6a48f9798a6ebda22ab4999a"
-    ],
-    "cart": [
-      {
-        "product": "6a48f9798a6ebda22ab4999e",
-        "variantSku": "SRUVALLE-SMOCKE-OL-XS",
-        "name": "Smocked Silk Blend Lehenga Set",
+        "product": "6a638ee1d121d069f6f8be90",
+        "variantSku": "SRUVALLE-STRIPE-RE-XS",
+        "name": "Striped Chiffon Sharara Set",
         "thumbnail": "https://images.unsplash.com/photo-1502716119720-b23a93e5fe1b?auto=format&fit=crop&w=700&h=900&q=80",
         "color": "Olive",
-        "size": "XL",
-        "price": 1529,
-        "quantity": 3
+        "size": "S",
+        "price": 4189,
+        "quantity": 1
       }
     ],
     "addresses": [
       {
-        "label": "Other",
-        "fullName": "Aanya Bhat",
-        "phone": "+91 9487066214",
+        "label": "Home",
+        "fullName": "Riya Mehta",
+        "phone": "+91 8780099771",
         "line1": "9 Green Meadows, Whitefield",
-        "line2": "Near Ring Road",
+        "line2": "Near City Mall",
+        "city": "Ahmedabad",
+        "state": "Gujarat",
+        "pincode": "380001",
+        "country": "India",
+        "isDefault": true
+      },
+      {
+        "label": "Other",
+        "fullName": "Riya Mehta",
+        "phone": "+91 9357467470",
+        "line1": "12 Palm Grove, Indiranagar",
+        "line2": "Near Metro Station",
         "city": "Kochi",
         "state": "Kerala",
         "pincode": "682001",
         "country": "India",
+        "isDefault": false
+      }
+    ],
+    "emailVerified": false,
+    "createdAt": "2025-03-01T12:37:49.894Z",
+    "updatedAt": "2026-07-24T16:12:17.138Z"
+  },
+  {
+    "_id": "6a638ee1d121d069f6f8bebe",
+    "name": "Divya Pillai",
+    "email": "divya.pillai12@example.com",
+    "phone": "+91 9525888064",
+    "password": "$2a$10$AIvVQjGwHv/XkVxDDShQbuspW/pJgF4MJd/iD8ngQnUwS6TRgX/7u",
+    "role": "customer",
+    "avatar": "https://i.pravatar.cc/150?img=13",
+    "wishlist": [
+      "6a638ee1d121d069f6f8beac",
+      "6a638ee1d121d069f6f8beab",
+      "6a638ee1d121d069f6f8be8b"
+    ],
+    "cart": [],
+    "addresses": [
+      {
+        "label": "Other",
+        "fullName": "Divya Pillai",
+        "phone": "+91 9032571660",
+        "line1": "7 Jasmine Lane, Banjara Hills",
+        "line2": "Near Ring Road",
+        "city": "Hyderabad",
+        "state": "Telangana",
+        "pincode": "500001",
+        "country": "India",
+        "isDefault": true
+      },
+      {
+        "label": "Other",
+        "fullName": "Divya Pillai",
+        "phone": "+91 7229528303",
+        "line1": "7 Jasmine Lane, Banjara Hills",
+        "line2": "Near Ring Road",
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "pincode": "400001",
+        "country": "India",
+        "isDefault": false
+      }
+    ],
+    "emailVerified": true,
+    "createdAt": "2024-10-26T13:04:37.942Z",
+    "updatedAt": "2026-07-24T16:12:17.138Z"
+  },
+  {
+    "_id": "6a638ee1d121d069f6f8bebf",
+    "name": "Neha Menon",
+    "email": "neha.menon13@example.com",
+    "phone": "+91 8991355986",
+    "password": "$2a$10$AIvVQjGwHv/XkVxDDShQbuspW/pJgF4MJd/iD8ngQnUwS6TRgX/7u",
+    "role": "customer",
+    "avatar": "https://i.pravatar.cc/150?img=14",
+    "wishlist": [
+      "6a638ee1d121d069f6f8be99"
+    ],
+    "cart": [
+      {
+        "product": "6a638ee1d121d069f6f8be71",
+        "variantSku": "SRUVALLE-TIERED-WH-XS",
+        "name": "Tiered Viscose Printed Blouse",
+        "thumbnail": "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=700&h=900&q=80",
+        "color": "Beige",
+        "size": "L",
+        "price": 969,
+        "quantity": 3
+      }
+    ],
+    "addresses": [
+      {
+        "label": "Work",
+        "fullName": "Neha Menon",
+        "phone": "+91 9337822125",
+        "line1": "18 Orchid Street, Vashi",
+        "line2": "Near Ring Road",
+        "city": "Pune",
+        "state": "Maharashtra",
+        "pincode": "411001",
+        "country": "India",
         "isDefault": true
       }
     ],
     "emailVerified": true,
-    "createdAt": "2025-03-17T19:06:19.983Z",
-    "updatedAt": "2026-07-04T12:15:53.402Z"
+    "createdAt": "2025-02-01T01:43:22.279Z",
+    "updatedAt": "2026-07-24T16:12:17.138Z"
   },
   {
-    "_id": "6a48f9798a6ebda22ab499c7",
-    "name": "Nisha Iyer",
-    "email": "nisha.iyer7@example.com",
-    "phone": "+91 8727503481",
-    "password": "$2a$10$Lpx6xcQ1CH.psRyhpxIyGO7djnsrxyooHrjgyLeXmMDZcAHfOUOXa",
+    "_id": "6a638ee1d121d069f6f8bec0",
+    "name": "Kavya Reddy",
+    "email": "kavya.reddy14@example.com",
+    "phone": "+91 7738634345",
+    "password": "$2a$10$AIvVQjGwHv/XkVxDDShQbuspW/pJgF4MJd/iD8ngQnUwS6TRgX/7u",
     "role": "customer",
-    "avatar": "https://i.pravatar.cc/150?img=8",
+    "avatar": "https://i.pravatar.cc/150?img=15",
     "wishlist": [
-      "6a48f9798a6ebda22ab499b9",
-      "6a48f9798a6ebda22ab499b8",
-      "6a48f9798a6ebda22ab49998",
-      "6a48f9798a6ebda22ab499a1"
+      "6a638ee1d121d069f6f8bea0"
     ],
     "cart": [
       {
-        "product": "6a48f9798a6ebda22ab499b3",
-        "variantSku": "SRUVALLE-STRIPE-MU-XS",
-        "name": "Striped Crepe Wrap Top",
-        "thumbnail": "https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?auto=format&fit=crop&w=700&h=900&q=80",
+        "product": "6a638ee1d121d069f6f8be7a",
+        "variantSku": "SRUVALLE-EMBROI-BL-XS",
+        "name": "Embroidered Viscose Cocktail Dress",
+        "thumbnail": "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=700&h=900&q=80",
         "color": "White",
         "size": "M",
-        "price": 2779,
-        "quantity": 1
+        "price": 1479,
+        "quantity": 3
+      },
+      {
+        "product": "6a638ee1d121d069f6f8be7b",
+        "variantSku": "SRUVALLE-TIERED-BL-XS",
+        "name": "Tiered Chiffon Formal Shirt",
+        "thumbnail": "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=700&h=900&q=80",
+        "color": "Olive",
+        "size": "M",
+        "price": 3989,
+        "quantity": 2
+      },
+      {
+        "product": "6a638ee1d121d069f6f8be98",
+        "variantSku": "SRUVALLE-DITSY--BL-XS",
+        "name": "Ditsy Floral Organza Chiffon Saree",
+        "thumbnail": "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=700&h=900&q=80",
+        "color": "Black",
+        "size": "M",
+        "price": 1339,
+        "quantity": 2
+      }
+    ],
+    "addresses": [
+      {
+        "label": "Home",
+        "fullName": "Kavya Reddy",
+        "phone": "+91 9878817437",
+        "line1": "Rose Villa, MG Road",
+        "line2": "Near City Mall",
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "pincode": "400001",
+        "country": "India",
+        "isDefault": true
+      },
+      {
+        "label": "Other",
+        "fullName": "Kavya Reddy",
+        "phone": "+91 9283389279",
+        "line1": "Rose Villa, MG Road",
+        "line2": "Near Central Park",
+        "city": "Kochi",
+        "state": "Kerala",
+        "pincode": "682001",
+        "country": "India",
+        "isDefault": false
+      }
+    ],
+    "emailVerified": true,
+    "createdAt": "2025-10-23T06:44:22.575Z",
+    "updatedAt": "2026-07-24T16:12:17.138Z"
+  },
+  {
+    "_id": "6a638ee1d121d069f6f8bec1",
+    "name": "Vaani Joshi",
+    "email": "vaani.joshi15@example.com",
+    "phone": "+91 7810661112",
+    "password": "$2a$10$AIvVQjGwHv/XkVxDDShQbuspW/pJgF4MJd/iD8ngQnUwS6TRgX/7u",
+    "role": "customer",
+    "avatar": "https://i.pravatar.cc/150?img=16",
+    "wishlist": [
+      "6a638ee1d121d069f6f8be57"
+    ],
+    "cart": [
+      {
+        "product": "6a638ee1d121d069f6f8be54",
+        "variantSku": "SRUVALLE-COLOUR-GR-XS",
+        "name": "Colour-Block Handloom Cotton Lehenga Set",
+        "thumbnail": "https://images.unsplash.com/photo-1502716119720-b23a93e5fe1b?auto=format&fit=crop&w=700&h=900&q=80",
+        "color": "Mustard",
+        "size": "M",
+        "price": 3849,
+        "quantity": 3
+      },
+      {
+        "product": "6a638ee1d121d069f6f8be71",
+        "variantSku": "SRUVALLE-TIERED-WH-XS",
+        "name": "Tiered Viscose Printed Blouse",
+        "thumbnail": "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=700&h=900&q=80",
+        "color": "Beige",
+        "size": "L",
+        "price": 969,
+        "quantity": 2
       }
     ],
     "addresses": [
       {
         "label": "Other",
-        "fullName": "Nisha Iyer",
-        "phone": "+91 7127857241",
-        "line1": "301 Sunrise Apartments, Anna Nagar",
-        "line2": "Near Ring Road",
+        "fullName": "Vaani Joshi",
+        "phone": "+91 7041072904",
+        "line1": "204 Sea Breeze, Marine Drive",
+        "line2": "Near Metro Station",
         "city": "Hyderabad",
         "state": "Telangana",
         "pincode": "500001",
+        "country": "India",
+        "isDefault": true
+      }
+    ],
+    "emailVerified": true,
+    "createdAt": "2024-12-22T16:13:25.445Z",
+    "updatedAt": "2026-07-24T16:12:17.138Z"
+  },
+  {
+    "_id": "6a638ee1d121d069f6f8bec2",
+    "name": "Pooja Kaur",
+    "email": "pooja.kaur16@example.com",
+    "phone": "+91 7190943955",
+    "password": "$2a$10$AIvVQjGwHv/XkVxDDShQbuspW/pJgF4MJd/iD8ngQnUwS6TRgX/7u",
+    "role": "customer",
+    "avatar": "https://i.pravatar.cc/150?img=17",
+    "wishlist": [
+      "6a638ee1d121d069f6f8be66",
+      "6a638ee1d121d069f6f8be7c",
+      "6a638ee1d121d069f6f8be73",
+      "6a638ee1d121d069f6f8be7f"
+    ],
+    "cart": [
+      {
+        "product": "6a638ee1d121d069f6f8be71",
+        "variantSku": "SRUVALLE-TIERED-WH-XS",
+        "name": "Tiered Viscose Printed Blouse",
+        "thumbnail": "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=700&h=900&q=80",
+        "color": "Beige",
+        "size": "L",
+        "price": 969,
+        "quantity": 2
+      }
+    ],
+    "addresses": [
+      {
+        "label": "Other",
+        "fullName": "Pooja Kaur",
+        "phone": "+91 7238830339",
+        "line1": "18 Orchid Street, Vashi",
+        "line2": "Near Ring Road",
+        "city": "Jaipur",
+        "state": "Rajasthan",
+        "pincode": "302001",
+        "country": "India",
+        "isDefault": true
+      }
+    ],
+    "emailVerified": true,
+    "createdAt": "2025-03-09T20:53:15.763Z",
+    "updatedAt": "2026-07-24T16:12:17.138Z"
+  },
+  {
+    "_id": "6a638ee1d121d069f6f8bec3",
+    "name": "Meera Iyer",
+    "email": "meera.iyer17@example.com",
+    "phone": "+91 7688944913",
+    "password": "$2a$10$AIvVQjGwHv/XkVxDDShQbuspW/pJgF4MJd/iD8ngQnUwS6TRgX/7u",
+    "role": "customer",
+    "avatar": "https://i.pravatar.cc/150?img=18",
+    "wishlist": [
+      "6a638ee1d121d069f6f8be4f",
+      "6a638ee1d121d069f6f8be7d"
+    ],
+    "cart": [
+      {
+        "product": "6a638ee1d121d069f6f8beaf",
+        "variantSku": "SRUVALLE-ABSTRA-BE-XS",
+        "name": "Abstract Georgette Printed Kurti",
+        "thumbnail": "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=700&h=900&q=80",
+        "color": "Beige",
+        "size": "XS",
+        "price": 1749,
+        "quantity": 2
+      }
+    ],
+    "addresses": [
+      {
+        "label": "Other",
+        "fullName": "Meera Iyer",
+        "phone": "+91 8299911146",
+        "line1": "204 Sea Breeze, Marine Drive",
+        "line2": "Near Ring Road",
+        "city": "Kolkata",
+        "state": "West Bengal",
+        "pincode": "700001",
         "country": "India",
         "isDefault": true
       }
     ],
     "emailVerified": false,
-    "createdAt": "2024-12-30T22:44:55.801Z",
-    "updatedAt": "2026-07-04T12:15:53.402Z"
+    "createdAt": "2025-08-25T08:59:06.533Z",
+    "updatedAt": "2026-07-24T16:12:17.138Z"
   },
   {
-    "_id": "6a48f9798a6ebda22ab499c8",
-    "name": "Myra Kulkarni",
-    "email": "myra.kulkarni8@example.com",
-    "phone": "+91 9189328663",
-    "password": "$2a$10$Lpx6xcQ1CH.psRyhpxIyGO7djnsrxyooHrjgyLeXmMDZcAHfOUOXa",
+    "_id": "6a638ee1d121d069f6f8bec4",
+    "name": "Kavya Kapoor",
+    "email": "kavya.kapoor18@example.com",
+    "phone": "+91 9663758608",
+    "password": "$2a$10$AIvVQjGwHv/XkVxDDShQbuspW/pJgF4MJd/iD8ngQnUwS6TRgX/7u",
     "role": "customer",
-    "avatar": "https://i.pravatar.cc/150?img=9",
-    "wishlist": [
-      "6a48f9798a6ebda22ab4997f"
-    ],
-    "cart": [
-      {
-        "product": "6a48f9798a6ebda22ab499a4",
-        "variantSku": "SRUVALLE-STRIPE-MU-XS",
-        "name": "Striped Silk Blend Maxi Dress",
-        "thumbnail": "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Mustard",
-        "size": "M",
-        "price": 2979,
-        "quantity": 1
-      },
-      {
-        "product": "6a48f9798a6ebda22ab499ad",
-        "variantSku": "SRUVALLE-SMOCKE-BE-XS",
-        "name": "Smocked Crepe Sheath Dress",
-        "thumbnail": "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Beige",
-        "size": "S",
-        "price": 2849,
-        "quantity": 3
-      },
-      {
-        "product": "6a48f9798a6ebda22ab499a5",
-        "variantSku": "SRUVALLE-SOLID--WH-XS",
-        "name": "Solid Cotton Anarkali Kurti",
-        "thumbnail": "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Black",
-        "size": "XS",
-        "price": 1339,
-        "quantity": 1
-      }
-    ],
-    "addresses": [
-      {
-        "label": "Work",
-        "fullName": "Myra Kulkarni",
-        "phone": "+91 8339267140",
-        "line1": "12 Palm Grove, Indiranagar",
-        "line2": "Near Central Park",
-        "city": "Kolkata",
-        "state": "West Bengal",
-        "pincode": "700001",
-        "country": "India",
-        "isDefault": true
-      }
-    ],
-    "emailVerified": true,
-    "createdAt": "2025-08-01T15:19:11.403Z",
-    "updatedAt": "2026-07-04T12:15:53.402Z"
-  },
-  {
-    "_id": "6a48f9798a6ebda22ab499c9",
-    "name": "Kavya Kulkarni",
-    "email": "kavya.kulkarni9@example.com",
-    "phone": "+91 9990966719",
-    "password": "$2a$10$Lpx6xcQ1CH.psRyhpxIyGO7djnsrxyooHrjgyLeXmMDZcAHfOUOXa",
-    "role": "customer",
-    "avatar": "https://i.pravatar.cc/150?img=10",
-    "wishlist": [
-      "6a48f9798a6ebda22ab49962",
-      "6a48f9798a6ebda22ab4997e",
-      "6a48f9798a6ebda22ab49965",
-      "6a48f9798a6ebda22ab49981",
-      "6a48f9798a6ebda22ab49989"
-    ],
-    "cart": [
-      {
-        "product": "6a48f9798a6ebda22ab499ab",
-        "variantSku": "SRUVALLE-SMOCKE-WH-XS",
-        "name": "Smocked Silk Blend Playsuit",
-        "thumbnail": "https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Pink",
-        "size": "L",
-        "price": 1549,
-        "quantity": 2
-      }
-    ],
-    "addresses": [
-      {
-        "label": "Work",
-        "fullName": "Kavya Kulkarni",
-        "phone": "+91 9581884783",
-        "line1": "9 Green Meadows, Whitefield",
-        "line2": "Near Central Park",
-        "city": "Hyderabad",
-        "state": "Telangana",
-        "pincode": "500001",
-        "country": "India",
-        "isDefault": true
-      },
-      {
-        "label": "Work",
-        "fullName": "Kavya Kulkarni",
-        "phone": "+91 7267115551",
-        "line1": "45 Lotus Residency, Koramangala",
-        "line2": "Near Central Park",
-        "city": "Bengaluru",
-        "state": "Karnataka",
-        "pincode": "560001",
-        "country": "India",
-        "isDefault": false
-      }
-    ],
-    "emailVerified": true,
-    "createdAt": "2025-07-09T10:04:39.626Z",
-    "updatedAt": "2026-07-04T12:15:53.402Z"
-  },
-  {
-    "_id": "6a48f9798a6ebda22ab499ca",
-    "name": "Charvi Nair",
-    "email": "charvi.nair10@example.com",
-    "phone": "+91 9844936378",
-    "password": "$2a$10$Lpx6xcQ1CH.psRyhpxIyGO7djnsrxyooHrjgyLeXmMDZcAHfOUOXa",
-    "role": "customer",
-    "avatar": "https://i.pravatar.cc/150?img=11",
-    "wishlist": [
-      "6a48f9798a6ebda22ab4997e",
-      "6a48f9798a6ebda22ab49975",
-      "6a48f9798a6ebda22ab4998a",
-      "6a48f9798a6ebda22ab49981"
-    ],
-    "cart": [
-      {
-        "product": "6a48f9798a6ebda22ab499a0",
-        "variantSku": "SRUVALLE-FLORAL-BL-XS",
-        "name": "Floral Chiffon Sequin Dress",
-        "thumbnail": "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Olive",
-        "size": "S",
-        "price": 1489,
-        "quantity": 1
-      }
-    ],
-    "addresses": [
-      {
-        "label": "Work",
-        "fullName": "Charvi Nair",
-        "phone": "+91 8567234384",
-        "line1": "204 Sea Breeze, Marine Drive",
-        "line2": "Near Metro Station",
-        "city": "Jaipur",
-        "state": "Rajasthan",
-        "pincode": "302001",
-        "country": "India",
-        "isDefault": true
-      }
-    ],
-    "emailVerified": true,
-    "createdAt": "2025-07-20T12:36:35.981Z",
-    "updatedAt": "2026-07-04T12:15:53.402Z"
-  },
-  {
-    "_id": "6a48f9798a6ebda22ab499cb",
-    "name": "Sneha Sharma",
-    "email": "sneha.sharma11@example.com",
-    "phone": "+91 9866092700",
-    "password": "$2a$10$Lpx6xcQ1CH.psRyhpxIyGO7djnsrxyooHrjgyLeXmMDZcAHfOUOXa",
-    "role": "customer",
-    "avatar": "https://i.pravatar.cc/150?img=12",
-    "wishlist": [
-      "6a48f9798a6ebda22ab49985",
-      "6a48f9798a6ebda22ab49988",
-      "6a48f9798a6ebda22ab499bc",
-      "6a48f9798a6ebda22ab4995d"
-    ],
-    "cart": [
-      {
-        "product": "6a48f9798a6ebda22ab499a0",
-        "variantSku": "SRUVALLE-FLORAL-BL-XS",
-        "name": "Floral Chiffon Sequin Dress",
-        "thumbnail": "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Black",
-        "size": "M",
-        "price": 1489,
-        "quantity": 2
-      },
-      {
-        "product": "6a48f9798a6ebda22ab49992",
-        "variantSku": "SRUVALLE-DITSY--BL-XS",
-        "name": "Ditsy Floral Georgette Straight Suit",
-        "thumbnail": "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Blue",
-        "size": "XL",
-        "price": 1519,
-        "quantity": 3
-      },
-      {
-        "product": "6a48f9798a6ebda22ab4998a",
-        "variantSku": "SRUVALLE-DITSY--BL-XS",
-        "name": "Ditsy Floral Rayon Crop Top",
-        "thumbnail": "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "White",
-        "size": "L",
-        "price": 1809,
-        "quantity": 3
-      }
-    ],
-    "addresses": [
-      {
-        "label": "Work",
-        "fullName": "Sneha Sharma",
-        "phone": "+91 7714146532",
-        "line1": "7 Jasmine Lane, Banjara Hills",
-        "line2": "Near City Mall",
-        "city": "Jaipur",
-        "state": "Rajasthan",
-        "pincode": "302001",
-        "country": "India",
-        "isDefault": true
-      },
-      {
-        "label": "Other",
-        "fullName": "Sneha Sharma",
-        "phone": "+91 8634604047",
-        "line1": "301 Sunrise Apartments, Anna Nagar",
-        "line2": "Near Central Park",
-        "city": "Kolkata",
-        "state": "West Bengal",
-        "pincode": "700001",
-        "country": "India",
-        "isDefault": false
-      }
-    ],
-    "emailVerified": true,
-    "createdAt": "2025-05-08T09:20:33.696Z",
-    "updatedAt": "2026-07-04T12:15:53.402Z"
-  },
-  {
-    "_id": "6a48f9798a6ebda22ab499cc",
-    "name": "Harini Mehta",
-    "email": "harini.mehta12@example.com",
-    "phone": "+91 8540312295",
-    "password": "$2a$10$Lpx6xcQ1CH.psRyhpxIyGO7djnsrxyooHrjgyLeXmMDZcAHfOUOXa",
-    "role": "customer",
-    "avatar": "https://i.pravatar.cc/150?img=13",
-    "wishlist": [
-      "6a48f9798a6ebda22ab499aa",
-      "6a48f9798a6ebda22ab499b7"
-    ],
-    "cart": [
-      {
-        "product": "6a48f9798a6ebda22ab4997f",
-        "variantSku": "SRUVALLE-GATHER-MU-XS",
-        "name": "Gathered Modal Utility Jumpsuit",
-        "thumbnail": "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Blue",
-        "size": "XL",
-        "price": 4349,
-        "quantity": 1
-      },
-      {
-        "product": "6a48f9798a6ebda22ab4996b",
-        "variantSku": "SRUVALLE-SMOCKE-GR-XS",
-        "name": "Smocked Handloom Cotton Peplum Top",
-        "thumbnail": "https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Green",
-        "size": "M",
-        "price": 1229,
-        "quantity": 1
-      },
-      {
-        "product": "6a48f9798a6ebda22ab4997c",
-        "variantSku": "SRUVALLE-STRIPE-BL-XS",
-        "name": "Striped Chiffon Satin Slip Dress",
-        "thumbnail": "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Red",
-        "size": "XS",
-        "price": 3129,
-        "quantity": 2
-      }
-    ],
-    "addresses": [
-      {
-        "label": "Work",
-        "fullName": "Harini Mehta",
-        "phone": "+91 9622394182",
-        "line1": "Rose Villa, MG Road",
-        "line2": "Near Ring Road",
-        "city": "Pune",
-        "state": "Maharashtra",
-        "pincode": "411001",
-        "country": "India",
-        "isDefault": true
-      }
-    ],
-    "emailVerified": true,
-    "createdAt": "2025-03-13T01:38:45.559Z",
-    "updatedAt": "2026-07-04T12:15:53.402Z"
-  },
-  {
-    "_id": "6a48f9798a6ebda22ab499cd",
-    "name": "Saanvi Rao",
-    "email": "saanvi.rao13@example.com",
-    "phone": "+91 7375644441",
-    "password": "$2a$10$Lpx6xcQ1CH.psRyhpxIyGO7djnsrxyooHrjgyLeXmMDZcAHfOUOXa",
-    "role": "customer",
-    "avatar": "https://i.pravatar.cc/150?img=14",
-    "wishlist": [
-      "6a48f9798a6ebda22ab49978",
-      "6a48f9798a6ebda22ab49994",
-      "6a48f9798a6ebda22ab4996c",
-      "6a48f9798a6ebda22ab4999c",
-      "6a48f9798a6ebda22ab499a8"
-    ],
-    "cart": [
-      {
-        "product": "6a48f9798a6ebda22ab4995d",
-        "variantSku": "SRUVALLE-PLEATE-OL-XS",
-        "name": "Pleated Cotton Straight Kurti",
-        "thumbnail": "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Olive",
-        "size": "M",
-        "price": 4079,
-        "quantity": 3
-      },
-      {
-        "product": "6a48f9798a6ebda22ab4998e",
-        "variantSku": "SRUVALLE-SMOCKE-PI-XS",
-        "name": "Smocked Modal Linen Saree",
-        "thumbnail": "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Blue",
-        "size": "L",
-        "price": 3099,
-        "quantity": 3
-      },
-      {
-        "product": "6a48f9798a6ebda22ab49989",
-        "variantSku": "SRUVALLE-BLOCK--MU-XS",
-        "name": "Block-Print Linen Tailored Trousers",
-        "thumbnail": "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Brown",
-        "size": "L",
-        "price": 3109,
-        "quantity": 3
-      }
-    ],
-    "addresses": [
-      {
-        "label": "Other",
-        "fullName": "Saanvi Rao",
-        "phone": "+91 9324572839",
-        "line1": "18 Orchid Street, Vashi",
-        "line2": "Near Ring Road",
-        "city": "Kolkata",
-        "state": "West Bengal",
-        "pincode": "700001",
-        "country": "India",
-        "isDefault": true
-      },
-      {
-        "label": "Home",
-        "fullName": "Saanvi Rao",
-        "phone": "+91 8852261654",
-        "line1": "18 Orchid Street, Vashi",
-        "line2": "Near Central Park",
-        "city": "Hyderabad",
-        "state": "Telangana",
-        "pincode": "500001",
-        "country": "India",
-        "isDefault": false
-      }
-    ],
-    "emailVerified": true,
-    "createdAt": "2025-09-04T20:29:50.372Z",
-    "updatedAt": "2026-07-04T12:15:53.402Z"
-  },
-  {
-    "_id": "6a48f9798a6ebda22ab499ce",
-    "name": "Gauri Sharma",
-    "email": "gauri.sharma14@example.com",
-    "phone": "+91 9081184912",
-    "password": "$2a$10$Lpx6xcQ1CH.psRyhpxIyGO7djnsrxyooHrjgyLeXmMDZcAHfOUOXa",
-    "role": "customer",
-    "avatar": "https://i.pravatar.cc/150?img=15",
-    "wishlist": [
-      "6a48f9798a6ebda22ab4995f",
-      "6a48f9798a6ebda22ab4999b",
-      "6a48f9798a6ebda22ab49980",
-      "6a48f9798a6ebda22ab4999f",
-      "6a48f9798a6ebda22ab49962"
-    ],
-    "cart": [
-      {
-        "product": "6a48f9798a6ebda22ab499bd",
-        "variantSku": "SRUVALLE-ABSTRA-MU-XS",
-        "name": "Abstract Rayon Printed Kurti",
-        "thumbnail": "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Mustard",
-        "size": "L",
-        "price": 929,
-        "quantity": 3
-      },
-      {
-        "product": "6a48f9798a6ebda22ab4997e",
-        "variantSku": "SRUVALLE-CUTWOR-PI-XS",
-        "name": "Cutwork Organza Crop Top",
-        "thumbnail": "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Mustard",
-        "size": "M",
-        "price": 3379,
-        "quantity": 2
-      }
-    ],
-    "addresses": [
-      {
-        "label": "Home",
-        "fullName": "Gauri Sharma",
-        "phone": "+91 8996504877",
-        "line1": "301 Sunrise Apartments, Anna Nagar",
-        "line2": "Near City Mall",
-        "city": "Jaipur",
-        "state": "Rajasthan",
-        "pincode": "302001",
-        "country": "India",
-        "isDefault": true
-      }
-    ],
-    "emailVerified": true,
-    "createdAt": "2026-04-11T17:03:32.142Z",
-    "updatedAt": "2026-07-04T12:15:53.402Z"
-  },
-  {
-    "_id": "6a48f9798a6ebda22ab499cf",
-    "name": "Aanya Iyer",
-    "email": "aanya.iyer15@example.com",
-    "phone": "+91 9772880291",
-    "password": "$2a$10$Lpx6xcQ1CH.psRyhpxIyGO7djnsrxyooHrjgyLeXmMDZcAHfOUOXa",
-    "role": "customer",
-    "avatar": "https://i.pravatar.cc/150?img=16",
-    "wishlist": [
-      "6a48f9798a6ebda22ab49968",
-      "6a48f9798a6ebda22ab499a5",
-      "6a48f9798a6ebda22ab49974",
-      "6a48f9798a6ebda22ab4998a",
-      "6a48f9798a6ebda22ab499ae"
-    ],
-    "cart": [
-      {
-        "product": "6a48f9798a6ebda22ab499bc",
-        "variantSku": "SRUVALLE-GATHER-BL-XS",
-        "name": "Gathered Cotton Maxi Dress",
-        "thumbnail": "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Brown",
-        "size": "XS",
-        "price": 2989,
-        "quantity": 3
-      },
-      {
-        "product": "6a48f9798a6ebda22ab4998f",
-        "variantSku": "SRUVALLE-SOLID--BL-XS",
-        "name": "Solid Modal Puff-Sleeve Top",
-        "thumbnail": "https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Blue",
-        "size": "L",
-        "price": 3369,
-        "quantity": 2
-      }
-    ],
-    "addresses": [
-      {
-        "label": "Home",
-        "fullName": "Aanya Iyer",
-        "phone": "+91 8856212844",
-        "line1": "301 Sunrise Apartments, Anna Nagar",
-        "line2": "Near Metro Station",
-        "city": "Bengaluru",
-        "state": "Karnataka",
-        "pincode": "560001",
-        "country": "India",
-        "isDefault": true
-      }
-    ],
-    "emailVerified": true,
-    "createdAt": "2025-05-13T19:59:51.196Z",
-    "updatedAt": "2026-07-04T12:15:53.402Z"
-  },
-  {
-    "_id": "6a48f9798a6ebda22ab499d0",
-    "name": "Gauri Menon",
-    "email": "gauri.menon16@example.com",
-    "phone": "+91 9827453808",
-    "password": "$2a$10$Lpx6xcQ1CH.psRyhpxIyGO7djnsrxyooHrjgyLeXmMDZcAHfOUOXa",
-    "role": "customer",
-    "avatar": "https://i.pravatar.cc/150?img=17",
-    "wishlist": [
-      "6a48f9798a6ebda22ab499a7",
-      "6a48f9798a6ebda22ab499bc",
-      "6a48f9798a6ebda22ab499b5"
-    ],
-    "cart": [
-      {
-        "product": "6a48f9798a6ebda22ab4996d",
-        "variantSku": "SRUVALLE-SOLID--RE-XS",
-        "name": "Solid Cotton Linen Co-Ord Set",
-        "thumbnail": "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Olive",
-        "size": "XS",
-        "price": 749,
-        "quantity": 2
-      },
-      {
-        "product": "6a48f9798a6ebda22ab49975",
-        "variantSku": "SRUVALLE-STRIPE-OL-XS",
-        "name": "Striped Cotton Anarkali Kurti",
-        "thumbnail": "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Olive",
-        "size": "XS",
-        "price": 3819,
-        "quantity": 3
-      },
-      {
-        "product": "6a48f9798a6ebda22ab49968",
-        "variantSku": "SRUVALLE-SMOCKE-BL-XS",
-        "name": "Smocked Modal Midi Dress",
-        "thumbnail": "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Pink",
-        "size": "S",
-        "price": 3599,
-        "quantity": 1
-      }
-    ],
-    "addresses": [
-      {
-        "label": "Other",
-        "fullName": "Gauri Menon",
-        "phone": "+91 8018361858",
-        "line1": "12 Palm Grove, Indiranagar",
-        "line2": "Near Metro Station",
-        "city": "Pune",
-        "state": "Maharashtra",
-        "pincode": "411001",
-        "country": "India",
-        "isDefault": true
-      },
-      {
-        "label": "Other",
-        "fullName": "Gauri Menon",
-        "phone": "+91 8382588658",
-        "line1": "Rose Villa, MG Road",
-        "line2": "Near Metro Station",
-        "city": "Delhi",
-        "state": "Delhi",
-        "pincode": "110001",
-        "country": "India",
-        "isDefault": false
-      }
-    ],
-    "emailVerified": true,
-    "createdAt": "2025-12-19T02:47:28.953Z",
-    "updatedAt": "2026-07-04T12:15:53.402Z"
-  },
-  {
-    "_id": "6a48f9798a6ebda22ab499d1",
-    "name": "Riya Reddy",
-    "email": "riya.reddy17@example.com",
-    "phone": "+91 7259518413",
-    "password": "$2a$10$Lpx6xcQ1CH.psRyhpxIyGO7djnsrxyooHrjgyLeXmMDZcAHfOUOXa",
-    "role": "customer",
-    "avatar": "https://i.pravatar.cc/150?img=18",
-    "wishlist": [
-      "6a48f9798a6ebda22ab499a3",
-      "6a48f9798a6ebda22ab499be",
-      "6a48f9798a6ebda22ab49992",
-      "6a48f9798a6ebda22ab499aa"
-    ],
+    "avatar": "https://i.pravatar.cc/150?img=19",
+    "wishlist": [],
     "cart": [],
     "addresses": [
       {
-        "label": "Home",
-        "fullName": "Riya Reddy",
-        "phone": "+91 7090597462",
-        "line1": "12 Palm Grove, Indiranagar",
-        "line2": "Near Central Park",
+        "label": "Work",
+        "fullName": "Kavya Kapoor",
+        "phone": "+91 8150406518",
+        "line1": "18 Orchid Street, Vashi",
+        "line2": "Near Metro Station",
+        "city": "Kolkata",
+        "state": "West Bengal",
+        "pincode": "700001",
+        "country": "India",
+        "isDefault": true
+      }
+    ],
+    "emailVerified": false,
+    "createdAt": "2025-09-16T07:56:50.489Z",
+    "updatedAt": "2026-07-24T16:12:17.138Z"
+  },
+  {
+    "_id": "6a638ee1d121d069f6f8bec5",
+    "name": "Gauri Nair",
+    "email": "gauri.nair19@example.com",
+    "phone": "+91 7741940839",
+    "password": "$2a$10$AIvVQjGwHv/XkVxDDShQbuspW/pJgF4MJd/iD8ngQnUwS6TRgX/7u",
+    "role": "customer",
+    "avatar": "https://i.pravatar.cc/150?img=20",
+    "wishlist": [
+      "6a638ee1d121d069f6f8be84",
+      "6a638ee1d121d069f6f8be7c"
+    ],
+    "cart": [
+      {
+        "product": "6a638ee1d121d069f6f8bea7",
+        "variantSku": "SRUVALLE-GATHER-GR-XS",
+        "name": "Gathered Rayon Crop & Skirt Set",
+        "thumbnail": "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=700&h=900&q=80",
+        "color": "Brown",
+        "size": "L",
+        "price": 989,
+        "quantity": 1
+      },
+      {
+        "product": "6a638ee1d121d069f6f8be87",
+        "variantSku": "SRUVALLE-RUCHED-BE-XS",
+        "name": "Ruched Handloom Cotton Formal Shirt",
+        "thumbnail": "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=700&h=900&q=80",
+        "color": "Blue",
+        "size": "S",
+        "price": 4949,
+        "quantity": 1
+      },
+      {
+        "product": "6a638ee1d121d069f6f8be93",
+        "variantSku": "SRUVALLE-GATHER-WH-XS",
+        "name": "Gathered Rayon Pencil Skirt",
+        "thumbnail": "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=700&h=900&q=80",
+        "color": "White",
+        "size": "XS",
+        "price": 1419,
+        "quantity": 1
+      }
+    ],
+    "addresses": [
+      {
+        "label": "Work",
+        "fullName": "Gauri Nair",
+        "phone": "+91 8698233176",
+        "line1": "Rose Villa, MG Road",
+        "line2": "Near City Mall",
         "city": "Chennai",
         "state": "Tamil Nadu",
         "pincode": "600001",
         "country": "India",
         "isDefault": true
-      }
-    ],
-    "emailVerified": true,
-    "createdAt": "2024-08-23T18:53:42.849Z",
-    "updatedAt": "2026-07-04T12:15:53.402Z"
-  },
-  {
-    "_id": "6a48f9798a6ebda22ab499d2",
-    "name": "Myra Bose",
-    "email": "myra.bose18@example.com",
-    "phone": "+91 9666625970",
-    "password": "$2a$10$Lpx6xcQ1CH.psRyhpxIyGO7djnsrxyooHrjgyLeXmMDZcAHfOUOXa",
-    "role": "customer",
-    "avatar": "https://i.pravatar.cc/150?img=19",
-    "wishlist": [
-      "6a48f9798a6ebda22ab499ac",
-      "6a48f9798a6ebda22ab4997b"
-    ],
-    "cart": [
-      {
-        "product": "6a48f9798a6ebda22ab499b4",
-        "variantSku": "SRUVALLE-SOLID--PI-XS",
-        "name": "Solid Rayon Paperbag Shorts",
-        "thumbnail": "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Olive",
-        "size": "S",
-        "price": 2859,
-        "quantity": 2
       },
       {
-        "product": "6a48f9798a6ebda22ab49982",
-        "variantSku": "SRUVALLE-GATHER-OL-XS",
-        "name": "Gathered Rayon Georgette Saree",
-        "thumbnail": "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Red",
-        "size": "XS",
-        "price": 3939,
-        "quantity": 2
-      }
-    ],
-    "addresses": [
-      {
-        "label": "Home",
-        "fullName": "Myra Bose",
-        "phone": "+91 8167210904",
-        "line1": "9 Green Meadows, Whitefield",
-        "line2": "Near City Mall",
+        "label": "Other",
+        "fullName": "Gauri Nair",
+        "phone": "+91 7187774244",
+        "line1": "7 Jasmine Lane, Banjara Hills",
+        "line2": "Near Metro Station",
         "city": "Ahmedabad",
         "state": "Gujarat",
         "pincode": "380001",
         "country": "India",
-        "isDefault": true
-      },
-      {
-        "label": "Work",
-        "fullName": "Myra Bose",
-        "phone": "+91 7820528463",
-        "line1": "12 Palm Grove, Indiranagar",
-        "line2": "Near Ring Road",
-        "city": "Kolkata",
-        "state": "West Bengal",
-        "pincode": "700001",
-        "country": "India",
         "isDefault": false
       }
     ],
-    "emailVerified": true,
-    "createdAt": "2024-09-19T12:50:44.013Z",
-    "updatedAt": "2026-07-04T12:15:53.402Z"
-  },
-  {
-    "_id": "6a48f9798a6ebda22ab499d3",
-    "name": "Trisha Bose",
-    "email": "trisha.bose19@example.com",
-    "phone": "+91 7678452848",
-    "password": "$2a$10$Lpx6xcQ1CH.psRyhpxIyGO7djnsrxyooHrjgyLeXmMDZcAHfOUOXa",
-    "role": "customer",
-    "avatar": "https://i.pravatar.cc/150?img=20",
-    "wishlist": [
-      "6a48f9798a6ebda22ab499b4"
-    ],
-    "cart": [
-      {
-        "product": "6a48f9798a6ebda22ab49982",
-        "variantSku": "SRUVALLE-GATHER-OL-XS",
-        "name": "Gathered Rayon Georgette Saree",
-        "thumbnail": "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Olive",
-        "size": "S",
-        "price": 3939,
-        "quantity": 1
-      }
-    ],
-    "addresses": [
-      {
-        "label": "Home",
-        "fullName": "Trisha Bose",
-        "phone": "+91 8393282005",
-        "line1": "18 Orchid Street, Vashi",
-        "line2": "Near City Mall",
-        "city": "Kolkata",
-        "state": "West Bengal",
-        "pincode": "700001",
-        "country": "India",
-        "isDefault": true
-      }
-    ],
-    "emailVerified": true,
-    "createdAt": "2024-10-04T16:51:17.243Z",
-    "updatedAt": "2026-07-04T12:15:53.402Z"
+    "emailVerified": false,
+    "createdAt": "2024-12-23T23:49:26.523Z",
+    "updatedAt": "2026-07-24T16:12:17.138Z"
   }
 ]

@@ -1,8 +1,7 @@
 "use client";
 
 import { X } from "lucide-react";
-import { categories } from "@/data/categories";
-import { COLORS, FABRICS, SIZES } from "@/data/_pools";
+import { useCategories, useAttributes } from "@/hooks/use-catalog";
 import { cn } from "@/lib/utils";
 
 export interface Filters {
@@ -30,11 +29,16 @@ function toggle(list: string[], value: string) {
 export function ProductFilters({
   filters,
   onChange,
+  priceCeiling = 5000,
 }: {
   filters: Filters;
   onChange: (f: Filters) => void;
+  priceCeiling?: number;
 }) {
   const set = (patch: Partial<Filters>) => onChange({ ...filters, ...patch });
+  const { data: categories } = useCategories();
+  const { data: attributes } = useAttributes();
+  const { fabrics: FABRICS, sizes: SIZES, colors: COLORS } = attributes;
 
   return (
     <div className="flex flex-col gap-7">
@@ -56,7 +60,7 @@ export function ProductFilters({
         <input
           type="range"
           min={499}
-          max={5000}
+          max={priceCeiling}
           step={100}
           value={filters.maxPrice}
           onChange={(e) => set({ maxPrice: Number(e.target.value) })}
@@ -102,7 +106,7 @@ export function ProductFilters({
       </FilterGroup>
 
       <FilterGroup title="Fabric">
-        {FABRICS.slice(0, 8).map((f) => (
+        {FABRICS.map((f) => (
           <label key={f} className="flex cursor-pointer items-center gap-2 text-sm text-muted hover:text-ink">
             <input
               type="checkbox"
@@ -126,7 +130,7 @@ export function ProductFilters({
       </label>
 
       <button
-        onClick={() => onChange(DEFAULT_FILTERS)}
+        onClick={() => onChange({ ...DEFAULT_FILTERS, maxPrice: priceCeiling })}
         className="flex items-center gap-1.5 self-start text-sm text-muted hover:text-ink"
       >
         <X size={14} /> Clear all filters

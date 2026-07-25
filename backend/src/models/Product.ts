@@ -36,6 +36,7 @@ const ProductSchema = new Schema(
     newArrival: { type: Boolean, default: false },
     bestSeller: { type: Boolean, default: false },
     trending: { type: Boolean, default: false },
+    flashSale: { type: Boolean, default: false },
     sizes: [{ type: String }],
     colors: [{ type: String }],
     material: { type: String },
@@ -56,6 +57,7 @@ ProductSchema.index({ name: "text", description: "text", brand: "text" });
 ProductSchema.index({ category: 1 });
 ProductSchema.index({ price: 1 });
 ProductSchema.index({ featured: 1, newArrival: 1, bestSeller: 1, trending: 1 });
+ProductSchema.index({ flashSale: 1 });
 ProductSchema.index({ rating: -1 });
 
 export default models.Product || model("Product", ProductSchema);

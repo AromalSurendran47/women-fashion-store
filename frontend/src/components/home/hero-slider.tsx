@@ -4,13 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { heroBanners } from "@/data/banners";
+import type { Banner } from "@/types";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 
-export function HeroSlider() {
+export function HeroSlider({ banners }: { banners: Banner[] }) {
   const [index, setIndex] = useState(0);
-  const count = heroBanners.length;
+  const count = banners.length;
 
   const go = (dir: number) => setIndex((i) => (i + dir + count) % count);
 
@@ -21,7 +21,7 @@ export function HeroSlider() {
 
   return (
     <section className="relative h-[75vh] min-h-[520px] w-full overflow-hidden bg-secondary">
-      {heroBanners.map((b, i) => (
+      {banners.map((b, i) => (
         <div
           key={b.id}
           className={cn(
@@ -79,7 +79,7 @@ export function HeroSlider() {
 
       {/* Dots */}
       <div className="absolute bottom-6 left-1/2 flex -translate-x-1/2 gap-2">
-        {heroBanners.map((_, i) => (
+        {banners.map((_, i) => (
           <button
             key={i}
             aria-label={`Go to slide ${i + 1}`}

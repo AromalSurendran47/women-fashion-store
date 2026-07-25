@@ -3,12 +3,13 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { Package, ShoppingCart, Users, IndianRupee, ArrowLeft, LogOut, Loader2 } from "lucide-react";
+import { Package, ShoppingCart, Users, IndianRupee, ArrowLeft, LogOut, Loader2, Boxes, Tags } from "lucide-react";
 import { AuthGuard } from "@/components/auth/auth-guard";
 import { useAuth } from "@/hooks/use-auth";
 import { useAuthStore } from "@/store/auth-store";
 import { apiGetAuthed } from "@/lib/auth-api";
 import { formatPrice, formatDate } from "@/lib/utils";
+import { AVATAR_FALLBACK } from "@/lib/constants";
 import { Badge } from "@/components/ui/badge";
 import type { AuthUser } from "@/types";
 
@@ -79,6 +80,30 @@ function AdminDashboard() {
         </div>
         <div className="flex gap-2">
           <Link
+            href="/admin/products"
+            className="flex items-center gap-2 rounded-full border border-line px-4 py-2 text-sm hover:border-ink"
+          >
+            <Boxes size={15} /> Manage Products
+          </Link>
+          <Link
+            href="/admin/categories"
+            className="flex items-center gap-2 rounded-full border border-line px-4 py-2 text-sm hover:border-ink"
+          >
+            <Tags size={15} /> Manage Categories
+          </Link>
+          <Link
+            href="/admin/customers"
+            className="flex items-center gap-2 rounded-full border border-line px-4 py-2 text-sm hover:border-ink"
+          >
+            <Users size={15} /> Manage Customers
+          </Link>
+          <Link
+            href="/admin/orders"
+            className="flex items-center gap-2 rounded-full border border-line px-4 py-2 text-sm hover:border-ink"
+          >
+            <ShoppingCart size={15} /> Manage Orders
+          </Link>
+          <Link
             href="/"
             className="flex items-center gap-2 rounded-full border border-line px-4 py-2 text-sm hover:border-ink"
           >
@@ -113,7 +138,12 @@ function AdminDashboard() {
           <div className="grid gap-8 lg:grid-cols-2">
             {/* Recent orders */}
             <section>
-              <h2 className="mb-4 text-lg font-medium">Recent Orders</h2>
+              <div className="mb-4 flex items-center justify-between">
+                <h2 className="text-lg font-medium">Recent Orders</h2>
+                <Link href="/admin/orders" className="text-sm underline hover:text-accent-dark">
+                  Manage all
+                </Link>
+              </div>
               <div className="overflow-hidden rounded-2xl border border-line">
                 <table className="w-full text-sm">
                   <thead className="bg-secondary text-left text-xs uppercase tracking-wider text-muted">
@@ -144,12 +174,23 @@ function AdminDashboard() {
 
             {/* Customers */}
             <section>
-              <h2 className="mb-4 text-lg font-medium">Customers ({users.length})</h2>
+              <div className="mb-4 flex items-center justify-between">
+                <h2 className="text-lg font-medium">Customers ({users.length})</h2>
+                <Link href="/admin/customers" className="text-sm underline hover:text-accent-dark">
+                  Manage all
+                </Link>
+              </div>
               <div className="flex flex-col divide-y divide-line rounded-2xl border border-line">
                 {users.slice(0, 8).map((u) => (
                   <div key={u.id} className="flex items-center gap-3 px-4 py-3">
                     <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full bg-secondary">
-                      <Image src={u.avatar} alt={u.name} fill sizes="36px" className="object-cover" />
+                      <Image
+                        src={u.avatar || AVATAR_FALLBACK}
+                        alt={u.name}
+                        fill
+                        sizes="36px"
+                        className="object-cover"
+                      />
                     </div>
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-medium">{u.name}</p>

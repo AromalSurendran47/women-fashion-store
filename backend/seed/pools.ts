@@ -396,13 +396,19 @@ export const SETTINGS = {
 /* ---------------- Banners ---------------- */
 
 export const HERO_BANNERS = [
-  { title: "The Summer Edit", subtitle: "Breezy weaves & sun-ready shades", ctaText: "Shop Summer", ctaLink: "/collections/summer-collection" },
-  { title: "Festive Reverie", subtitle: "Ethnic wear for every celebration", ctaText: "Explore Ethnic", ctaLink: "/collections/ethnic-wear" },
-  { title: "New Season, New You", subtitle: "Fresh arrivals dropped weekly", ctaText: "Shop New In", ctaLink: "/collections/new-arrivals" },
-  { title: "Co-Ord, Done Right", subtitle: "Matching sets for effortless days", ctaText: "Shop Co-Ords", ctaLink: "/collections/co-ord-sets" },
+  { title: "The Summer Edit", subtitle: "New Season", description: "Breezy weaves and sun-ready shades, made for long golden days.", ctaText: "Shop Summer", ctaLink: "/collections/summer-collection", align: "left" },
+  { title: "Festive Reverie", subtitle: "Ethnic Wear", description: "Handcrafted silhouettes for every celebration on your calendar.", ctaText: "Explore Ethnic", ctaLink: "/collections/ethnic-wear", align: "center" },
+  { title: "Effortless Co-Ords", subtitle: "Matching Sets", description: "One decision, one polished look. Throw it on and go.", ctaText: "Shop Co-Ords", ctaLink: "/collections/co-ord-sets", align: "right" },
+];
+
+export const COLLECTION_BANNERS = [
+  { title: "The New Arrivals", subtitle: "Just In", description: "Fresh drops, restocked weekly. Be the first to wear what's next.", ctaText: "Discover New In", ctaLink: "/products?filter=new", align: "left" },
 ];
 
 export const OFFER_BANNERS = [
-  { title: "Flat 20% Off", subtitle: "Use code FESTIVE20 at checkout", ctaText: "Grab the Deal", ctaLink: "/collections/party-wear" },
-  { title: "Free Shipping over ₹1499", subtitle: "On every order, everywhere in India", ctaText: "Start Shopping", ctaLink: "/collections/new-arrivals" },
+  { title: "Flat 20% Off", subtitle: "Festive Sale", description: "Use code FESTIVE20 at checkout on orders over ₹1,999.", ctaText: "Grab the Deal", ctaLink: "/collections/party-wear", align: "center" },
+  { title: "Free Shipping over ₹1499", subtitle: "Always On", description: "On every order, everywhere in India — no minimum, no code.", ctaText: "Start Shopping", ctaLink: "/collections/new-arrivals", align: "center" },
 ];
+
+export const INSTAGRAM_HANDLE = "sruvalle";
+export const INSTAGRAM_COUNT = 6;

@@ -29,6 +29,9 @@ function categoryFields(category: any): { slug: string; name: string } {
 
 export function mapProduct(p: any) {
   const cat = categoryFields(p.category);
+  // "New" badge shows only for products created today (server-local date).
+  const created = p.createdAt ? new Date(p.createdAt) : null;
+  const isNew = created ? created.toDateString() === new Date().toDateString() : false;
   return {
     id: String(p._id),
     name: p.name,
@@ -52,7 +55,7 @@ export function mapProduct(p: any) {
     newArrival: !!p.newArrival,
     bestSeller: !!p.bestSeller,
     trending: !!p.trending,
-    flashSale: (p.discountPercentage ?? 0) >= 25,
+    flashSale: !!p.flashSale,
     sizes: p.sizes ?? [],
     colors: (p.colors ?? []).map((c: string) => ({ name: c, hex: hexFor(c) })),
     material: p.material ?? p.fabric ?? "",
@@ -64,6 +67,8 @@ export function mapProduct(p: any) {
       size: v.size,
       stock: v.stock,
     })),
+    createdAt: p.createdAt ?? null,
+    isNew,
   };
 }
 
@@ -94,19 +99,28 @@ export function mapCategory(c: any) {
 }
 
 export function mapReview(r: any) {
-  // Deterministic face avatar from the review id (pravatar has 70 portraits).
+  // When the author is populated, show their live name/avatar; otherwise fall back
+  // to the stored snapshot and a deterministic pravatar face from the review id.
+  const author = r.user && typeof r.user === "object" ? r.user : null;
   const n = (parseInt(String(r._id).slice(-2), 16) % 70) + 1;
+  // Same fallback formula as mapUser, so a user without an uploaded photo gets an
+  // identical face here and in their profile header.
+  const authorFallback = author
+    ? `https://i.pravatar.cc/150?img=${(String(author._id).charCodeAt(0) % 70) + 1}`
+    : `https://i.pravatar.cc/150?img=${n}`;
   return {
     id: String(r._id),
     productId: String(r.product),
-    userName: r.userName,
-    avatar: `https://i.pravatar.cc/150?img=${n}`,
+    userId: String(author?._id ?? r.user),
+    userName: author?.name ?? r.userName,
+    avatar: author?.avatar || authorFallback,
     rating: r.rating,
     title: r.title ?? "",
     comment: r.comment,
     verifiedPurchase: !!r.verifiedPurchase,
     date: r.createdAt,
     helpfulCount: r.helpfulCount ?? 0,
+    votedBy: (r.helpfulVotedBy ?? []).map(String),
   };
 }
 
@@ -154,5 +168,60 @@ export function mapCoupon(c: any) {
     discountValue: c.discountValue,
     minOrderValue: c.minOrderValue ?? 0,
     maxDiscount: c.maxDiscount ?? 0,
+  };
+}
+
+export function mapOrder(o: any) {
+  return {
+    id: String(o._id),
+    orderNumber: o.orderNumber,
+    customerName: o.customerName ?? "",
+    date: o.createdAt ?? o.date,
+    createdAt: o.createdAt ?? o.date,
+    items: (o.products ?? []).map((p: any) => ({
+      productId: String(p.product),
+      name: p.name,
+      thumbnail: p.thumbnail ?? "",
+      color: p.color ?? "",
+      size: p.size ?? "",
+      price: p.price,
+      quantity: p.quantity,
+    })),
+    subtotal: o.subtotal ?? 0,
+    discount: o.discount ?? 0,
+    shipping: o.shipping ?? 0,
+    tax: o.tax ?? 0,
+    total: o.total ?? 0,
+    status: o.status,
+    paymentMethod: o.paymentMethod ?? "",
+    paymentStatus: o.paymentStatus ?? "Pending",
+    trackingNumber: o.trackingNumber ?? undefined,
+    shippingAddress: o.shippingAddress
+      ? {
+          fullName: o.shippingAddress.fullName ?? "",
+          phone: o.shippingAddress.phone ?? "",
+          line1: o.shippingAddress.line1 ?? "",
+          line2: o.shippingAddress.line2 ?? "",
+          city: o.shippingAddress.city ?? "",
+          state: o.shippingAddress.state ?? "",
+          pincode: o.shippingAddress.pincode ?? "",
+          country: o.shippingAddress.country ?? "India",
+        }
+      : undefined,
+  };
+}
+
+export function mapBanner(b: any) {
+  return {
+    id: String(b._id),
+    title: b.title,
+    subtitle: b.subtitle ?? "",
+    description: b.description ?? "",
+    image: b.image,
+    mobileImage: b.mobileImage ?? b.image,
+    ctaText: b.ctaText ?? "",
+    ctaLink: b.ctaLink ?? "",
+    type: b.type ?? "hero",
+    align: b.align ?? "left",
   };
 }

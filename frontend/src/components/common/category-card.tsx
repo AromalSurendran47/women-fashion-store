@@ -1,10 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Category } from "@/types";
-import { categoryCounts } from "@/data/products";
 
 export function CategoryCard({ category }: { category: Category }) {
-  const count = categoryCounts[category.slug] ?? category.productCount;
+  const count = category.productCount;
   return (
     <Link
       href={`/collections/${category.slug}`}

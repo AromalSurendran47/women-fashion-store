@@ -30,6 +30,8 @@ export function FlashSale({ products }: { products: Product[] }) {
     return () => clearInterval(id);
   }, []);
 
+  if (products.length === 0) return null;
+
   return (
     <section className="bg-secondary py-14 md:py-20">
       <div className="container-wide">

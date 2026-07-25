@@ -13,3 +13,4 @@ export { default as Faq } from "./Faq.js";
 export { default as Newsletter } from "./Newsletter.js";
 export { default as Blog } from "./Blog.js";
 export { default as Settings } from "./Settings.js";
+export { default as Attribute } from "./Attribute.js";

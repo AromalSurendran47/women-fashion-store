@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Search, Heart, User, ShoppingBag, Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { NAV_LINKS } from "@/lib/constants";
-import { categories } from "@/data/categories";
+import { useCategories } from "@/hooks/use-catalog";
 import { useUIStore } from "@/store/ui-store";
 import { useCartStore } from "@/store/cart-store";
 import { useWishlistStore } from "@/store/wishlist-store";
@@ -29,9 +29,11 @@ export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const mounted = useMounted();
 
+  const { data: categories } = useCategories();
   const { openSearch, openDrawer, openCart } = useUIStore();
   const cartCount = useCartStore((s) => s.items.reduce((n, l) => n + l.quantity, 0));
   const wishCount = useWishlistStore((s) => s.ids.length);
+  const syncWishlist = useWishlistStore((s) => s.syncWithServer);
   const authToken = useAuthStore((s) => s.token);
   const accountHref = mounted && authToken ? "/profile" : "/login";
 
@@ -41,6 +43,11 @@ export function Navbar() {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Pull the account wishlist (merged with any guest picks) on page load and right after login.
+  useEffect(() => {
+    if (authToken) void syncWishlist();
+  }, [authToken, syncWishlist]);
 
   return (
     <>

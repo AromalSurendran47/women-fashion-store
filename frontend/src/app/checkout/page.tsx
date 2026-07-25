@@ -3,10 +3,13 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
-import { CreditCard, Truck, Wallet, Banknote, Lock } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { CreditCard, Truck, Wallet, Banknote, Lock, Loader2 } from "lucide-react";
 import { useCartStore } from "@/store/cart-store";
-import { formatPrice, cn } from "@/lib/utils";
+import { useAuthStore } from "@/store/auth-store";
+import { apiCreateOrder, apiGetAddresses } from "@/lib/auth-api";
+import { toast } from "@/store/toast-store";
+import { formatPrice, cn, isValidImageSrc } from "@/lib/utils";
 import { STORE } from "@/lib/constants";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -33,30 +36,178 @@ const PAYMENTS = [
 const inputCls =
   "h-12 w-full rounded-xl border border-line bg-background px-4 text-sm outline-none focus:border-ink";
 
+/** Compose the full order summary sent to the store's WhatsApp number. */
+function buildWhatsAppMessage(args: {
+  orderNumber: string;
+  items: { name: string; color: string; size: string; price: number; quantity: number }[];
+  form: CheckoutForm;
+  subtotal: number;
+  discount: number;
+  couponCode?: string;
+  shipping: number;
+  tax: number;
+  total: number;
+  payment: string;
+}) {
+  const { orderNumber, items, form, subtotal, discount, couponCode, shipping, tax, total, payment } =
+    args;
+  const lines = [
+    `🛍️ New Order — ${orderNumber}`,
+    "",
+    "Items:",
+    ...items.map(
+      (l, i) =>
+        `${i + 1}. ${l.name} (${l.color} / ${l.size}) x${l.quantity} — ${formatPrice(l.price * l.quantity)}`
+    ),
+    "",
+    `Subtotal: ${formatPrice(subtotal)}`,
+    ...(discount > 0
+      ? [`Discount${couponCode ? ` (${couponCode})` : ""}: - ${formatPrice(discount)}`]
+      : []),
+    `Shipping: ${shipping === 0 ? "Free" : formatPrice(shipping)}`,
+    `Tax (5% GST): ${formatPrice(tax)}`,
+    `Total: ${formatPrice(total)}`,
+    `Payment: ${payment.toUpperCase()}`,
+    "",
+    `Customer: ${form.fullName}`,
+    `Phone: ${form.phone}`,
+    `Email: ${form.email}`,
+    "",
+    "Deliver to:",
+    [form.line1, form.line2, form.city, `${form.state} ${form.pincode}`].filter(Boolean).join(", "),
+  ];
+  return lines.join("\n");
+}
+
 export default function CheckoutPage() {
   const router = useRouter();
-  const { items, clear } = useCartStore();
+  const { items, clear, coupon } = useCartStore();
+  const token = useAuthStore((s) => s.token);
+  const user = useAuthStore((s) => s.user);
   const [payment, setPayment] = useState("razorpay");
   const [billingSame, setBillingSame] = useState(true);
+  const [placing, setPlacing] = useState(false);
+  // Synchronous re-entry lock: blocks a second submit before `placing` re-renders,
+  // so a fast double-click / double Enter can never create a duplicate order.
+  const placingRef = useRef(false);
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<CheckoutForm>();
 
+  // Prefill shipping from the default saved address (profile → Addresses) and the
+  // account's contact details. keepDirtyValues makes sure a slow fetch never
+  // overwrites fields the user has already started typing into.
+  useEffect(() => {
+    if (!token) return;
+    let cancelled = false;
+    (async () => {
+      const res = await apiGetAddresses(token);
+      if (cancelled) return;
+      const addr = res?.addresses.find((a) => a.isDefault) ?? res?.addresses[0];
+      reset(
+        {
+          fullName: addr?.fullName ?? user?.name ?? "",
+          email: user?.email ?? "",
+          phone: addr?.phone ?? user?.phone ?? "",
+          line1: addr?.line1 ?? "",
+          line2: addr?.line2 ?? "",
+          city: addr?.city ?? "",
+          state: addr?.state ?? "",
+          pincode: addr?.pincode ?? "",
+        },
+        { keepDirtyValues: true }
+      );
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [token, user, reset]);
+
+  // Same formulas as the backend order route (and the cart page).
   const subtotal = items.reduce((s, l) => s + l.price * l.quantity, 0);
+  const discount = coupon?.amount ?? 0;
   const shipping = subtotal >= STORE.freeShippingThreshold ? 0 : 99;
   const tax = Math.round(subtotal * 0.05);
-  const total = subtotal + shipping + tax;
+  const total = Math.max(0, subtotal + shipping + tax - discount);
 
-  const onSubmit = () => {
-    const orderNumber = `SRUVALLE${Math.floor(100000 + subtotal + items.length * 37)}`;
-    if (typeof window !== "undefined") {
-      sessionStorage.setItem("aura-last-order", JSON.stringify({ orderNumber, total, payment }));
+  const onSubmit = async (data: CheckoutForm) => {
+    if (placingRef.current) return; // already submitting — ignore repeat clicks
+    if (!token) {
+      toast.error("Please sign in to place your order.");
+      router.push("/login");
+      return;
     }
-    clear();
-    router.push("/checkout/success");
+    placingRef.current = true;
+    setPlacing(true);
+    try {
+      const res = await apiCreateOrder(token, {
+        items: items.map((l) => ({
+          productId: l.productId,
+          name: l.name,
+          thumbnail: l.thumbnail,
+          color: l.color,
+          size: l.size,
+          price: l.price,
+          quantity: l.quantity,
+        })),
+        shippingAddress: {
+          fullName: data.fullName,
+          phone: data.phone,
+          line1: data.line1,
+          line2: data.line2,
+          city: data.city,
+          state: data.state,
+          pincode: data.pincode,
+        },
+        paymentMethod: payment,
+        discount,
+        couponCode: coupon?.code,
+      });
+
+      if (!res.ok) {
+        toast.error(res.error);
+        placingRef.current = false;
+        setPlacing(false);
+        return;
+      }
+
+      // Forward the full order details to the store's WhatsApp.
+      const waMessage = buildWhatsAppMessage({
+        orderNumber: res.data.orderNumber,
+        items,
+        form: data,
+        subtotal,
+        discount,
+        couponCode: coupon?.code,
+        shipping,
+        tax,
+        total,
+        payment,
+      });
+      const waUrl = `https://wa.me/${STORE.orderWhatsapp}?text=${encodeURIComponent(waMessage)}`;
+
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem(
+          "aura-last-order",
+          JSON.stringify({ orderNumber: res.data.orderNumber, total: res.data.total, payment, waUrl })
+        );
+        // Popup blockers may stop this — the success page offers the same link as a button.
+        window.open(waUrl, "_blank", "noopener");
+      }
+      toast.success(`Order ${res.data.orderNumber} placed!`);
+      clear();
+      router.push("/checkout/success");
+      // Intentionally keep the lock set — we're navigating away; leaving it locked
+      // prevents any late duplicate submit during the redirect.
+    } catch {
+      toast.error("Something went wrong placing your order. Please try again.");
+      placingRef.current = false;
+      setPlacing(false);
+    }
   };
 
   if (items.length === 0) {
@@ -161,7 +312,9 @@ export default function CheckoutPage() {
             {items.map((l) => (
               <div key={`${l.productId}-${l.color}-${l.size}`} className="flex gap-3">
                 <div className="relative h-16 w-12 shrink-0 overflow-hidden rounded-lg bg-background">
-                  <Image src={l.thumbnail} alt={l.name} fill sizes="48px" className="object-cover" />
+                  {isValidImageSrc(l.thumbnail) && (
+                    <Image src={l.thumbnail} alt={l.name} fill sizes="48px" className="object-cover" />
+                  )}
                 </div>
                 <div className="flex-1 text-sm">
                   <p className="line-clamp-1 font-medium">{l.name}</p>
@@ -175,6 +328,12 @@ export default function CheckoutPage() {
           </div>
           <dl className="space-y-2 border-t border-line py-4 text-sm">
             <div className="flex justify-between"><dt className="text-muted">Subtotal</dt><dd>{formatPrice(subtotal)}</dd></div>
+            {discount > 0 && (
+              <div className="flex justify-between">
+                <dt className="text-muted">Discount{coupon?.code ? ` (${coupon.code})` : ""}</dt>
+                <dd className="text-green-700">- {formatPrice(discount)}</dd>
+              </div>
+            )}
             <div className="flex justify-between"><dt className="text-muted">Shipping</dt><dd>{shipping === 0 ? "Free" : formatPrice(shipping)}</dd></div>
             <div className="flex justify-between"><dt className="text-muted">Tax (5% GST)</dt><dd>{formatPrice(tax)}</dd></div>
           </dl>
@@ -182,8 +341,16 @@ export default function CheckoutPage() {
             <span>Total</span>
             <span>{formatPrice(total)}</span>
           </div>
-          <Button type="submit" block className="mt-6 h-12">
-            <Lock size={15} /> Place Order
+          <Button type="submit" block disabled={placing} className="mt-6 h-12">
+            {placing ? (
+              <>
+                <Loader2 size={15} className="animate-spin" /> Placing order…
+              </>
+            ) : (
+              <>
+                <Lock size={15} /> Place Order
+              </>
+            )}
           </Button>
           <p className="mt-3 text-center text-xs text-muted">
             Secured by Razorpay · This is a demo — no payment is taken.

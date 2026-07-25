@@ -1,11 +1,55 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import { orders } from "@/data/orders";
-import { formatPrice, formatDate } from "@/lib/utils";
+import { useEffect, useState } from "react";
+import { Loader2, Package } from "lucide-react";
+import { useAuthStore } from "@/store/auth-store";
+import { apiGetOrders } from "@/lib/auth-api";
+import { formatPrice, formatDate, isValidImageSrc } from "@/lib/utils";
 import { OrderBadge } from "@/components/profile/order-badge";
 import { buttonVariants } from "@/components/ui/button";
+import type { Order } from "@/types";
 
 export default function OrdersPage() {
+  const token = useAuthStore((s) => s.token);
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!token) return;
+    (async () => {
+      setOrders(await apiGetOrders(token));
+      setLoading(false);
+    })();
+  }, [token]);
+
+  if (loading) {
+    return (
+      <div className="flex min-h-[40vh] items-center justify-center">
+        <Loader2 className="animate-spin text-accent-dark" size={28} />
+      </div>
+    );
+  }
+
+  if (orders.length === 0) {
+    return (
+      <div className="flex flex-col gap-6">
+        <h2 className="text-lg font-medium">Order History</h2>
+        <div className="flex flex-col items-center gap-4 rounded-2xl border border-line py-16 text-center">
+          <Package size={32} className="text-muted" />
+          <div>
+            <p className="font-medium">No orders yet</p>
+            <p className="text-sm text-muted">When you place an order, it will show up here.</p>
+          </div>
+          <Link href="/products" className={buttonVariants({ size: "sm" })}>
+            Start Shopping
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-6">
       <h2 className="text-lg font-medium">Order History</h2>
@@ -33,7 +77,9 @@ export default function OrdersPage() {
             {o.items.map((it, i) => (
               <div key={i} className="flex items-center gap-3">
                 <div className="relative h-16 w-12 shrink-0 overflow-hidden rounded-lg bg-secondary">
-                  <Image src={it.thumbnail} alt={it.name} fill sizes="48px" className="object-cover" />
+                  {isValidImageSrc(it.thumbnail) && (
+                    <Image src={it.thumbnail} alt={it.name} fill sizes="48px" className="object-cover" />
+                  )}
                 </div>
                 <div className="flex-1 text-sm">
                   <p className="line-clamp-1 font-medium">{it.name}</p>

@@ -7,6 +7,10 @@ import { formatDate } from "@/lib/utils";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Badge } from "@/components/ui/badge";
 
+// Always render on-demand from the live backend — never statically cached.
+// If the backend is down, getBlogBySlug() returns undefined → notFound() (404).
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({
   params,
 }: {

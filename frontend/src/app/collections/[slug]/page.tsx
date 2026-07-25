@@ -52,7 +52,7 @@ export default async function CollectionPage({
           ]}
         />
         <div className="mt-6">
-          <ProductListing products={list} initialFilters={{ categories: [slug] }} />
+          <ProductListing products={list} initialFilters={{ categories: [slug] }} showFilters={false} />
         </div>
       </div>
     </div>

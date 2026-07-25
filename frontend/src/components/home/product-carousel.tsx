@@ -29,6 +29,8 @@ export function ProductCarousel({
     ref.current?.scrollBy({ left: dir * 320, behavior: "smooth" });
   };
 
+  if (products.length === 0) return null;
+
   return (
     <section className="container-wide py-14 md:py-20">
       <div className="flex items-end justify-between gap-4">

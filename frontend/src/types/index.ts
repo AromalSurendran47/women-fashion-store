@@ -16,6 +16,15 @@ export interface ColorOption {
   hex: string;
 }
 
+/** Controlled option lists for product attributes, served from the backend. */
+export interface Attributes {
+  fabrics: string[];
+  fits: string[];
+  occasions: string[];
+  sizes: string[];
+  colors: ColorOption[];
+}
+
 export interface Category {
   id: string;
   name: string;
@@ -64,11 +73,16 @@ export interface Product {
   images: string[];
   thumbnail: string;
   variants: ProductVariant[];
+  /** ISO timestamp the product was created (from the backend). */
+  createdAt?: string | null;
+  /** True only when the product was created today — drives the "New" badge. */
+  isNew?: boolean;
 }
 
 export interface Review {
   id: string;
   productId: string;
+  userId: string;
   userName: string;
   avatar: string;
   rating: number;
@@ -77,6 +91,7 @@ export interface Review {
   verifiedPurchase: boolean;
   date: string;
   helpfulCount: number;
+  votedBy: string[];
 }
 
 export interface Banner {
@@ -139,9 +154,23 @@ export type OrderStatus =
   | "Cancelled"
   | "Returned";
 
+export type PaymentStatus = "Pending" | "Paid" | "Failed" | "Refunded";
+
+export interface OrderAddress {
+  fullName: string;
+  phone: string;
+  line1: string;
+  line2?: string;
+  city: string;
+  state: string;
+  pincode: string;
+  country?: string;
+}
+
 export interface Order {
   id: string;
   orderNumber: string;
+  customerName?: string;
   date: string;
   items: OrderItem[];
   subtotal: number;
@@ -151,7 +180,9 @@ export interface Order {
   total: number;
   status: OrderStatus;
   paymentMethod: string;
+  paymentStatus?: PaymentStatus;
   trackingNumber?: string;
+  shippingAddress?: OrderAddress;
 }
 
 export interface CartLine {

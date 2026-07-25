@@ -1,286 +1,221 @@
 [
   {
-    "_id": "6a48f9798a6ebda22ab49ae0",
-    "user": "6a48f9798a6ebda22ab499c2",
+    "_id": "6a638ee1d121d069f6f8bfd2",
+    "user": "6a638ee1d121d069f6f8beb5",
     "items": [
       {
-        "product": "6a48f9798a6ebda22ab499ab",
-        "variantSku": "SRUVALLE-SMOCKE-WH-XS",
-        "name": "Smocked Silk Blend Playsuit",
+        "product": "6a638ee1d121d069f6f8beae",
+        "variantSku": "SRUVALLE-PLEATE-OL-XS",
+        "name": "Pleated Organza Midi Dress",
+        "thumbnail": "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?auto=format&fit=crop&w=700&h=900&q=80",
+        "color": "Olive",
+        "size": "S",
+        "price": 3419,
+        "quantity": 2
+      },
+      {
+        "product": "6a638ee1d121d069f6f8be85",
+        "variantSku": "SRUVALLE-ABSTRA-WH-XS",
+        "name": "Abstract Georgette Blazer",
         "thumbnail": "https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?auto=format&fit=crop&w=700&h=900&q=80",
+        "color": "Beige",
+        "size": "XS",
+        "price": 819,
+        "quantity": 3
+      }
+    ],
+    "updatedAt": "2026-07-22T06:56:51.101Z"
+  },
+  {
+    "_id": "6a638ee1d121d069f6f8bfd3",
+    "user": "6a638ee1d121d069f6f8beb6",
+    "items": [
+      {
+        "product": "6a638ee1d121d069f6f8be75",
+        "variantSku": "SRUVALLE-STRIPE-BR-XS",
+        "name": "Striped Modal Puff-Sleeve Top",
+        "thumbnail": "https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?auto=format&fit=crop&w=700&h=900&q=80",
+        "color": "Brown",
+        "size": "XS",
+        "price": 2339,
+        "quantity": 1
+      },
+      {
+        "product": "6a638ee1d121d069f6f8be6c",
+        "variantSku": "SRUVALLE-PLEATE-BL-XS",
+        "name": "Pleated Viscose Lehenga Set",
+        "thumbnail": "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=700&h=900&q=80",
         "color": "White",
         "size": "L",
-        "price": 1549,
-        "quantity": 2
-      },
-      {
-        "product": "6a48f9798a6ebda22ab4997d",
-        "variantSku": "SRUVALLE-TIERED-GR-XS",
-        "name": "Tiered Linen Sheath Dress",
-        "thumbnail": "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Blue",
-        "size": "XS",
-        "price": 4859,
-        "quantity": 2
-      },
-      {
-        "product": "6a48f9798a6ebda22ab4997f",
-        "variantSku": "SRUVALLE-GATHER-MU-XS",
-        "name": "Gathered Modal Utility Jumpsuit",
-        "thumbnail": "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Brown",
-        "size": "XS",
-        "price": 4349,
-        "quantity": 1
-      }
-    ],
-    "updatedAt": "2026-06-18T23:26:57.015Z"
-  },
-  {
-    "_id": "6a48f9798a6ebda22ab49ae1",
-    "user": "6a48f9798a6ebda22ab499c5",
-    "items": [
-      {
-        "product": "6a48f9798a6ebda22ab49966",
-        "variantSku": "SRUVALLE-BLOCK--PI-XS",
-        "name": "Block-Print Silk Blend Tiered Maxi",
-        "thumbnail": "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Green",
-        "size": "L",
-        "price": 1689,
-        "quantity": 1
-      },
-      {
-        "product": "6a48f9798a6ebda22ab49982",
-        "variantSku": "SRUVALLE-GATHER-OL-XS",
-        "name": "Gathered Rayon Georgette Saree",
-        "thumbnail": "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Olive",
-        "size": "XL",
-        "price": 3939,
-        "quantity": 2
-      }
-    ],
-    "updatedAt": "2026-07-03T14:52:35.071Z"
-  },
-  {
-    "_id": "6a48f9798a6ebda22ab49ae2",
-    "user": "6a48f9798a6ebda22ab499c7",
-    "items": [
-      {
-        "product": "6a48f9798a6ebda22ab4995c",
-        "variantSku": "SRUVALLE-COLOUR-PI-XS",
-        "name": "Colour-Block Organza Maxi Dress",
-        "thumbnail": "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Brown",
-        "size": "L",
-        "price": 1359,
+        "price": 3169,
         "quantity": 3
+      }
+    ],
+    "updatedAt": "2026-07-07T16:14:44.274Z"
+  },
+  {
+    "_id": "6a638ee1d121d069f6f8bfd4",
+    "user": "6a638ee1d121d069f6f8beb7",
+    "items": [
+      {
+        "product": "6a638ee1d121d069f6f8be4f",
+        "variantSku": "SRUVALLE-BLOCK--BR-XS",
+        "name": "Block-Print Linen A-Line Kurti",
+        "thumbnail": "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=700&h=900&q=80",
+        "color": "Red",
+        "size": "M",
+        "price": 1179,
+        "quantity": 2
       },
       {
-        "product": "6a48f9798a6ebda22ab49996",
-        "variantSku": "SRUVALLE-EMBROI-MU-XS",
-        "name": "Embroidered Denim Beach Kaftan",
+        "product": "6a638ee1d121d069f6f8be74",
+        "variantSku": "SRUVALLE-DITSY--GR-XS",
+        "name": "Ditsy Floral Rayon Banarasi Saree",
+        "thumbnail": "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=700&h=900&q=80",
+        "color": "Green",
+        "size": "XS",
+        "price": 1879,
+        "quantity": 1
+      },
+      {
+        "product": "6a638ee1d121d069f6f8be5a",
+        "variantSku": "SRUVALLE-ABSTRA-RE-XS",
+        "name": "Abstract Organza Maxi Dress",
+        "thumbnail": "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=700&h=900&q=80",
+        "color": "Black",
+        "size": "M",
+        "price": 3899,
+        "quantity": 1
+      }
+    ],
+    "coupon": "SAREE15",
+    "updatedAt": "2026-07-17T18:18:50.573Z"
+  },
+  {
+    "_id": "6a638ee1d121d069f6f8bfd5",
+    "user": "6a638ee1d121d069f6f8beb8",
+    "items": [
+      {
+        "product": "6a638ee1d121d069f6f8be56",
+        "variantSku": "SRUVALLE-RUCHED-WH-XS",
+        "name": "Ruched Crepe Embellished Gown",
+        "thumbnail": "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=700&h=900&q=80",
+        "color": "White",
+        "size": "L",
+        "price": 1249,
+        "quantity": 3
+      }
+    ],
+    "updatedAt": "2026-07-14T21:15:29.614Z"
+  },
+  {
+    "_id": "6a638ee1d121d069f6f8bfd6",
+    "user": "6a638ee1d121d069f6f8beb9",
+    "items": [
+      {
+        "product": "6a638ee1d121d069f6f8be94",
+        "variantSku": "SRUVALLE-ABSTRA-MU-XS",
+        "name": "Abstract Handloom Cotton Beach Kaftan",
+        "thumbnail": "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=700&h=900&q=80",
+        "color": "White",
+        "size": "XS",
+        "price": 3649,
+        "quantity": 3
+      }
+    ],
+    "coupon": "SUMMER15",
+    "updatedAt": "2026-07-05T12:22:05.360Z"
+  },
+  {
+    "_id": "6a638ee1d121d069f6f8bfd7",
+    "user": "6a638ee1d121d069f6f8bec0",
+    "items": [
+      {
+        "product": "6a638ee1d121d069f6f8be58",
+        "variantSku": "SRUVALLE-TIERED-BL-XS",
+        "name": "Tiered Silk Blend Cotton Sundress",
         "thumbnail": "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=700&h=900&q=80",
         "color": "Mustard",
-        "size": "S",
-        "price": 4539,
-        "quantity": 1
+        "size": "XS",
+        "price": 2879,
+        "quantity": 3
       },
       {
-        "product": "6a48f9798a6ebda22ab49994",
-        "variantSku": "SRUVALLE-SMOCKE-BL-XS",
-        "name": "Smocked Denim Sequin Dress",
+        "product": "6a638ee1d121d069f6f8bea8",
+        "variantSku": "SRUVALLE-EMBROI-MU-XS",
+        "name": "Embroidered Cotton Lehenga Set",
         "thumbnail": "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=700&h=900&q=80",
         "color": "Black",
-        "size": "XXL",
-        "price": 2369,
-        "quantity": 1
-      }
-    ],
-    "updatedAt": "2026-06-26T13:29:13.518Z"
-  },
-  {
-    "_id": "6a48f9798a6ebda22ab49ae3",
-    "user": "6a48f9798a6ebda22ab499c8",
-    "items": [
-      {
-        "product": "6a48f9798a6ebda22ab49978",
-        "variantSku": "SRUVALLE-RUCHED-WH-XS",
-        "name": "Ruched Organza Culottes",
-        "thumbnail": "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Beige",
-        "size": "S",
-        "price": 3759,
+        "size": "M",
+        "price": 2339,
         "quantity": 3
       },
       {
-        "product": "6a48f9798a6ebda22ab4995c",
-        "variantSku": "SRUVALLE-COLOUR-PI-XS",
-        "name": "Colour-Block Organza Maxi Dress",
-        "thumbnail": "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Pink",
-        "size": "XL",
-        "price": 1359,
-        "quantity": 3
-      }
-    ],
-    "updatedAt": "2026-07-01T15:25:00.467Z"
-  },
-  {
-    "_id": "6a48f9798a6ebda22ab49ae4",
-    "user": "6a48f9798a6ebda22ab499cc",
-    "items": [
-      {
-        "product": "6a48f9798a6ebda22ab499b4",
-        "variantSku": "SRUVALLE-SOLID--PI-XS",
-        "name": "Solid Rayon Paperbag Shorts",
-        "thumbnail": "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Pink",
-        "size": "S",
-        "price": 2859,
-        "quantity": 1
-      },
-      {
-        "product": "6a48f9798a6ebda22ab499a1",
-        "variantSku": "SRUVALLE-RUCHED-OL-XS",
-        "name": "Ruched Handloom Cotton Sheath Dress",
-        "thumbnail": "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Olive",
+        "product": "6a638ee1d121d069f6f8be91",
+        "variantSku": "SRUVALLE-EMBROI-BL-XS",
+        "name": "Embroidered Handloom Cotton Playsuit",
+        "thumbnail": "https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?auto=format&fit=crop&w=700&h=900&q=80",
+        "color": "Brown",
         "size": "XS",
-        "price": 2869,
-        "quantity": 2
-      }
-    ],
-    "updatedAt": "2026-07-03T03:42:07.268Z"
-  },
-  {
-    "_id": "6a48f9798a6ebda22ab49ae5",
-    "user": "6a48f9798a6ebda22ab499d0",
-    "items": [
-      {
-        "product": "6a48f9798a6ebda22ab499bf",
-        "variantSku": "SRUVALLE-SMOCKE-BL-XS",
-        "name": "Smocked Georgette Puff-Sleeve Top",
-        "thumbnail": "https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Black",
-        "size": "S",
-        "price": 3709,
-        "quantity": 3
-      }
-    ],
-    "updatedAt": "2026-06-27T15:34:02.171Z"
-  },
-  {
-    "_id": "6a48f9798a6ebda22ab49ae6",
-    "user": "6a48f9798a6ebda22ab499d1",
-    "items": [
-      {
-        "product": "6a48f9798a6ebda22ab49987",
-        "variantSku": "SRUVALLE-RUCHED-BL-XS",
-        "name": "Ruched Silk Blend Jumpsuit",
-        "thumbnail": "https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Black",
-        "size": "XL",
-        "price": 2049,
-        "quantity": 2
-      },
-      {
-        "product": "6a48f9798a6ebda22ab499ba",
-        "variantSku": "SRUVALLE-ABSTRA-PI-XS",
-        "name": "Abstract Chiffon Linen Shirt",
-        "thumbnail": "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Pink",
-        "size": "L",
-        "price": 4249,
-        "quantity": 1
-      }
-    ],
-    "coupon": "FLAT300",
-    "updatedAt": "2026-07-02T00:01:15.436Z"
-  },
-  {
-    "_id": "6a48f9798a6ebda22ab49ae7",
-    "user": "6a48f9798a6ebda22ab499d2",
-    "items": [
-      {
-        "product": "6a48f9798a6ebda22ab499bc",
-        "variantSku": "SRUVALLE-GATHER-BL-XS",
-        "name": "Gathered Cotton Maxi Dress",
-        "thumbnail": "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "White",
-        "size": "S",
-        "price": 2989,
-        "quantity": 3
-      },
-      {
-        "product": "6a48f9798a6ebda22ab49997",
-        "variantSku": "SRUVALLE-BLOCK--BE-XS",
-        "name": "Block-Print Modal Utility Jumpsuit",
-        "thumbnail": "https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "White",
-        "size": "L",
-        "price": 1809,
+        "price": 3009,
         "quantity": 1
       },
       {
-        "product": "6a48f9798a6ebda22ab49961",
-        "variantSku": "SRUVALLE-SOLID--BL-XS",
-        "name": "Solid Modal Shirt & Shorts Set",
-        "thumbnail": "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Black",
-        "size": "XS",
-        "price": 2779,
-        "quantity": 3
-      }
-    ],
-    "updatedAt": "2026-06-27T07:35:17.081Z"
-  },
-  {
-    "_id": "6a48f9798a6ebda22ab49ae8",
-    "user": "6a48f9798a6ebda22ab499d3",
-    "items": [
-      {
-        "product": "6a48f9798a6ebda22ab4999c",
-        "variantSku": "SRUVALLE-FLORAL-BR-XS",
-        "name": "Floral Georgette Pleated Skirt",
+        "product": "6a638ee1d121d069f6f8be52",
+        "variantSku": "SRUVALLE-GATHER-WH-XS",
+        "name": "Gathered Cotton Denim Jeans",
         "thumbnail": "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=700&h=900&q=80",
         "color": "Beige",
         "size": "M",
-        "price": 3949,
-        "quantity": 2
-      },
+        "price": 2559,
+        "quantity": 3
+      }
+    ],
+    "coupon": "BIGDAY30",
+    "updatedAt": "2026-07-10T15:57:57.614Z"
+  },
+  {
+    "_id": "6a638ee1d121d069f6f8bfd8",
+    "user": "6a638ee1d121d069f6f8bec3",
+    "items": [
       {
-        "product": "6a48f9798a6ebda22ab4996f",
-        "variantSku": "SRUVALLE-EMBROI-OL-XS",
-        "name": "Embroidered Viscose Bodysuit",
-        "thumbnail": "https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Beige",
-        "size": "XL",
-        "price": 4389,
-        "quantity": 1
-      },
-      {
-        "product": "6a48f9798a6ebda22ab49979",
-        "variantSku": "SRUVALLE-CUTWOR-MU-XS",
-        "name": "Cutwork Denim Printed Co-Ord Set",
-        "thumbnail": "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Black",
-        "size": "XL",
-        "price": 2639,
-        "quantity": 1
-      },
-      {
-        "product": "6a48f9798a6ebda22ab49978",
-        "variantSku": "SRUVALLE-RUCHED-WH-XS",
-        "name": "Ruched Organza Culottes",
+        "product": "6a638ee1d121d069f6f8bea6",
+        "variantSku": "SRUVALLE-EMBROI-RE-XS",
+        "name": "Embroidered Organza Palazzo Pants",
         "thumbnail": "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=700&h=900&q=80",
-        "color": "Green",
-        "size": "L",
-        "price": 3759,
+        "color": "Brown",
+        "size": "M",
+        "price": 2569,
         "quantity": 1
       }
     ],
-    "updatedAt": "2026-06-19T14:23:39.393Z"
+    "updatedAt": "2026-07-11T05:33:46.674Z"
+  },
+  {
+    "_id": "6a638ee1d121d069f6f8bfd9",
+    "user": "6a638ee1d121d069f6f8bec5",
+    "items": [
+      {
+        "product": "6a638ee1d121d069f6f8bea4",
+        "variantSku": "SRUVALLE-EMBROI-GR-XS",
+        "name": "Embroidered Silk Blend Organza Saree",
+        "thumbnail": "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=700&h=900&q=80",
+        "color": "White",
+        "size": "XL",
+        "price": 2579,
+        "quantity": 3
+      },
+      {
+        "product": "6a638ee1d121d069f6f8be7f",
+        "variantSku": "SRUVALLE-CUTWOR-BL-XS",
+        "name": "Cutwork Denim A-Line Kurti",
+        "thumbnail": "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=700&h=900&q=80",
+        "color": "Beige",
+        "size": "S",
+        "price": 2219,
+        "quantity": 3
+      }
+    ],
+    "updatedAt": "2026-07-12T02:33:37.716Z"
   }
 ]

@@ -34,7 +34,7 @@ export function ProductCard({ product }: { product: Product }) {
 
         {/* Badges */}
         <div className="absolute left-3 top-3 flex flex-col gap-1.5">
-          {product.newArrival && <Badge variant="new">New</Badge>}
+          {product.isNew && <Badge variant="new">New</Badge>}
           {product.discountPercentage > 0 && (
             <Badge variant="sale">-{product.discountPercentage}%</Badge>
           )}
