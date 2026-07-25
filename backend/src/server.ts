@@ -4,7 +4,7 @@ import cors from "cors";
 import multer from "multer";
 import mongoose from "mongoose";
 import { connectDB } from "./lib/db.js";
-import { uploadImageToBlob } from "./lib/azure-blob.js";
+import { uploadImage } from "./lib/s3.js";
 import {
   User,
   Category,
@@ -168,7 +168,7 @@ app.post(
     const file = (req as AuthedRequest & { file?: Express.Multer.File }).file;
     if (!file) return res.status(400).json({ error: "No file uploaded." });
     try {
-      const url = await uploadImageToBlob({ buffer: file.buffer, mimetype: file.mimetype }, "avatars");
+      const url = await uploadImage({ buffer: file.buffer, mimetype: file.mimetype }, "avatars");
       const user = await User.findByIdAndUpdate(req.auth!.id, { avatar: url }, { new: true }).lean();
       if (!user) return res.status(404).json({ error: "User not found" });
       res.json({ user: mapUser(user) });
@@ -516,7 +516,7 @@ app.post(
     const file = (req as express.Request & { file?: Express.Multer.File }).file;
     if (!file) return res.status(400).json({ error: "No file uploaded." });
     try {
-      const url = await uploadImageToBlob({ buffer: file.buffer, mimetype: file.mimetype });
+      const url = await uploadImage({ buffer: file.buffer, mimetype: file.mimetype });
       res.json({ url });
     } catch (err: any) {
       if (err?.status === 503) return res.status(503).json({ error: err.message });
