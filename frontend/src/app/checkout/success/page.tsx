@@ -20,6 +20,7 @@ export default function OrderSuccessPage() {
   }, []);
 
   const isCod = order?.payment === "cod";
+  const isWhatsApp = order?.payment === "whatsapp";
 
   return (
     <div className="container-wide flex flex-col items-center py-16 text-center md:py-24">
@@ -28,8 +29,17 @@ export default function OrderSuccessPage() {
       </div>
       <h1 className="mt-6 text-3xl font-medium md:text-4xl">Thank you for your order!</h1>
       <p className="mt-3 max-w-md text-sm text-muted">
-        Your order has been placed successfully. A confirmation has been sent to your email. We&apos;ll
-        notify you when it ships.
+        {isWhatsApp ? (
+          <>
+            Your order has been placed. Please complete the payment on WhatsApp — we&apos;ll confirm
+            your order as soon as it&apos;s received.
+          </>
+        ) : (
+          <>
+            Your order has been placed successfully. A confirmation has been sent to your email.
+            We&apos;ll notify you when it ships.
+          </>
+        )}
       </p>
 
       <div className="mt-8 w-full max-w-md rounded-2xl border border-line bg-secondary/50 p-6 text-left">
@@ -38,7 +48,9 @@ export default function OrderSuccessPage() {
           <span className="font-medium">{order?.orderNumber ?? "SRUVALLE100000"}</span>
         </div>
         <div className="flex justify-between pt-3 text-sm">
-          <span className="text-muted">{isCod ? "Amount payable (COD)" : "Amount paid"}</span>
+          <span className="text-muted">
+            {isCod ? "Amount payable (COD)" : isWhatsApp ? "Amount payable" : "Amount paid"}
+          </span>
           <span className="font-medium">{order ? formatPrice(order.total) : "—"}</span>
         </div>
       </div>
@@ -72,7 +84,8 @@ export default function OrderSuccessPage() {
           rel="noopener noreferrer"
           className="mt-10 flex items-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-sm font-medium text-white hover:bg-[#1fb959]"
         >
-          <MessageCircle size={16} /> Send order details on WhatsApp
+          <MessageCircle size={16} />
+          {isWhatsApp ? "Complete payment on WhatsApp" : "Send order details on WhatsApp"}
         </a>
       )}
 

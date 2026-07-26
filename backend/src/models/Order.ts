@@ -44,7 +44,7 @@ const OrderSchema = new Schema(
     total: { type: Number, required: true },
     paymentMethod: {
       type: String,
-      enum: ["Razorpay", "UPI", "Card", "NetBanking", "COD"],
+      enum: ["WhatsApp", "Razorpay", "UPI", "Card", "NetBanking", "COD"],
       required: true,
     },
     paymentStatus: {

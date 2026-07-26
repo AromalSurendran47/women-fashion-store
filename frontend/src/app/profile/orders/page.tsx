@@ -69,6 +69,23 @@ export default function OrdersPage() {
                 <p className="text-xs text-muted">Total</p>
                 <p className="text-sm font-medium">{formatPrice(o.total)}</p>
               </div>
+              <div>
+                <p className="text-xs text-muted">Payment</p>
+                <p className="text-sm">
+                  <span
+                    className={`font-medium ${
+                      o.paymentStatus === "Paid"
+                        ? "text-emerald-600"
+                        : o.paymentStatus === "Failed"
+                        ? "text-sale"
+                        : "text-amber-600"
+                    }`}
+                  >
+                    {o.paymentStatus ?? "Pending"}
+                  </span>
+                  {o.paymentMethod && <span className="text-muted"> · {o.paymentMethod}</span>}
+                </p>
+              </div>
             </div>
             <OrderBadge status={o.status} />
           </div>
@@ -90,6 +107,32 @@ export default function OrdersPage() {
                 <span className="text-sm">{formatPrice(it.price * it.quantity)}</span>
               </div>
             ))}
+
+            {/* Price breakdown — shows how the item prices become the order total. */}
+            <dl className="mt-1 space-y-1.5 border-t border-line pt-3 text-sm">
+              <div className="flex justify-between">
+                <dt className="text-muted">Subtotal</dt>
+                <dd>{formatPrice(o.subtotal)}</dd>
+              </div>
+              {o.discount > 0 && (
+                <div className="flex justify-between">
+                  <dt className="text-muted">Discount</dt>
+                  <dd className="text-emerald-600">− {formatPrice(o.discount)}</dd>
+                </div>
+              )}
+              <div className="flex justify-between">
+                <dt className="text-muted">Shipping</dt>
+                <dd>{o.shipping === 0 ? "Free" : formatPrice(o.shipping)}</dd>
+              </div>
+              <div className="flex justify-between">
+                <dt className="text-muted">Tax (5% GST)</dt>
+                <dd>{formatPrice(o.tax)}</dd>
+              </div>
+              <div className="flex justify-between border-t border-line pt-1.5 font-semibold">
+                <dt>Total</dt>
+                <dd>{formatPrice(o.total)}</dd>
+              </div>
+            </dl>
           </div>
 
           <div className="flex items-center justify-between gap-3 border-t border-line p-4">

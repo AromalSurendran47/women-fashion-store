@@ -1278,6 +1278,7 @@ app.post(
 
 /* ------------------------------- Orders ----------------------------- */
 const PAYMENT_LABELS: Record<string, string> = {
+  whatsapp: "WhatsApp",
   razorpay: "Razorpay",
   card: "Card",
   cod: "COD",
@@ -1477,7 +1478,9 @@ app.post(
       tax,
       total,
       paymentMethod: method,
-      paymentStatus: method === "COD" ? "Pending" : "Paid",
+      // No gateway is wired up yet — money arrives over WhatsApp (or on delivery),
+      // so every order starts unpaid and the admin marks it Paid in Manage Orders.
+      paymentStatus: "Pending",
       status: "Confirmed",
       shippingAddress,
       billingAddress: b.billingAddress ?? shippingAddress,
