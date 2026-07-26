@@ -17,7 +17,7 @@ export const STORE = {
   whatsapp: "+91 75580 83325",
   // Order details are forwarded to this WhatsApp number (country code + digits, no "+").
   orderWhatsapp: "917558083325",
-  address: "Sruvalle Studio, 4th Floor, Prestige Tower, MG Road, Bengaluru 560001",
+  address: "Souparnika, Vamanapuram, Thiruvananthapuram 695606",
   freeShippingThreshold: 1499,
 };
 

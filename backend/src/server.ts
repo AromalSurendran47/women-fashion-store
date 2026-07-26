@@ -368,6 +368,169 @@ app.get(
   })
 );
 
+/* ------------------- Admin dashboard (charts data) ------------------ */
+
+const DAY_MS = 86_400_000;
+const IST_TZ = "+05:30"; // the store's timezone — all daily buckets use it
+const LIVE_STATUS = { $nin: ["Cancelled", "Returned"] };
+
+const shiftDayStr = (day: string, days: number) =>
+  new Date(new Date(`${day}T00:00:00Z`).getTime() + days * DAY_MS).toISOString().slice(0, 10);
+
+/** Parse ?from / ?to (YYYY-MM-DD, IST) with a last-30-days default and a 1-year cap. */
+function dayRange(query: Record<string, unknown>) {
+  const parseDay = (v: unknown) =>
+    typeof v === "string" && /^\d{4}-\d{2}-\d{2}$/.test(v) ? v : null;
+  const istToday = new Date(Date.now() + 5.5 * 3_600_000).toISOString().slice(0, 10);
+  let toDay = parseDay(query.to) ?? istToday;
+  let fromDay = parseDay(query.from) ?? shiftDayStr(toDay, -29);
+  if (fromDay > toDay) [fromDay, toDay] = [toDay, fromDay];
+  // Hard cap so a bad request can't ask for a decade of buckets.
+  if (shiftDayStr(fromDay, 366) < toDay) fromDay = shiftDayStr(toDay, -366);
+  return {
+    fromDay,
+    toDay,
+    rangeStart: new Date(`${fromDay}T00:00:00${IST_TZ}`),
+    rangeEnd: new Date(`${toDay}T23:59:59.999${IST_TZ}`),
+  };
+}
+
+// Everything the dashboard's charts need in one round-trip. "Live" revenue
+// excludes cancelled/returned orders, same as /api/admin/stats.
+// Optional ?from=YYYY-MM-DD&to=YYYY-MM-DD scope the daily revenue series.
+app.get(
+  "/api/admin/dashboard",
+  adminRequired,
+  wrap(async (req, res) => {
+    const now = new Date();
+    const d30 = new Date(now.getTime() - 30 * DAY_MS);
+    const d60 = new Date(now.getTime() - 60 * DAY_MS);
+    const live = LIVE_STATUS;
+    const { fromDay, toDay, rangeStart, rangeEnd } = dayRange(req.query);
+
+    const [
+      products,
+      orders,
+      users,
+      revenueAgg,
+      cur30Agg,
+      prev30Agg,
+      byDay,
+      paymentStatus,
+    ] = await Promise.all([
+      Product.countDocuments(),
+      Order.countDocuments(),
+      User.countDocuments(),
+      Order.aggregate([
+        { $match: { status: live } },
+        { $group: { _id: null, total: { $sum: "$total" } } },
+      ]),
+      Order.aggregate([
+        { $match: { status: live, createdAt: { $gte: d30 } } },
+        { $group: { _id: null, total: { $sum: "$total" }, n: { $sum: 1 } } },
+      ]),
+      Order.aggregate([
+        { $match: { status: live, createdAt: { $gte: d60, $lt: d30 } } },
+        { $group: { _id: null, total: { $sum: "$total" }, n: { $sum: 1 } } },
+      ]),
+      Order.aggregate([
+        { $match: { status: live, createdAt: { $gte: rangeStart, $lte: rangeEnd } } },
+        {
+          $group: {
+            _id: {
+              $dateToString: { format: "%Y-%m-%d", date: "$createdAt", timezone: IST_TZ },
+            },
+            revenue: { $sum: "$total" },
+            orders: { $sum: 1 },
+          },
+        },
+        { $sort: { _id: 1 } },
+      ]),
+      Order.aggregate([{ $group: { _id: "$paymentStatus", count: { $sum: 1 } } }]),
+    ]);
+
+    // Zero-fill the revenue series so gaps render as flat days, not holes.
+    const dayMap = new Map(byDay.map((d: any) => [d._id, d]));
+    const revenueByDay: { date: string; revenue: number; orders: number }[] = [];
+    for (let date = fromDay; date <= toDay; date = shiftDayStr(date, 1)) {
+      const row = dayMap.get(date) as any;
+      revenueByDay.push({ date, revenue: row?.revenue ?? 0, orders: row?.orders ?? 0 });
+    }
+
+    const countsOf = (rows: any[]) =>
+      rows.reduce<Record<string, number>>((acc, r) => {
+        acc[String(r._id ?? "Pending")] = r.count;
+        return acc;
+      }, {});
+
+    res.json({
+      products,
+      orders,
+      users,
+      revenue: revenueAgg[0]?.total ?? 0,
+      revenue30: cur30Agg[0]?.total ?? 0,
+      revenuePrev30: prev30Agg[0]?.total ?? 0,
+      orders30: cur30Agg[0]?.n ?? 0,
+      ordersPrev30: prev30Agg[0]?.n ?? 0,
+      from: fromDay,
+      to: toDay,
+      revenueByDay,
+      paymentStatus: countsOf(paymentStatus),
+    });
+  })
+);
+
+// Best-selling categories within ?from/?to (same range rules as the dashboard),
+// ranked by units sold across live orders. Has its own range so the card can be
+// filtered independently of the revenue chart.
+app.get(
+  "/api/admin/top-categories",
+  adminRequired,
+  wrap(async (req, res) => {
+    const { fromDay, toDay, rangeStart, rangeEnd } = dayRange(req.query);
+    const rows = await Order.aggregate([
+      { $match: { status: LIVE_STATUS, createdAt: { $gte: rangeStart, $lte: rangeEnd } } },
+      { $unwind: "$products" },
+      {
+        $lookup: {
+          from: "products",
+          localField: "products.product",
+          foreignField: "_id",
+          as: "prod",
+        },
+      },
+      { $unwind: "$prod" },
+      {
+        $lookup: {
+          from: "categories",
+          localField: "prod.category",
+          foreignField: "_id",
+          as: "cat",
+        },
+      },
+      { $unwind: "$cat" },
+      {
+        $group: {
+          _id: "$cat.name",
+          units: { $sum: "$products.quantity" },
+          revenue: { $sum: { $multiply: ["$products.price", "$products.quantity"] } },
+        },
+      },
+      { $sort: { units: -1 } },
+      { $limit: 6 },
+    ]);
+    res.json({
+      from: fromDay,
+      to: toDay,
+      categories: rows.map((c: any) => ({
+        name: String(c._id),
+        units: c.units,
+        revenue: c.revenue,
+      })),
+    });
+  })
+);
+
 const escapeRegex = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 app.get(
@@ -1092,12 +1255,127 @@ app.get(
   })
 );
 
+// All articles including drafts (admin) — `published` is exposed for the table.
+app.get(
+  "/api/admin/blogs",
+  adminRequired,
+  wrap(async (_req, res) => {
+    const blogs = await Blog.find().sort({ createdAt: -1 }).lean();
+    res.json(blogs.map((b: any) => ({ ...mapBlog(b), published: b.published !== false })));
+  })
+);
+
+// Drafts are only reachable by admins through /api/admin/blogs — never here.
 app.get(
   "/api/blogs/:slug",
   wrap(async (req, res) => {
-    const blog = await Blog.findOne({ slug: req.params.slug }).lean();
+    const blog = await Blog.findOne({ slug: req.params.slug, published: true }).lean();
     if (!blog) return res.status(404).json({ error: "Blog not found" });
     res.json(mapBlog(blog));
+  })
+);
+
+/* ----------------- Blog admin CRUD (adminRequired) ------------------ */
+
+/** Build the set of blog fields from a request body (create or update). */
+function buildBlogFields(body: any): Record<string, unknown> {
+  const fields: Record<string, unknown> = {};
+  const toArray = (v: unknown) =>
+    Array.isArray(v)
+      ? v.map((x) => String(x).trim()).filter(Boolean)
+      : typeof v === "string"
+      ? v.split(",").map((s) => s.trim()).filter(Boolean)
+      : undefined;
+
+  if (body.title !== undefined) fields.title = String(body.title).trim();
+  if (body.slug !== undefined && String(body.slug).trim()) fields.slug = slugify(body.slug);
+  if (body.excerpt !== undefined) fields.excerpt = String(body.excerpt).trim();
+  if (body.image !== undefined) fields.image = String(body.image).trim();
+  if (body.content !== undefined) fields.content = String(body.content);
+  if (body.author !== undefined) fields.author = String(body.author).trim();
+  if (body.authorAvatar !== undefined) fields.authorAvatar = String(body.authorAvatar).trim();
+  if (body.readTime !== undefined) {
+    const rt = Number(body.readTime);
+    if (Number.isFinite(rt) && rt > 0) fields.readTime = Math.round(rt);
+  }
+  const tags = toArray(body.tags);
+  if (tags) fields.tags = tags;
+  if (body.published !== undefined) fields.published = Boolean(body.published);
+  return fields;
+}
+
+const mapAdminBlog = (b: any) => ({ ...mapBlog(b), published: b.published !== false });
+
+// Create
+app.post(
+  "/api/blogs",
+  adminRequired,
+  wrap(async (req, res) => {
+    const body = req.body ?? {};
+    if (!body.title || !body.image || !body.content || !body.author) {
+      return res.status(400).json({ error: "Title, image, content and author are required." });
+    }
+    const fields: any = buildBlogFields(body);
+    fields.slug = fields.slug || slugify(fields.title);
+    if (!fields.slug) {
+      return res.status(400).json({ error: "Could not derive a slug from the title." });
+    }
+    if (fields.published === undefined) fields.published = true;
+    if (fields.published) fields.publishedAt = new Date();
+
+    const clash = await Blog.findOne({ slug: fields.slug }).lean();
+    if (clash) {
+      return res.status(409).json({ error: `An article with slug "${fields.slug}" already exists.` });
+    }
+
+    const created = await Blog.create(fields);
+    res.status(201).json(mapAdminBlog(created.toObject()));
+  })
+);
+
+// Update
+app.put(
+  "/api/blogs/:id",
+  adminRequired,
+  wrap(async (req, res) => {
+    const { id } = req.params;
+    if (!OID.test(id)) return res.status(400).json({ error: "Invalid blog id." });
+    const body = req.body ?? {};
+    const fields: any = buildBlogFields(body);
+    for (const key of ["title", "image", "content", "author"] as const) {
+      if (fields[key] !== undefined && !fields[key]) {
+        return res.status(400).json({ error: `${key} cannot be empty.` });
+      }
+    }
+    // Renaming the title also refreshes the slug unless one was sent explicitly.
+    if (fields.title && body.slug === undefined) fields.slug = slugify(fields.title);
+    if (fields.slug) {
+      const clash = await Blog.findOne({ slug: fields.slug, _id: { $ne: id } }).lean();
+      if (clash) {
+        return res.status(409).json({ error: `An article with slug "${fields.slug}" already exists.` });
+      }
+    }
+
+    const blog = (await Blog.findById(id)) as any;
+    if (!blog) return res.status(404).json({ error: "Blog not found" });
+    // First time an article goes live, stamp its publish date.
+    if (fields.published === true && !blog.publishedAt) fields.publishedAt = new Date();
+    Object.assign(blog, fields);
+    await blog.save();
+    res.json(mapAdminBlog(blog.toObject()));
+  })
+);
+
+// Delete
+app.delete(
+  "/api/blogs/:id",
+  adminRequired,
+  wrap(async (req, res) => {
+    const { id } = req.params;
+    if (!OID.test(id)) return res.status(400).json({ error: "Invalid blog id." });
+    const deleted = await Blog.findByIdAndDelete(id).lean();
+    if (!deleted) return res.status(404).json({ error: "Blog not found" });
+    res.json({ ok: true, id });
   })
 );
 
@@ -1163,6 +1441,7 @@ app.post(
 
 /* ------------------------------- Orders ----------------------------- */
 const PAYMENT_LABELS: Record<string, string> = {
+  whatsapp: "WhatsApp",
   razorpay: "Razorpay",
   card: "Card",
   cod: "COD",
@@ -1362,7 +1641,9 @@ app.post(
       tax,
       total,
       paymentMethod: method,
-      paymentStatus: method === "COD" ? "Pending" : "Paid",
+      // No gateway is wired up yet — money arrives over WhatsApp (or on delivery),
+      // so every order starts unpaid and the admin marks it Paid in Manage Orders.
+      paymentStatus: "Pending",
       status: "Confirmed",
       shippingAddress,
       billingAddress: b.billingAddress ?? shippingAddress,

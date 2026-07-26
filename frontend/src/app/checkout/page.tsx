@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";
-import { CreditCard, Truck, Wallet, Banknote, Lock, Loader2 } from "lucide-react";
+import { CreditCard, Truck, MessageCircle, Lock, Loader2 } from "lucide-react";
 import { useCartStore } from "@/store/cart-store";
 import { useAuthStore } from "@/store/auth-store";
 import { apiCreateOrder, apiGetAddresses } from "@/lib/auth-api";
@@ -27,10 +27,14 @@ interface CheckoutForm {
   pincode: string;
 }
 
+// Payments are currently collected over WhatsApp after the order is placed.
+// The gateway options are parked until online payments go live — restore the
+// entries below (and re-import their icons) to bring them back.
 const PAYMENTS = [
-  { id: "razorpay", label: "Razorpay (UPI / Cards)", icon: Wallet },
-  { id: "card", label: "Credit / Debit Card", icon: CreditCard },
-  { id: "cod", label: "Cash on Delivery", icon: Banknote },
+  { id: "whatsapp", label: "WhatsApp (UPI / Bank Transfer)", icon: MessageCircle },
+  // { id: "razorpay", label: "Razorpay (UPI / Cards)", icon: Wallet },
+  // { id: "card", label: "Credit / Debit Card", icon: CreditCard },
+  // { id: "cod", label: "Cash on Delivery", icon: Banknote },
 ];
 
 const inputCls =
@@ -67,7 +71,7 @@ function buildWhatsAppMessage(args: {
     `Shipping: ${shipping === 0 ? "Free" : formatPrice(shipping)}`,
     `Tax (5% GST): ${formatPrice(tax)}`,
     `Total: ${formatPrice(total)}`,
-    `Payment: ${payment.toUpperCase()}`,
+    `Payment: ${payment === "whatsapp" ? "WhatsApp (pending — paying now)" : payment.toUpperCase()}`,
     "",
     `Customer: ${form.fullName}`,
     `Phone: ${form.phone}`,
@@ -84,7 +88,7 @@ export default function CheckoutPage() {
   const { items, clear, coupon } = useCartStore();
   const token = useAuthStore((s) => s.token);
   const user = useAuthStore((s) => s.user);
-  const [payment, setPayment] = useState("razorpay");
+  const [payment, setPayment] = useState("whatsapp");
   const [billingSame, setBillingSame] = useState(true);
   const [placing, setPlacing] = useState(false);
   // Synchronous re-entry lock: blocks a second submit before `placing` re-renders,
@@ -353,7 +357,7 @@ export default function CheckoutPage() {
             )}
           </Button>
           <p className="mt-3 text-center text-xs text-muted">
-            Secured by Razorpay · This is a demo — no payment is taken.
+            After placing the order you&apos;ll be taken to WhatsApp to complete the payment.
           </p>
         </div>
       </form>

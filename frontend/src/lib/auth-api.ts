@@ -1,4 +1,4 @@
-import type { AuthUser, Product, Order, Category, Review } from "@/types";
+import type { AuthUser, Product, Order, Category, Review, Blog } from "@/types";
 
 /** Shape the admin product form sends to the backend (create/update). */
 export interface ProductInput {
@@ -317,6 +317,93 @@ export function apiUpdateCategory(token: string, id: string, input: Partial<Cate
 /** Delete a category by id (admin). Fails while products still use it. */
 export function apiDeleteCategory(token: string, id: string) {
   return sendAuthed<{ ok: true; id: string }>(`/categories/${id}`, "DELETE", token);
+}
+
+/* --------------------------- Admin: dashboard --------------------------- */
+
+/** Aggregates for the admin dashboard's KPI tiles and charts. */
+export interface AdminDashboard {
+  products: number;
+  orders: number;
+  users: number;
+  revenue: number;
+  revenue30: number;
+  revenuePrev30: number;
+  orders30: number;
+  ordersPrev30: number;
+  from: string;
+  to: string;
+  revenueByDay: { date: string; revenue: number; orders: number }[];
+  paymentStatus: Record<string, number>;
+}
+
+/** One row of the best-selling-categories chart. */
+export interface TopCategory {
+  name: string;
+  units: number;
+  revenue: number;
+}
+
+/** Fetch everything the dashboard needs in one call (admin).
+ *  `range` scopes the daily revenue series (YYYY-MM-DD, default last 30 days). */
+export function apiGetAdminDashboard(token: string, range?: { from?: string; to?: string }) {
+  const params = new URLSearchParams();
+  if (range?.from) params.set("from", range.from);
+  if (range?.to) params.set("to", range.to);
+  const qs = params.toString();
+  return apiGetAuthed<AdminDashboard | null>(`/admin/dashboard${qs ? `?${qs}` : ""}`, token, null);
+}
+
+/** Best-selling categories (units + revenue) within a date range (admin). */
+export function apiGetTopCategories(token: string, range?: { from?: string; to?: string }) {
+  const params = new URLSearchParams();
+  if (range?.from) params.set("from", range.from);
+  if (range?.to) params.set("to", range.to);
+  const qs = params.toString();
+  return apiGetAuthed<{ from: string; to: string; categories: TopCategory[] } | null>(
+    `/admin/top-categories${qs ? `?${qs}` : ""}`,
+    token,
+    null
+  );
+}
+
+/* ----------------------------- Admin: blog CRUD ---------------------------- */
+
+/** A blog as returned to the admin — includes the draft/published flag. */
+export type AdminBlog = Blog & { published: boolean };
+
+/** Shape the admin blog form sends to the backend (create/update). */
+export interface BlogInput {
+  title: string;
+  slug?: string;
+  excerpt?: string;
+  image: string;
+  content: string;
+  tags?: string[];
+  author: string;
+  authorAvatar?: string;
+  readTime?: number;
+  published?: boolean;
+}
+
+/** Fetch every article including drafts (admin). */
+export function apiGetAdminBlogs(token: string) {
+  return apiGetAuthed<AdminBlog[]>("/admin/blogs", token, []);
+}
+
+/** Create an article (admin). Returns the created article. */
+export function apiCreateBlog(token: string, input: BlogInput) {
+  return sendAuthed<AdminBlog>("/blogs", "POST", token, input);
+}
+
+/** Update an article by id (admin). Returns the updated article. */
+export function apiUpdateBlog(token: string, id: string, input: Partial<BlogInput>) {
+  return sendAuthed<AdminBlog>(`/blogs/${id}`, "PUT", token, input);
+}
+
+/** Delete an article by id (admin). */
+export function apiDeleteBlog(token: string, id: string) {
+  return sendAuthed<{ ok: true; id: string }>(`/blogs/${id}`, "DELETE", token);
 }
 
 /* ------------------------------- Orders ------------------------------- */
