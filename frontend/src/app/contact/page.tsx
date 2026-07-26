@@ -94,7 +94,7 @@ export default function ContactPage() {
             />
             <div className="relative flex flex-col items-center gap-2 text-muted">
               <MapPin size={28} className="text-accent-dark" />
-              <span className="text-sm font-medium">Sruvalle Studio, MG Road, Bengaluru</span>
+              <span className="text-sm font-medium">Souparnika, Vamanapuram, Thiruvananthapuram</span>
               <span className="text-xs">Google Map placeholder</span>
             </div>
           </div>
