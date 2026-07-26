@@ -319,6 +319,54 @@ export function apiDeleteCategory(token: string, id: string) {
   return sendAuthed<{ ok: true; id: string }>(`/categories/${id}`, "DELETE", token);
 }
 
+/* --------------------------- Admin: dashboard --------------------------- */
+
+/** Aggregates for the admin dashboard's KPI tiles and charts. */
+export interface AdminDashboard {
+  products: number;
+  orders: number;
+  users: number;
+  revenue: number;
+  revenue30: number;
+  revenuePrev30: number;
+  orders30: number;
+  ordersPrev30: number;
+  from: string;
+  to: string;
+  revenueByDay: { date: string; revenue: number; orders: number }[];
+  paymentStatus: Record<string, number>;
+}
+
+/** One row of the best-selling-categories chart. */
+export interface TopCategory {
+  name: string;
+  units: number;
+  revenue: number;
+}
+
+/** Fetch everything the dashboard needs in one call (admin).
+ *  `range` scopes the daily revenue series (YYYY-MM-DD, default last 30 days). */
+export function apiGetAdminDashboard(token: string, range?: { from?: string; to?: string }) {
+  const params = new URLSearchParams();
+  if (range?.from) params.set("from", range.from);
+  if (range?.to) params.set("to", range.to);
+  const qs = params.toString();
+  return apiGetAuthed<AdminDashboard | null>(`/admin/dashboard${qs ? `?${qs}` : ""}`, token, null);
+}
+
+/** Best-selling categories (units + revenue) within a date range (admin). */
+export function apiGetTopCategories(token: string, range?: { from?: string; to?: string }) {
+  const params = new URLSearchParams();
+  if (range?.from) params.set("from", range.from);
+  if (range?.to) params.set("to", range.to);
+  const qs = params.toString();
+  return apiGetAuthed<{ from: string; to: string; categories: TopCategory[] } | null>(
+    `/admin/top-categories${qs ? `?${qs}` : ""}`,
+    token,
+    null
+  );
+}
+
 /* ----------------------------- Admin: blog CRUD ---------------------------- */
 
 /** A blog as returned to the admin — includes the draft/published flag. */
