@@ -23,14 +23,15 @@ import { useAuthStore } from "@/store/auth-store";
 import {
   apiGetAuthed,
   apiGetAdminDashboard,
-  apiGetTopCategories,
+  // apiGetTopCategories, // best-selling categories — disabled (see below)
   type AdminDashboard,
-  type TopCategory,
+  // type TopCategory,
 } from "@/lib/auth-api";
 import { formatPrice } from "@/lib/utils";
 import { AVATAR_FALLBACK } from "@/lib/constants";
 import { Badge } from "@/components/ui/badge";
-import { RevenueAreaChart, DonutChart, HBarChart } from "@/components/admin/charts";
+import { RevenueAreaChart, DonutChart } from "@/components/admin/charts";
+// import { HBarChart } from "@/components/admin/charts"; // used by best-selling categories
 import type { AuthUser } from "@/types";
 
 interface AdminOrder {
@@ -72,11 +73,14 @@ const REVENUE_PRESETS = [
   { id: "custom", label: "Custom" },
 ];
 
-const CATEGORY_PRESETS = [
-  { id: "today", label: "Today" },
-  { id: "1m", label: "1 month" },
-  { id: "custom", label: "Custom" },
-];
+// Best-selling categories is disabled for now — its order→product→category
+// aggregation was slowing the dashboard down. Uncomment the marked blocks
+// (imports, presets, state, effect, card) to bring it back.
+// const CATEGORY_PRESETS = [
+//   { id: "today", label: "Today" },
+//   { id: "1m", label: "1 month" },
+//   { id: "custom", label: "Custom" },
+// ];
 
 /** Local (IST) calendar day as YYYY-MM-DD, optionally shifted by N days. */
 function dayStr(shiftDays = 0): string {
@@ -117,12 +121,12 @@ function AdminDashboardPage() {
   const [applied, setApplied] = useState<{ from: string; to: string } | null>(null);
   const [chartLoading, setChartLoading] = useState(false);
 
-  // Best-selling-categories date range (independent of the revenue chart)
-  const [catPreset, setCatPreset] = useState("1m");
-  const [catCustom, setCatCustom] = useState({ from: "", to: "" });
-  const [catApplied, setCatApplied] = useState<{ from: string; to: string } | null>(null);
-  const [catLoading, setCatLoading] = useState(false);
-  const [categories, setCategories] = useState<TopCategory[] | null>(null);
+  // Best-selling-categories date range (independent of the revenue chart) — disabled
+  // const [catPreset, setCatPreset] = useState("1m");
+  // const [catCustom, setCatCustom] = useState({ from: "", to: "" });
+  // const [catApplied, setCatApplied] = useState<{ from: string; to: string } | null>(null);
+  // const [catLoading, setCatLoading] = useState(false);
+  // const [categories, setCategories] = useState<TopCategory[] | null>(null);
 
   useEffect(() => {
     if (!token) return;
@@ -148,18 +152,18 @@ function AdminDashboardPage() {
     })();
   }, [token, preset, applied]);
 
-  // The categories card has its own range and endpoint.
-  useEffect(() => {
-    if (!token) return;
-    const range = rangeOf(catPreset, catApplied);
-    if (!range) return;
-    setCatLoading(true);
-    (async () => {
-      const res = await apiGetTopCategories(token, range);
-      setCategories(res?.categories ?? []);
-      setCatLoading(false);
-    })();
-  }, [token, catPreset, catApplied]);
+  // The categories card has its own range and endpoint — disabled
+  // useEffect(() => {
+  //   if (!token) return;
+  //   const range = rangeOf(catPreset, catApplied);
+  //   if (!range) return;
+  //   setCatLoading(true);
+  //   (async () => {
+  //     const res = await apiGetTopCategories(token, range);
+  //     setCategories(res?.categories ?? []);
+  //     setCatLoading(false);
+  //   })();
+  // }, [token, catPreset, catApplied]);
 
   const loading = dash === null;
 
@@ -265,7 +269,9 @@ function AdminDashboardPage() {
             </ChartCard>
           </div>
 
-          {/* Best-selling categories — has its own date range */}
+          {/* Best-selling categories — disabled for now (slow aggregation).
+              Uncomment this card plus the marked imports/presets/state/effect above to restore.
+
           <ChartCard
             title="Best-selling categories"
             subtitle={`Units sold ${
@@ -308,6 +314,7 @@ function AdminDashboardPage() {
               )}
             </div>
           </ChartCard>
+          */}
 
           {/* Lists */}
           <div className="grid gap-6 lg:grid-cols-2">
