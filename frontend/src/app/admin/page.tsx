@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { Package, ShoppingCart, Users, IndianRupee, ArrowLeft, LogOut, Loader2, Boxes, Tags } from "lucide-react";
+import { Package, ShoppingCart, Users, IndianRupee, ArrowLeft, LogOut, Loader2, Boxes, Tags, Newspaper } from "lucide-react";
 import { AuthGuard } from "@/components/auth/auth-guard";
 import { useAuth } from "@/hooks/use-auth";
 import { useAuthStore } from "@/store/auth-store";
@@ -102,6 +102,12 @@ function AdminDashboard() {
             className="flex items-center gap-2 rounded-full border border-line px-4 py-2 text-sm hover:border-ink"
           >
             <ShoppingCart size={15} /> Manage Orders
+          </Link>
+          <Link
+            href="/admin/blogs"
+            className="flex items-center gap-2 rounded-full border border-line px-4 py-2 text-sm hover:border-ink"
+          >
+            <Newspaper size={15} /> Manage Blog
           </Link>
           <Link
             href="/"

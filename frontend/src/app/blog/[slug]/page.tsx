@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getBlogBySlug, getRelatedBlogs } from "@/lib/api";
 import { formatDate } from "@/lib/utils";
+import { AVATAR_FALLBACK } from "@/lib/constants";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Badge } from "@/components/ui/badge";
 
@@ -51,7 +52,7 @@ export default async function BlogDetailPage({
         <h1 className="mt-4 text-3xl font-medium md:text-5xl">{blog.title}</h1>
         <div className="mt-4 flex items-center justify-center gap-3 text-sm text-muted">
           <div className="relative h-8 w-8 overflow-hidden rounded-full bg-secondary">
-            <Image src={blog.authorAvatar} alt={blog.author} fill sizes="32px" className="object-cover" />
+            <Image src={blog.authorAvatar || AVATAR_FALLBACK} alt={blog.author} fill sizes="32px" className="object-cover" />
           </div>
           {blog.author} · {formatDate(blog.date)} · {blog.readTime} min read
         </div>

@@ -1092,12 +1092,127 @@ app.get(
   })
 );
 
+// All articles including drafts (admin) — `published` is exposed for the table.
+app.get(
+  "/api/admin/blogs",
+  adminRequired,
+  wrap(async (_req, res) => {
+    const blogs = await Blog.find().sort({ createdAt: -1 }).lean();
+    res.json(blogs.map((b: any) => ({ ...mapBlog(b), published: b.published !== false })));
+  })
+);
+
+// Drafts are only reachable by admins through /api/admin/blogs — never here.
 app.get(
   "/api/blogs/:slug",
   wrap(async (req, res) => {
-    const blog = await Blog.findOne({ slug: req.params.slug }).lean();
+    const blog = await Blog.findOne({ slug: req.params.slug, published: true }).lean();
     if (!blog) return res.status(404).json({ error: "Blog not found" });
     res.json(mapBlog(blog));
+  })
+);
+
+/* ----------------- Blog admin CRUD (adminRequired) ------------------ */
+
+/** Build the set of blog fields from a request body (create or update). */
+function buildBlogFields(body: any): Record<string, unknown> {
+  const fields: Record<string, unknown> = {};
+  const toArray = (v: unknown) =>
+    Array.isArray(v)
+      ? v.map((x) => String(x).trim()).filter(Boolean)
+      : typeof v === "string"
+      ? v.split(",").map((s) => s.trim()).filter(Boolean)
+      : undefined;
+
+  if (body.title !== undefined) fields.title = String(body.title).trim();
+  if (body.slug !== undefined && String(body.slug).trim()) fields.slug = slugify(body.slug);
+  if (body.excerpt !== undefined) fields.excerpt = String(body.excerpt).trim();
+  if (body.image !== undefined) fields.image = String(body.image).trim();
+  if (body.content !== undefined) fields.content = String(body.content);
+  if (body.author !== undefined) fields.author = String(body.author).trim();
+  if (body.authorAvatar !== undefined) fields.authorAvatar = String(body.authorAvatar).trim();
+  if (body.readTime !== undefined) {
+    const rt = Number(body.readTime);
+    if (Number.isFinite(rt) && rt > 0) fields.readTime = Math.round(rt);
+  }
+  const tags = toArray(body.tags);
+  if (tags) fields.tags = tags;
+  if (body.published !== undefined) fields.published = Boolean(body.published);
+  return fields;
+}
+
+const mapAdminBlog = (b: any) => ({ ...mapBlog(b), published: b.published !== false });
+
+// Create
+app.post(
+  "/api/blogs",
+  adminRequired,
+  wrap(async (req, res) => {
+    const body = req.body ?? {};
+    if (!body.title || !body.image || !body.content || !body.author) {
+      return res.status(400).json({ error: "Title, image, content and author are required." });
+    }
+    const fields: any = buildBlogFields(body);
+    fields.slug = fields.slug || slugify(fields.title);
+    if (!fields.slug) {
+      return res.status(400).json({ error: "Could not derive a slug from the title." });
+    }
+    if (fields.published === undefined) fields.published = true;
+    if (fields.published) fields.publishedAt = new Date();
+
+    const clash = await Blog.findOne({ slug: fields.slug }).lean();
+    if (clash) {
+      return res.status(409).json({ error: `An article with slug "${fields.slug}" already exists.` });
+    }
+
+    const created = await Blog.create(fields);
+    res.status(201).json(mapAdminBlog(created.toObject()));
+  })
+);
+
+// Update
+app.put(
+  "/api/blogs/:id",
+  adminRequired,
+  wrap(async (req, res) => {
+    const { id } = req.params;
+    if (!OID.test(id)) return res.status(400).json({ error: "Invalid blog id." });
+    const body = req.body ?? {};
+    const fields: any = buildBlogFields(body);
+    for (const key of ["title", "image", "content", "author"] as const) {
+      if (fields[key] !== undefined && !fields[key]) {
+        return res.status(400).json({ error: `${key} cannot be empty.` });
+      }
+    }
+    // Renaming the title also refreshes the slug unless one was sent explicitly.
+    if (fields.title && body.slug === undefined) fields.slug = slugify(fields.title);
+    if (fields.slug) {
+      const clash = await Blog.findOne({ slug: fields.slug, _id: { $ne: id } }).lean();
+      if (clash) {
+        return res.status(409).json({ error: `An article with slug "${fields.slug}" already exists.` });
+      }
+    }
+
+    const blog = (await Blog.findById(id)) as any;
+    if (!blog) return res.status(404).json({ error: "Blog not found" });
+    // First time an article goes live, stamp its publish date.
+    if (fields.published === true && !blog.publishedAt) fields.publishedAt = new Date();
+    Object.assign(blog, fields);
+    await blog.save();
+    res.json(mapAdminBlog(blog.toObject()));
+  })
+);
+
+// Delete
+app.delete(
+  "/api/blogs/:id",
+  adminRequired,
+  wrap(async (req, res) => {
+    const { id } = req.params;
+    if (!OID.test(id)) return res.status(400).json({ error: "Invalid blog id." });
+    const deleted = await Blog.findByIdAndDelete(id).lean();
+    if (!deleted) return res.status(404).json({ error: "Blog not found" });
+    res.json({ ok: true, id });
   })
 );
 

@@ -1,4 +1,4 @@
-import type { AuthUser, Product, Order, Category, Review } from "@/types";
+import type { AuthUser, Product, Order, Category, Review, Blog } from "@/types";
 
 /** Shape the admin product form sends to the backend (create/update). */
 export interface ProductInput {
@@ -317,6 +317,45 @@ export function apiUpdateCategory(token: string, id: string, input: Partial<Cate
 /** Delete a category by id (admin). Fails while products still use it. */
 export function apiDeleteCategory(token: string, id: string) {
   return sendAuthed<{ ok: true; id: string }>(`/categories/${id}`, "DELETE", token);
+}
+
+/* ----------------------------- Admin: blog CRUD ---------------------------- */
+
+/** A blog as returned to the admin — includes the draft/published flag. */
+export type AdminBlog = Blog & { published: boolean };
+
+/** Shape the admin blog form sends to the backend (create/update). */
+export interface BlogInput {
+  title: string;
+  slug?: string;
+  excerpt?: string;
+  image: string;
+  content: string;
+  tags?: string[];
+  author: string;
+  authorAvatar?: string;
+  readTime?: number;
+  published?: boolean;
+}
+
+/** Fetch every article including drafts (admin). */
+export function apiGetAdminBlogs(token: string) {
+  return apiGetAuthed<AdminBlog[]>("/admin/blogs", token, []);
+}
+
+/** Create an article (admin). Returns the created article. */
+export function apiCreateBlog(token: string, input: BlogInput) {
+  return sendAuthed<AdminBlog>("/blogs", "POST", token, input);
+}
+
+/** Update an article by id (admin). Returns the updated article. */
+export function apiUpdateBlog(token: string, id: string, input: Partial<BlogInput>) {
+  return sendAuthed<AdminBlog>(`/blogs/${id}`, "PUT", token, input);
+}
+
+/** Delete an article by id (admin). */
+export function apiDeleteBlog(token: string, id: string) {
+  return sendAuthed<{ ok: true; id: string }>(`/blogs/${id}`, "DELETE", token);
 }
 
 /* ------------------------------- Orders ------------------------------- */
